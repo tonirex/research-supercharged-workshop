@@ -1,0 +1,30 @@
+{
+  "_comment": "Canned demo prompts for Research Supercharged. Domain-agnostic defaults you can re-theme to any DSO research area. PUBLIC / UNCLASSIFIED topics only. Referenced by the Build-rail lab scripts via text_of(<id>).",
+  "prompts": {
+    "search_recent": {
+      "lab": 1,
+      "text": "What are the most significant developments in solid-state battery research in the last two years? Summarise the top 3 and cite a source for each.",
+      "note": "Web Search — swap the topic to your own field."
+    },
+    "compare_methods": {
+      "lab": 1,
+      "text": "Compare two leading approaches to perovskite solar cell stability. What are the trade-offs? Cite sources.",
+      "note": "Web Search — shows synthesis across pages."
+    },
+    "summarize_corpus": {
+      "lab": 2,
+      "text": "Using only the documents I uploaded, summarise the key findings and methods. Cite the specific source file for each point. If something isn't in the documents, say so.",
+      "note": "File Search / RAG — grounded on assets/corpus."
+    },
+    "specific_q": {
+      "lab": 2,
+      "text": "According to the uploaded documents, what evaluation metrics or datasets are used, and what are the reported results? Cite the source files.",
+      "note": "File Search / RAG — targeted retrieval."
+    },
+    "convert_question": {
+      "lab": 4,
+      "text": "I measured a semiconductor band gap of 1.8 eV. What is that energy in joules? Use the converter tool and show the result.",
+      "note": "Function tool — forces a real unit conversion."
+    }
+  }
+}
