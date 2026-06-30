@@ -17,6 +17,7 @@ from common.research_common import (  # noqa: E402
     build_vector_store,
     citations_of,
     cleanup,
+    delete_vector_store,
     file_search_tool,
     research_agent,
     run_response,
@@ -38,6 +39,7 @@ def main():
             print(f"  - {c.get('title')}")
     finally:
         cleanup(agent)
+        delete_vector_store(vector_store_id)  # tidy up the shared project
 
 
 if __name__ == "__main__":

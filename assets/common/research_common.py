@@ -202,15 +202,32 @@ def run_text(agent, text: str) -> str:
 
 
 def citations_of(response) -> list:
-    """Best-effort: pull cited URLs/titles from a response's annotations (Web/File Search)."""
+    """Best-effort: pull cited URLs/titles from a response (Web/File Search), de-duplicated.
+
+    Prefers structured ``url_citation`` annotations. Falls back to markdown ``[title](url)``
+    links in the answer text, because gpt-4.1 web search sometimes inlines citations that
+    way instead of emitting annotations.
+    """
     cites: list = []
+    seen: set = set()
+
+    def _add(title, url):
+        key = url or title
+        if key and key not in seen:
+            seen.add(key)
+            cites.append({"title": title, "url": url})
+
     for item in getattr(response, "output", None) or []:
         for part in getattr(item, "content", None) or []:
             for ann in getattr(part, "annotations", None) or []:
                 url = getattr(ann, "url", None)
                 title = getattr(ann, "title", None) or getattr(ann, "filename", None)
                 if url or title:
-                    cites.append({"title": title, "url": url})
+                    _add(title, url)
+    if not cites:  # fallback: scrape [title](url) markdown links from the answer text
+        text = getattr(response, "output_text", "") or ""
+        for m in re.finditer(r"\[([^\]]+)\]\((https?://[^)\s]+)\)", text):
+            _add(m.group(1), m.group(2))
     return cites
 
 
@@ -323,9 +340,10 @@ def build_vector_store(folder=None, name=None) -> str:
     path = pathlib.Path(folder) if folder else CORPUS
     if not path.is_absolute() and not path.exists():
         path = CORPUS / str(folder)
+    skip = {"readme.md", "starter-corpus.md"}  # meta-docs in the corpus folder, not research content
     files = sorted(
         p for p in path.rglob("*")
-        if p.is_file() and not p.name.startswith(".") and p.name.lower() != "readme.md"
+        if p.is_file() and not p.name.startswith(".") and p.name.lower() not in skip
     )
     if not files:
         raise RuntimeError(
@@ -342,6 +360,16 @@ def upload_file(path):
     """Upload a single file (e.g. a CSV for code interpreter); return the file id."""
     with open(path, "rb") as fh:
         return get_openai().files.create(file=fh, purpose="assistants").id
+
+
+def delete_vector_store(vector_store_id) -> None:
+    """Best-effort delete of a vector store created during a lab (keeps the shared project tidy)."""
+    if not vector_store_id:
+        return
+    try:
+        get_openai().vector_stores.delete(vector_store_id)
+    except Exception:
+        pass
 
 
 # --------------------------------------------------------------------- housekeeping

@@ -27,14 +27,15 @@ numbers and drawing charts — instead of estimating in its head.
 2. **Upload** `assets/data/sample_experiments.csv` (drag it into the chat or attach it).
 3. Ask:
    > *"Describe this dataset. Compute summary statistics for each numeric column, plot
-   > `energy_density_whkg` over `trial`, and tell me whether it's improving. Flag any outlier
-   > rows and explain why."*
+   > `energy_density_whkg` over `trial`, and tell me whether it's improving. Then identify the
+   > row that breaks that upward trend (a contextual outlier vs. its neighbours) and explain why."*
 4. Watch it **write code, run it, render a chart inline**, and report numbers. Look for the one
    row that breaks the upward trend. *(Hint: check around **trial 12 / sample `S012`**.)*
 
 ### ✅ Checkpoint
 The agent shows a **chart** + **computed statistics**, says energy density is **improving
-across trials**, and correctly flags the **`S012` outlier** (low yield/energy vs. its neighbours).
+across trials**, and flags **`S012` (trial 12)** as the row that **breaks the trend** — its
+yield/energy dips far below its neighbours.
 
 ---
 
@@ -55,7 +56,7 @@ from common.research_common import research_agent, code_interpreter_tool, run_te
 csv_text = (DATA / "sample_experiments.csv").read_text(encoding="utf-8")
 agent = research_agent("data", tools=[code_interpreter_tool()])
 print(run_text(agent, "You have a Python sandbox. Analyse this CSV:\n" + csv_text +
-                      "\nReport summary stats, quantify the energy_density trend, flag outliers."))
+                      "\nReport summary stats, quantify the energy_density trend, and name the row that breaks it."))
 cleanup(agent)
 ```
 

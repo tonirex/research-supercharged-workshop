@@ -31,7 +31,8 @@ def main():
             f"{csv_text}\n\n"
             "1) Report summary statistics for each numeric column.\n"
             "2) Is `energy_density_whkg` improving across trials? Fit a simple trend and quantify it.\n"
-            "3) Flag any outlier rows and explain why. Show the key numbers you computed."
+            "3) Identify any row that breaks that upward trend (a contextual outlier vs. its\n"
+            "   neighbouring trials), name its sample_id, and explain why. Show the key numbers."
         )
         print(run_text(agent, prompt))
     finally:
