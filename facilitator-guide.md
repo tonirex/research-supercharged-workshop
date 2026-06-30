@@ -6,7 +6,11 @@ Minute-by-minute script, demo cues, and contingencies. Pairs with
 ---
 
 ## Pre-flight checklist (day before)
-- [ ] Shared Foundry project live; all participants have access (Entra guests or shared login).
+> Provisioning + RBAC is a one-time admin job — follow the **[SETUP.md](./SETUP.md)** runbook
+> (Basic Foundry account, model deployments, participant access). This checklist confirms it's done.
+- [ ] Shared **Basic** Foundry project live (managed File Search — no Azure AI Search to wire up).
+- [ ] All participants granted **Foundry User** at **project scope** (assign once to an Entra group
+      for 20–30 people). See [SETUP.md §6](./SETUP.md#6-rbac--give-participants-access-least-privilege).
 - [ ] `model-router` deployed (Global Standard); quota sized for the whole room on one project.
 - [ ] **`gpt-4.1` deployed** (Global Standard) — **Lab 1 Web Search needs an Azure OpenAI model;
       `model-router` doesn't support Web Search.** Size its quota for the room too.

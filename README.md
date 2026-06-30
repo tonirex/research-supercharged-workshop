@@ -54,6 +54,10 @@ Each lab has both. Not a coder? Stay on 🟢 the whole way and you'll still buil
 
 > **New here? Grab the one-page [QUICKSTART.md](./QUICKSTART.md)** — both rails, the data rule,
 > and the four labs at a glance.
+>
+> **Facilitator?** Provision the shared project + grant participant access with the
+> **[SETUP.md](./SETUP.md)** runbook (Basic Foundry account, model deployments, and least-privilege
+> **Foundry User** RBAC).
 
 ### 🟢 Explore rail
 1. Open the **shared workshop project** in the Foundry portal (link from your facilitator).
@@ -74,6 +78,7 @@ Full SDK setup & troubleshooting: **[assets/README.md](./assets/README.md)**.
 research-supercharged-workshop/
 ├── README.md                  ← you are here
 ├── QUICKSTART.md              one-page participant handout (both rails)
+├── SETUP.md                   facilitator setup & RBAC runbook (provision the shared project)
 ├── workshop-plan.md           design rationale & run-of-show
 ├── facilitator-guide.md       minute-by-minute facilitator script
 ├── slides-outline.md          deck skeleton (~40 slides) for the session
