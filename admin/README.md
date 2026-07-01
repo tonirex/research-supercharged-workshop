@@ -16,8 +16,11 @@ and grant participants access. Running the session itself is covered separately 
 
 ## Prerequisites
 
-- **Azure CLI** signed in: `az login`. (Validated with CLI `2.73.0`; see the version note in
-  [01-provision-foundry.md → Step 2](./01-provision-foundry.md#step-2--foundry-account-basic).)
+- **Azure CLI ≥ 2.80.0** signed in: `az login`. 2.80.0 is the floor for the CLI provisioning commands
+  (`az cognitiveservices account project` create); the runbook **enforces** it with a version gate — see
+  [01-provision-foundry.md → Before you start](./01-provision-foundry.md#before-you-start). (An
+  [ARM REST fallback](./01-provision-foundry.md#arm-rest-fallback-any-cli-version) works on any CLI
+  version.)
 - An admin identity with a role that can **create resources and assign roles** — i.e. **Owner**
   (or **Contributor** + **User Access Administrator**) on the subscription or target resource group.
   In Foundry terms, **Foundry Account Owner** can create the account/project and assign Foundry User.

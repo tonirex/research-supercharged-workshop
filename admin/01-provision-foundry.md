@@ -48,9 +48,21 @@ each with the two lab models. Half the participants use each region.
 
 ## Before you start
 
-- **Azure CLI signed in** as an **Owner** (or Contributor + User Access Administrator) on the
-  subscription: `az login`. Validated on CLI **2.73.0** using the **ARM REST** path below (it works on
-  any CLI version).
+- **Azure CLI ≥ 2.80.0**, signed in as an **Owner** (or Contributor + User Access Administrator) on the
+  subscription: `az login`. **2.80.0 is the floor** — it's the release that adds
+  `az cognitiveservices account project` (Step 3); `--allow-project-management` (Step 2) landed in 2.78.0
+  and `deployment create` is legacy. Enforce it up front so a stale CLI fails fast instead of half-way
+  through:
+
+  ```powershell
+  $min = [version]"2.80.0"
+  $cur = [version](az version --query '"azure-cli"' -o tsv)
+  if ($cur -lt $min) { throw "Azure CLI $cur is too old — need >= $min. Run 'az upgrade' (or reinstall)." }
+  "Azure CLI $cur — OK"
+  ```
+
+  (Can't upgrade the CLI? Use the [ARM REST fallback](#arm-rest-fallback-any-cli-version) — it works on
+  any version and is what this workshop was originally validated on.)
 - Choose the two **globally-unique** account names now (lowercase, DNS-safe).
 
 Set the shared variables and **Region A** values. You'll run **Steps 1–4 once per region** — start with
@@ -58,7 +70,6 @@ Region A, then switch to Region B in Step 5:
 
 ```powershell
 $sub  = "<your-subscription-id>"
-$api  = "2026-05-01"
 az account set --subscription $sub
 
 # ---- Region A (swedencentral) ----
@@ -80,56 +91,50 @@ az group create --name $rg --location $loc
 
 ## Step 2 — Foundry account (Basic)
 
-A **Basic** account is project-enabled (`allowProjectManagement = true`) with **no** connected Azure AI
+A **Basic** account is project-enabled (`--allow-project-management`) with **no** connected Azure AI
 Search/Storage, so File Search (Lab 2) uses a **Microsoft-managed** vector store — nothing else to
 provision or pay for.
 
-Create it with **ARM REST** (validated; works on any CLI) and wait for it to finish:
-
 ```powershell
-$acctUri = "https://management.azure.com/subscriptions/$sub/resourceGroups/$rg/providers/Microsoft.CognitiveServices/accounts/$acct" + "?api-version=$api"
-$body = @{
-  location = $loc; kind = "AIServices"; sku = @{ name = "S0" }
-  identity = @{ type = "SystemAssigned" }
-  properties = @{ allowProjectManagement = $true; customSubDomainName = $acct }
-} | ConvertTo-Json -Depth 6
-$body | Set-Content "$env:TEMP\acct.json" -Encoding utf8
-az rest --method put --uri $acctUri --body "@$env:TEMP\acct.json"
-
-do { Start-Sleep 8; $state = az rest --method get --uri $acctUri --query "properties.provisioningState" -o tsv }
-while ($state -ne "Succeeded" -and $state -ne "Failed")
-"account: $state"
+az cognitiveservices account create `
+  --name $acct --resource-group $rg `
+  --kind AIServices --sku S0 --location $loc `
+  --custom-domain $acct `
+  --allow-project-management true `
+  --assign-identity `
+  --yes
 ```
 
-> **Alternative (Azure CLI ≥ ~2.80):** one command instead of the REST call —
-> `az cognitiveservices account create --name $acct --resource-group $rg --kind AIServices --sku S0 --location $loc --custom-domain $acct --allow-project-management --yes`.
-> On CLI **2.73.0** the `--allow-project-management` flag isn't available, so use the ARM REST block above.
+The command waits for provisioning and prints the account (expect `provisioningState: Succeeded` and a
+system-assigned identity). `--custom-domain $acct` is **required** — it gives the account its
+`<acct>.services.ai.azure.com` host for token auth; `--allow-project-management true` is what makes it a
+project-enabled Foundry (Basic) account.
+
+> **No CLI ≥ 2.80.0?** Do this step via the [ARM REST fallback](#arm-rest-fallback-any-cli-version).
 
 ---
 
 ## Step 3 — Project + SDK endpoint
 
-Create the project, wait for it, then **record the SDK endpoint** (participants' Build-rail `.env`):
+Create the project, then **record the SDK endpoint** (participants' Build-rail `.env`):
 
 ```powershell
-$projUri = "https://management.azure.com/subscriptions/$sub/resourceGroups/$rg/providers/Microsoft.CognitiveServices/accounts/$acct/projects/$proj" + "?api-version=$api"
-$body = @{
-  location = $loc; identity = @{ type = "SystemAssigned" }
-  properties = @{ displayName = "Research Supercharged Workshop" }
-} | ConvertTo-Json -Depth 6
-$body | Set-Content "$env:TEMP\proj.json" -Encoding utf8
-az rest --method put --uri $projUri --body "@$env:TEMP\proj.json"
+az cognitiveservices account project create `
+  --name $acct --resource-group $rg `
+  --project-name $proj --location $loc `
+  --display-name "Research Supercharged Workshop"
 
-do { Start-Sleep 6; $pstate = az rest --method get --uri $projUri --query "properties.provisioningState" -o tsv }
-while ($pstate -ne "Succeeded" -and $pstate -ne "Failed")
-"project: $pstate"
-
-# The endpoint each participant in THIS region will use — write it down:
-az rest --method get --uri $projUri --query "properties.endpoints.\"AI Foundry API\"" -o tsv
+# The endpoint each participant in THIS region uses — write it down. The host is the account's
+# custom domain, so it's deterministic:
+"https://$acct.services.ai.azure.com/api/projects/$proj"
 # -> https://<acct>.services.ai.azure.com/api/projects/research-workshop
+# (Confirm against the portal: project -> Overview -> Endpoint.)
 ```
 
-> **Alternative (CLI):** `az cognitiveservices account project create --name $acct --resource-group $rg --project-name $proj --location $loc`.
+The project gets a **system-assigned managed identity** by default — that's the identity you grant
+**Foundry User** to in [02-assign-participant-access.md](./02-assign-participant-access.md).
+
+> **No CLI ≥ 2.80.0?** Do this step via the [ARM REST fallback](#arm-rest-fallback-any-cli-version).
 
 ---
 
@@ -237,4 +242,53 @@ and every participant's agents/vector stores in one shot:
 ```powershell
 az group delete --name rg-foundry-workshop-swe  --yes --no-wait
 az group delete --name rg-foundry-workshop-eus2 --yes --no-wait
+```
+
+---
+
+## ARM REST fallback (any CLI version)
+
+Only needed if you **can't** reach Azure CLI **2.80.0** (e.g. a locked build agent). This is the path
+the workshop was originally validated on — it calls ARM REST directly, so any CLI version works. Set
+`$api` once, then use these blocks **in place of Step 2 / Step 3** (Steps 1 and 4 are unchanged):
+
+```powershell
+$api = "2026-05-01"
+```
+
+**Account (replaces Step 2):**
+
+```powershell
+$acctUri = "https://management.azure.com/subscriptions/$sub/resourceGroups/$rg/providers/Microsoft.CognitiveServices/accounts/$acct" + "?api-version=$api"
+$body = @{
+  location = $loc; kind = "AIServices"; sku = @{ name = "S0" }
+  identity = @{ type = "SystemAssigned" }
+  properties = @{ allowProjectManagement = $true; customSubDomainName = $acct }
+} | ConvertTo-Json -Depth 6
+$body | Set-Content "$env:TEMP\acct.json" -Encoding utf8
+az rest --method put --uri $acctUri --body "@$env:TEMP\acct.json"
+
+do { Start-Sleep 8; $state = az rest --method get --uri $acctUri --query "properties.provisioningState" -o tsv }
+while ($state -ne "Succeeded" -and $state -ne "Failed")
+"account: $state"
+```
+
+**Project + endpoint (replaces Step 3):**
+
+```powershell
+$projUri = "https://management.azure.com/subscriptions/$sub/resourceGroups/$rg/providers/Microsoft.CognitiveServices/accounts/$acct/projects/$proj" + "?api-version=$api"
+$body = @{
+  location = $loc; identity = @{ type = "SystemAssigned" }
+  properties = @{ displayName = "Research Supercharged Workshop" }
+} | ConvertTo-Json -Depth 6
+$body | Set-Content "$env:TEMP\proj.json" -Encoding utf8
+az rest --method put --uri $projUri --body "@$env:TEMP\proj.json"
+
+do { Start-Sleep 6; $pstate = az rest --method get --uri $projUri --query "properties.provisioningState" -o tsv }
+while ($pstate -ne "Succeeded" -and $pstate -ne "Failed")
+"project: $pstate"
+
+# The endpoint each participant in THIS region will use — write it down:
+az rest --method get --uri $projUri --query "properties.endpoints.\"AI Foundry API\"" -o tsv
+# -> https://<acct>.services.ai.azure.com/api/projects/research-workshop
 ```
