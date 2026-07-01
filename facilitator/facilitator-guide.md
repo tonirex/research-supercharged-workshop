@@ -46,7 +46,9 @@ Minute-by-minute script, demo cues, and contingencies. Pairs with
 ### 0:20 – 0:55 · Lab 1 — Search the Literature
 - **Demo (3 min):** ask a current question *without* web search, then *with* it. The citations are
   the "wow".
-- **Do (25 min):** add Web Search, ask a topic in their own field, inspect sources, A/B it.
+- **Do (25 min):** add Web Search — in the **Add the Web Search Tool** dialog pick **"Search the
+  web with Bing Search" (No setup required)**, *not* the Bing Custom Search option — then ask a
+  topic in their own field, inspect sources, A/B it.
 - **Cue:** everyone stays on **`model-router`** — Web Search works on it, no model switch needed.
   *(If a rare query errors, switching that agent to `gpt-4.1` is a reliable fallback.)*
 - **Talking point:** training-cutoff vs. live grounding; "trust but verify" via citations.

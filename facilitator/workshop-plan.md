@@ -62,7 +62,7 @@ move on — the next lab doesn't depend on a *finished* previous one (only on ha
 | Lab | Portal (🟢) | SDK (🔵) — `azure-ai-projects` 2.x |
 |-----|------------|-----------------------------------|
 | 0 | New agent + instructions | `create_version` + `PromptAgentDefinition` |
-| 1 | Tools → Web Search | `WebSearchTool()` (hosted, no connection) |
+| 1 | Tools → Web Search → *Search the web with Bing Search* (no setup) | `WebSearchTool()` (hosted, no connection) |
 | 2 | Knowledge → files (vector store) | `openai.vector_stores.*` + `FileSearchTool` |
 | 3 | Tools → Code Interpreter | `CodeInterpreterTool()` |
 | 4 | Tools → MCP | `FunctionTool(...)` / `MCPTool(...)` |

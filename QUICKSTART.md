@@ -38,7 +38,7 @@ python lab01_websearch.py     # then lab02_filesearch / lab03_codeinterpreter / 
 ## The four labs at a glance
 | Lab | You'll do | Portal (🟢) | Code (🔵) |
 |-----|-----------|------------|-----------|
-| 1 · Search | Cited answer from the live web | Tools → Web Search (on `model-router`) | `lab01_websearch.py` |
+| 1 · Search | Cited answer from the live web | Tools → Web Search → *Search the web with Bing Search* (no setup, on `model-router`) | `lab01_websearch.py` |
 | 2 · Ground | Cited answer from your **public** docs | Knowledge → add files | `lab02_filesearch.py` |
 | 3 · Analyse | Stats + chart; find the outlier | Tools → Code Interpreter | `lab03_codeinterpreter.py` |
 | 4 · Act | Agent calls a tool, you approve | Tools → MCP | `lab04_tool.py` |

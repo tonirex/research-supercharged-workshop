@@ -23,9 +23,12 @@ rails: ["🟢 Explore (portal)", "🔵 Build (SDK) — optional"]
 > *(If your agent ever errors on a web-search query, switching the model to **`gpt-4.1`** is a
 > reliable fallback, but you shouldn't need it.)*
 
-1. On your `rc-<initials>` agent, open **Tools** → add the **Web Search** grounding tool.
-   *(Your facilitator will point out the exact label and the **search context size** option —
-   how much of each page the agent reads.)*
+1. On your `rc-<initials>` agent, open **Tools** → **Add** → **Web Search**. In the **Add the Web
+   Search Tool** dialog, under **Search type** choose **"Search the web with Bing Search"
+   (No setup required)** — **not** *"Search specific domains with Bing Custom Search"* (that option
+   needs a Bing Custom Search connection you don't have). Click **Add**.
+   *(Your facilitator will also point out the **search context size** option — how much of each
+   page the agent reads.)*
 2. Ask a current, public research question:
    > *"What are the most significant developments in solid-state battery research in the last
    > two years? Summarise the top 3 and cite a source for each."*

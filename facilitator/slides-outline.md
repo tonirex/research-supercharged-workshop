@@ -77,7 +77,7 @@ real deck from this; keep text light and let the **portal + code** do the talkin
 - *Cue:* ask a current question **without** search → wrong/old → then **with**.
 
 **Slide 13 — Web Search in Foundry**
-- 🟢 Tools → Web Search (hosted).
+- 🟢 Tools → Web Search → *Search the web with Bing Search* (no setup required).
 - 🔵 `WebSearchTool()` — **no Bing connection needed**.
 - Citations come back in the response.
 
