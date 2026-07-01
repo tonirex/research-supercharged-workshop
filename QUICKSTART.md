@@ -13,8 +13,8 @@ You'll build **Research Copilot**, an agent that gains a superpower each lab:
 - 🟢 **Explore** — do everything in the **portal**. No install. *Everyone can finish on this rail.*
 - 🔵 **Build** — same agent from **Python**. Optional, goes deeper.
 
-**Name your agent `rc-<your-initials>`** on the shared project (e.g. `rc-acw`). Clone **`rc-reference`**
-for a head start.
+**Name your agent `rc-<your-initials>`** on the shared project (e.g. `rc-acw`), then paste the
+Research Copilot persona from **[Lab 0](./labs/lab-00-hello-research-copilot.md)** — no typing from scratch.
 
 ---
 

@@ -15,7 +15,8 @@ Minute-by-minute script, demo cues, and contingencies. Pairs with
 - [ ] `model-router` deployed (Global Standard); quota sized for the whole room on one project.
 - [ ] **`gpt-4.1` deployed** (Global Standard) — **Lab 1 Web Search needs an Azure OpenAI model;
       `model-router` doesn't support Web Search.** Size its quota for the room too.
-- [ ] Read-only **`rc-reference`** agent created (so people can clone a head-start).
+- [ ] Persona text handy to paste (it's in Lab 0 step 4) — the portal has **no agent-clone**
+      feature, so participants create a **New agent** and paste the persona.
 - [ ] **Dry-run all 4 lab scripts** end-to-end in the real tenant: `lab01`–`lab04`.
 - [ ] Confirm the **portal labels** for Web Search, Knowledge/Files, Code Interpreter, MCP — these
       can drift; note the exact wording you'll say out loud.

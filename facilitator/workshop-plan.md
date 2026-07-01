@@ -30,7 +30,8 @@ By the end, a participant can:
 - **Portal-led, code-backed.** The portal agent and the SDK agent are the *same* Foundry object,
   so the rails never diverge conceptually.
 - **One shared project.** Simplest to run for a mixed room; naming convention `rc-<initials>`
-  keeps it legible. A read-only `rc-reference` agent lets people clone a head-start.
+  keeps it legible. Participants copy-paste the persona from Lab 0 for a head start — the portal
+  has no agent-clone feature, so there's no reference agent to maintain.
 
 ## 4. The "Research Copilot" scenario
 Deliberately **domain-agnostic**: a research assistant that finds, reads, calculates, and acts.
@@ -76,7 +77,8 @@ move on — the next lab doesn't depend on a *finished* previous one (only on ha
 - Model deployments: **`model-router`** (teaching default) **and `gpt-4.1`** (required for Lab 1
   Web Search — `model-router` doesn't support that tool), both Global Standard; quota sized for
   the room sharing one project.
-- A read-only **`rc-reference`** agent to clone.
+- The Research Copilot **persona text** ready to paste (it lives in Lab 0 — the portal has no
+  agent-clone feature, so no reference agent is needed).
 - *(Optional)* a small **open-access corpus pack** for Lab 2 and a **research MCP server** for
   Lab 4 (with fallback to facilitator demo).
 - Dry-run all four lab scripts end-to-end in the real tenant.

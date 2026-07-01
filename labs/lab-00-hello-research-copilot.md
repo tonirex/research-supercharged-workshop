@@ -21,8 +21,7 @@ single tool. This is your *Research Copilot*; every later lab gives it a new sup
 
 ## 🟢 Explore (portal) — everyone
 
-1. Open the shared workshop project in the **Foundry portal** → **Agents** → **New agent**
-   *(or clone the read-only **`research-copilot-reference`** agent to skip typing).*
+1. Open the shared workshop project in the **Foundry portal** → **Agents** → **New agent**.
 2. **Name it `rc-<your-initials>`** (e.g. `rc-ac`). We all share one project, so the initials
    keep the agent list legible and avoid collisions.
 3. **Model:** choose **`model-router`** — it auto-picks a capable model so nobody stalls on
