@@ -170,5 +170,38 @@ models should now be visible and agent creation unblocked.
 
 ---
 
+## Troubleshooting — participant sees a "couldn't automatically deploy a model" / quota warning
+
+**Symptom:** a participant **with the correct account-scope role** clicks **Agents → New agent** and
+the portal shows *"We couldn't automatically deploy a model for your agent because no models have at
+least 50K tokens per minute of available quota in `<region>`"*, with **Request more quota** / **Deploy
+a model manually** links.
+
+**This is expected — and it is *not* a real quota shortage.** The portal's quick-create tries to
+**auto-deploy a fresh model**, which needs two rights participants deliberately don't have: **read
+subscription quota** and **create model deployments**. A **Foundry User** can't read quota, so the
+check returns empty and surfaces as a misleading *"no quota"* message. An **Owner** never sees it
+because they *can* read quota and auto-deploy — which is also why an Owner test-creating an agent can
+silently add a `text-embedding-3-large` deployment to the account. Meanwhile the model the workshop
+actually runs on has plenty of headroom: `model-router` (GlobalStandard) shows **~800K TPM free per
+region** in this subscription.
+
+**Fix — the participant selects the pre-deployed model instead of auto-deploying** (you already
+deployed `model-router` + `gpt-4.1` in
+[01 → Step 4](./01-provision-foundry.md#step-4--deploy-the-two-lab-models)):
+
+1. In the "Create an agent" dialog, click **Create and open playground** anyway — the warning is
+   **non-blocking** and that button stays enabled.
+2. In the agent's **Setup** panel, set **Deployment → `model-router`** (or **`gpt-4.1`** from Lab 2's
+   portal File Search onward).
+3. **Do not** click *Request more quota* or *Deploy a model manually* — those need admin rights the
+   participant doesn't have, and quota isn't the problem.
+
+> Nothing to change on the admin side — pre-deploying the models (Step 4) is exactly what lets
+> least-privilege participants skip the deploy step. If `model-router` **isn't in the Deployment
+> dropdown at all**, that's the *scope* problem above, not this one.
+
+---
+
 ✅ **Done.** Confirm the [pre-flight checklist](../facilitator/facilitator-guide.md) and you're ready
 to run the workshop.
