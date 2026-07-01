@@ -54,10 +54,6 @@ Each lab has both. Not a coder? Stay on 🟢 the whole way and you'll still buil
 
 > **New here? Grab the one-page [QUICKSTART.md](./QUICKSTART.md)** — both rails, the data rule,
 > and the four labs at a glance.
->
-> **Facilitator?** Provision the shared project + grant participant access with the
-> **[SETUP.md](./SETUP.md)** runbook (Basic Foundry account, model deployments, and least-privilege
-> **Foundry User** RBAC).
 
 ### 🟢 Explore rail
 1. Open the **shared workshop project** in the Foundry portal (link from your facilitator).
@@ -73,15 +69,11 @@ python lab01_websearch.py        # first agent with web search
 ```
 Full SDK setup & troubleshooting: **[assets/README.md](./assets/README.md)**.
 
-## Repo layout
+## Repo layout (what you'll touch)
 ```
 research-supercharged-workshop/
 ├── README.md                  ← you are here
-├── QUICKSTART.md              one-page participant handout (both rails)
-├── SETUP.md                   facilitator setup & RBAC runbook (provision the shared project)
-├── workshop-plan.md           design rationale & run-of-show
-├── facilitator-guide.md       minute-by-minute facilitator script
-├── slides-outline.md          deck skeleton (~40 slides) for the session
+├── QUICKSTART.md              one-page handout (both rails, the data rule)
 ├── labs/                      the 6 hands-on labs (start at Lab 0)
 ├── prompts/demo-prompts.json  canned prompts the scripts use
 └── assets/                    Build (SDK) rail
@@ -93,6 +85,10 @@ research-supercharged-workshop/
     │   └── STARTER-CORPUS.md   curated open-access pack for Lab 2
     └── data/sample_experiments.csv   synthetic dataset (Lab 3)
 ```
+
+> **Running or organising this workshop?** Setup and delivery live in two folders participants don't
+> need: **[admin/](./admin/)** — provision the shared Foundry project + grant access; and
+> **[facilitator/](./facilitator/)** — run-of-show, design rationale, and slides.
 
 ## Tech stack
 Built on the **current Microsoft Foundry agents API** — `azure-ai-projects` **2.x**

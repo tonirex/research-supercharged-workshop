@@ -1,16 +1,16 @@
 # Facilitator Guide — Research Supercharged
 
 Minute-by-minute script, demo cues, and contingencies. Pairs with
-[workshop-plan.md](./workshop-plan.md) (the *why*) and the [labs](./labs/) (the *what*).
+[workshop-plan.md](./workshop-plan.md) (the *why*) and the [labs](../labs/) (the *what*).
 
 ---
 
 ## Pre-flight checklist (day before)
-> Provisioning + RBAC is a one-time admin job — follow the **[SETUP.md](./SETUP.md)** runbook
+> Provisioning + RBAC is a one-time admin job — follow the **[admin runbook](../admin/README.md)**
 > (Basic Foundry account, model deployments, participant access). This checklist confirms it's done.
 - [ ] Shared **Basic** Foundry project live (managed File Search — no Azure AI Search to wire up).
 - [ ] All participants granted **Foundry User** at **project scope** (assign once to an Entra group
-      for 20–30 people). See [SETUP.md §6](./SETUP.md#6-rbac--give-participants-access-least-privilege).
+      for 20–30 people). See [admin/02-assign-participant-access.md](../admin/02-assign-participant-access.md).
 - [ ] `model-router` deployed (Global Standard); quota sized for the whole room on one project.
 - [ ] **`gpt-4.1` deployed** (Global Standard) — **Lab 1 Web Search needs an Azure OpenAI model;
       `model-router` doesn't support Web Search.** Size its quota for the room too.

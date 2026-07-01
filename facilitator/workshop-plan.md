@@ -1,7 +1,7 @@
 # Research Supercharged — Workshop Plan (design rationale)
 
-> Facilitator-facing design doc. Participants use the [README](./README.md) and
-> [labs](./labs/); this explains *why* the workshop is shaped the way it is.
+> Facilitator-facing design doc. Participants use the [README](../README.md) and
+> [labs](../labs/); this explains *why* the workshop is shaped the way it is.
 
 ## 1. Overview
 - **Title:** *Research Supercharged: Azure AI for the Curious Mind*
