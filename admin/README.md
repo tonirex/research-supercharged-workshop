@@ -13,7 +13,7 @@ and grant participants access. Running the session itself is covered separately 
 
 | Step | Doc | Outcome |
 |------|-----|---------|
-| 1 | **[01-provision-foundry.md](./01-provision-foundry.md)** | Resource group → **Basic** Foundry account → project → `model-router` deployment (+ optional `gpt-4.1` fallback) → SDK endpoint |
+| 1 | **[01-provision-foundry.md](./01-provision-foundry.md)** | Resource group → **Basic** Foundry account → project → `model-router` + `gpt-4.1` deployments (gpt-4.1 required for portal File Search) → SDK endpoint |
 | 2 | **[02-assign-participant-access.md](./02-assign-participant-access.md)** | **Foundry User** RBAC for participants (per-user or Entra group), project managed identity, and verification |
 
 When both are done, hand the project link + endpoint to participants and confirm the

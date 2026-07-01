@@ -23,10 +23,21 @@ cites the exact file — instead of the open web. This is Retrieval-Augmented Ge
 
 ## 🟢 Explore (portal) — everyone
 
+> ### ⚠️ First, switch this agent to **`gpt-4.1`**
+> The **File Search** tool is **not** supported on `model-router` in the portal — you'll get
+> *"File search tool doesn't work with the model you selected. Please use another model."* On your
+> `rc-<initials>` agent, open the **model** selector, pick **`gpt-4.1`**, and Save. *(Keep it on
+> `gpt-4.1` for the rest of the portal labs — it supports every tool. Web Search from Lab 1 works
+> on it too.)*
+
 1. Gather **3–10 public documents** (PDF / MD / TXT / DOCX). No materials of your own? Use the
    facilitator's **open-access starter pack**.
-2. On your `rc-<initials>` agent, open **Knowledge** → **add files** (this creates a **vector
-   store** behind the scenes) → upload your documents and wait for indexing.
+2. On your `rc-<initials>` agent, open **Knowledge → add files** (or **Tools → Add → Files**). In
+   the **Attach files** dialog, keep **Create a new index**, then **replace the auto-generated
+   Vector index name with one you'll recognise — include your initials**, e.g.
+   **`<initials>-papers`** (`jd-papers`). Upload your documents and wait for indexing.
+   > **Why rename it?** Everyone shares one project, so the vector indexes are listed together.
+   > Your initials make *yours* easy to find and avoid confusion with a neighbour's.
 3. Ask a grounding question:
    > *"Using only the documents I uploaded, summarise the key findings and methods. Cite the
    > specific source file for each point. If something isn't in the documents, say so."*
@@ -59,6 +70,10 @@ print(resp.output_text)
 print(citations_of(resp))                                    # which files were cited
 cleanup(agent)
 ```
+
+> Unlike the portal, the **SDK** File Search runs fine on the default **`model-router`** — no model
+> switch needed on this rail (verified). `build_vector_store()` auto-names the index; pass
+> `name="<initials>-papers"` to label yours in the shared project.
 
 ---
 

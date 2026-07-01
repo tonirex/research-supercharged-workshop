@@ -98,18 +98,19 @@ az rest --method get `
 
 ## 5. Deploy the lab models
 
-One deployment (`model-router`) covers every lab; a second (`gpt-4.1`) is an **optional** Web
-Search fallback. Size capacity for the **whole room** on one project.
+Deploy **two** models. `model-router` is the teaching default (Labs 0–1 portal + all SDK rails);
+`gpt-4.1` is **required** for Lab 2's portal **File Search** tool, which does not accept
+`model-router`. Size capacity for the **whole room** on one project.
 
 ```powershell
-# model-router — ALL labs 0-4 (auto-picks a capable model; handles Web Search too)
+# model-router — teaching default: Labs 0-1 portal + ALL SDK rails (auto-picks a capable model)
 az cognitiveservices account deployment create `
   --name $acct --resource-group $rg `
   --deployment-name model-router `
   --model-name model-router --model-version 2025-11-18 --model-format OpenAI `
   --sku-name GlobalStandard --sku-capacity 100
 
-# gpt-4.1 — OPTIONAL Web Search fallback (model-router handles Web Search fine)
+# gpt-4.1 — REQUIRED for Lab 2 portal File Search (model-router rejected there); also a Web Search fallback
 az cognitiveservices account deployment create `
   --name $acct --resource-group $rg `
   --deployment-name gpt-4.1 `
@@ -117,18 +118,19 @@ az cognitiveservices account deployment create `
   --sku-name GlobalStandard --sku-capacity 100
 ```
 
-> **Why deploy `gpt-4.1` (optional):** Web Search works on `model-router` (verified), so all labs
-> run on the default. Deploy `gpt-4.1` only if you want a reliable Web Search **fallback**. See
-> [../labs/lab-01-search-the-literature.md](../labs/lab-01-search-the-literature.md).
+> **Why deploy `gpt-4.1`:** Lab 2's **portal** File Search tool does **not** accept `model-router`
+> (participants get *"File search tool doesn't work with the model you selected"*), so they switch
+> their agent to `gpt-4.1` from Lab 2 on. It also serves as a Web Search fallback. (Lab 1 Web
+> Search and all **SDK** rails — including SDK File Search — run fine on `model-router`.) See
+> [../labs/lab-02-ground-on-your-papers.md](../labs/lab-02-ground-on-your-papers.md).
 >
 > **Capacity sizing:** `100` = 100K TPM / 100 requests-per-min per deployment — fine for a dry run.
-> For 20–30 concurrent participants, request **as much `model-router` quota as the subscription
-> allows** (and some for `gpt-4.1` if you deployed the fallback) and stagger the heavy labs (RAG
-> indexing, code interpreter). File Search
+> For 20–30 concurrent participants, request **as much `model-router` + `gpt-4.1` quota as the
+> subscription allows** and stagger the heavy labs (RAG indexing, code interpreter). File Search
 > embeddings are **managed in Basic** — you do **not** deploy `text-embedding-3-large` yourself.
 >
 > **No managed `text-embedding-3-large` deployment is required** for Lab 2 — verified: File Search
-> built and queried a managed vector store with only `model-router` deployed.
+> built and queried a managed vector store with no embedding deployment (Basic manages it).
 
 ---
 

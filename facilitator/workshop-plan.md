@@ -63,7 +63,7 @@ move on — the next lab doesn't depend on a *finished* previous one (only on ha
 |-----|------------|-----------------------------------|
 | 0 | New agent + instructions | `create_version` + `PromptAgentDefinition` |
 | 1 | Tools → Web Search → *Search the web with Bing Search* (no setup) | `WebSearchTool()` (hosted, no connection) |
-| 2 | Knowledge → files (vector store) | `openai.vector_stores.*` + `FileSearchTool` |
+| 2 | Switch to `gpt-4.1` → Knowledge → files (name index w/ initials) | `openai.vector_stores.*` + `FileSearchTool` (works on `model-router`) |
 | 3 | Tools → Code Interpreter | `CodeInterpreterTool()` |
 | 4 | Tools → MCP | `FunctionTool(...)` / `MCPTool(...)` |
 
@@ -74,9 +74,10 @@ move on — the next lab doesn't depend on a *finished* previous one (only on ha
 **Operator (day before):**
 - Shared Foundry project on the **current** experience, all participants added (Entra guests or a
   shared login).
-- Model deployment: **`model-router`** (teaching default) — handles **all** labs, including Lab 1
-  Web Search. *(Optional: **`gpt-4.1`** as a Web Search fallback; not required.)* Global Standard;
-  quota sized for the room sharing one project.
+- Model deployments: **`model-router`** (teaching default — Labs 0–1 portal + all SDK rails) **and
+  `gpt-4.1`** (**required** for Lab 2's portal File Search tool, which rejects `model-router`;
+  participants switch to it from Lab 2 on). Both Global Standard; quota sized for the room sharing
+  one project.
 - The Research Copilot **persona text** ready to paste (it lives in Lab 0 — the portal has no
   agent-clone feature, so no reference agent is needed).
 - *(Optional)* a small **open-access corpus pack** for Lab 2 and a **research MCP server** for

@@ -13,9 +13,10 @@ Minute-by-minute script, demo cues, and contingencies. Pairs with
       resource — required to see model deployments + create agents; assign once to an Entra group
       for 20–30 people). See [admin/02-assign-participant-access.md](../admin/02-assign-participant-access.md).
 - [ ] `model-router` deployed (Global Standard); quota sized for the whole room on one project.
-      **All labs — including Lab 1 Web Search — run on `model-router`.**
-- [ ] *(Optional)* **`gpt-4.1` deployed** (Global Standard) as a **Web Search fallback** only;
-      not required. If you deploy it, size a little quota for the room.
+      Teaching default for Labs 0–1 and all SDK rails (Lab 1 Web Search works on it).
+- [ ] **`gpt-4.1` deployed** (Global Standard) — **required for Lab 2's portal File Search tool**,
+      which does *not* accept `model-router`. Participants switch to it from Lab 2 on. Size its
+      quota for the room too.
 - [ ] Persona text handy to paste (it's in Lab 0 step 4) — the portal has **no agent-clone**
       feature, so participants create a **New agent** and paste the persona.
 - [ ] **Dry-run all 4 lab scripts** end-to-end in the real tenant: `lab01`–`lab04`.
@@ -54,6 +55,11 @@ Minute-by-minute script, demo cues, and contingencies. Pairs with
 - **Talking point:** training-cutoff vs. live grounding; "trust but verify" via citations.
 
 ### 0:55 – 1:35 · Lab 2 — Ground on Your Papers
+- **Cue first:** File Search is **not** supported on `model-router` in the portal — have everyone
+  switch their `rc-<initials>` agent to **`gpt-4.1`** before adding files (and keep it there for
+  Labs 3–4). Otherwise they hit *"File search tool doesn't work with the model you selected."*
+- **Cue:** when the **Attach files** dialog appears, tell them to rename the **Vector index name**
+  with their **initials** (e.g. `jd-papers`) — one shared project, so it keeps indexes findable.
 - **Demo (3 min):** upload 2–3 open-access PDFs, ask for a cited summary, then ask something
   *not* in them to show the honest "not in the documents" refusal.
 - **Do (32 min):** participants use the starter pack or their own **public** docs.
