@@ -91,14 +91,15 @@ Provisioned with these steps (RG `rg-foundry-workshop`, account `dso-foundry-ws-
 project's parent resource — required so participants can see model deployments and create agents)
 and verified. The project was swept clean afterward (0 agents, 0 vector stores).
 
-> **Two-region parity:** the live end-to-end run above was on `swedencentral`. `eastus2` was
-> validated for **feature + model parity** — the tool-support-by-region table lists it as *yes* for
-> File Search, Grounding with Bing Search, Code Interpreter, Function and MCP, and a live
-> `az cognitiveservices model list --location eastus2` confirms `model-router 2025-11-18` +
-> `gpt-4.1 2025-04-14` are both offered. So the second (eastus2) project behaves identically. Provisioning
-> commands were re-checked against this session's logs and the live swedencentral resources (account
-> kind `AIServices`, both deployments `GlobalStandard`/`Succeeded`) — they match
-> [01-provision-foundry.md](./01-provision-foundry.md) step-for-step.
+> **Two-region parity — validated end-to-end.** Both regions were provisioned with these steps and
+> exercised live. **swedencentral** ran all five labs (table above). **eastus2** was then stood up via
+> the [§7 flow](./01-provision-foundry.md#7-scale-out-across-two-regions-load-balancing): Basic
+> `AIServices` account (`allowProjectManagement=true`), project `research-workshop`, and **both**
+> deployments `model-router 2025-11-18` + `gpt-4.1 2025-04-14` (GlobalStandard, cap 100, all
+> `Succeeded`). A representative participant (`janedoe`) was granted **Foundry User at account
+> scope**, and a **live two-model agent smoke test passed** against the eastus2 endpoint
+> (`model-router` applied the persona + citations; `gpt-4.1` answered). The project was left pristine
+> (0 agents, 0 vector stores). eastus2 is confirmed feature-identical to swedencentral for every lab.
 
 > **Lab 4 MCP server (step 3, optional):** the server code + MCP Streamable-HTTP transport were
 > validated locally (`convert_units` returns `1.8 eV → 2.884e-19 J`; tools advertise over `/mcp`).
