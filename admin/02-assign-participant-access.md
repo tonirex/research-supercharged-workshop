@@ -117,5 +117,53 @@ The Build-rail endpoint + `.env` handoff is covered in
 
 ---
 
+## Troubleshooting — participant can't see deployed models / can't create agents
+
+**Symptom:** a participant is signed in and *inside* the `research-workshop` project, but the
+**Deployments → Deployed models** list is **empty** and they **can't create an agent** — the portal
+shows *"You do not have permissions to deploy models… ask your administrator to assign you the
+Foundry Owner role."*
+
+**Cause:** their **Foundry User** role is assigned at **project** scope only. Model deployments are
+**account-level** resources and Azure RBAC inherits **downward** (account → project) not upward, so a
+project-scoped role can't read them — and agent creation needs to pick a deployment. (This is *not*
+a request to make them Foundry Owner — that would let them deploy/manage models. Keep them Foundry
+User, just at the right scope.)
+
+**1. Diagnose** — list the participant's Foundry assignments across every scope:
+
+```powershell
+$sub  = "<your-subscription-id>"
+$rg   = "rg-foundry-workshop"
+$acct = "dso-foundry-ws-<unique>"
+$acctScope = "/subscriptions/$sub/resourceGroups/$rg/providers/Microsoft.CognitiveServices/accounts/$acct"
+
+$uid = az ad user show --id "<participant>@<tenant>.onmicrosoft.com" --query id -o tsv
+az role assignment list --assignee $uid --all --include-inherited `
+  --query "[?contains(roleDefinitionName,'Foundry')].{role:roleDefinitionName, scope:scope}" -o table
+```
+
+If the only scope shown ends in `…/projects/research-workshop` (and **not** the bare
+`…/accounts/<acct>`), that's the problem.
+
+**2. Fix** — add Foundry User at the **account** scope:
+
+```powershell
+az role assignment create `
+  --role "53ca6127-db72-4b80-b1b0-d745d6d5456d" `
+  --assignee-object-id $uid --assignee-principal-type User `
+  --scope $acctScope
+```
+
+> Doing the whole room? Assign it **once to the Entra group** at `$acctScope` (see §b) rather than
+> per user.
+
+**3. Verify + refresh** — re-run the diagnose command and confirm a row with the bare
+`…/accounts/<acct>` scope now appears. RBAC changes take **a few minutes** to propagate; have the
+participant **hard-refresh** the portal (or sign out and back in) before re-checking. The deployed
+models should now be visible and agent creation unblocked.
+
+---
+
 ✅ **Done.** Confirm the [pre-flight checklist](../facilitator/facilitator-guide.md) and you're ready
 to run the workshop.
