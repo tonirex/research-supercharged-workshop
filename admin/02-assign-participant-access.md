@@ -34,13 +34,21 @@ search, file search, code interpreter, function/MCP tools) plus reader access �
 | Foundry Account Owner | `e47c6f54-e4a2-4754-9501-8e0985b135e1` |
 | Foundry Owner | `c883944f-8b7b-4483-af10-35834be79c4a` |
 
-**Scope:** assign at the **project** (least privilege — participants see only this project, not
-other projects in the account). Get the project resource ID:
+**Scope:** assign at the **Foundry account** (the *parent resource* of the project). Per Microsoft
+docs, *"on the parent resource of your project, you need the Foundry User role to access model
+deployments and create agents."*
+
+> ⚠️ **Do NOT assign at project scope only.** Model deployments live at the **account** level, and
+> Azure RBAC inherits **downward** (account → project), not upward. A project-scoped assignment
+> can't read the account's deployments, so participants get an **empty "Deployed models" list and
+> can't create agents** (the portal tells them to ask for *Foundry Owner*). Account scope fixes both
+> — and Foundry User at account scope **still can't deploy or manage models** (that needs Owner),
+> so it stays least-privilege. With one project in the account, account scope exposes nothing extra.
+
+Get the account resource ID:
 
 ```powershell
-$projScope = az cognitiveservices account project show `
-  --name $acct --resource-group $rg --project-name $proj --query id -o tsv
-# (or build it: /subscriptions/$sub/resourceGroups/$rg/providers/Microsoft.CognitiveServices/accounts/$acct/projects/$proj)
+$acctScope = "/subscriptions/$sub/resourceGroups/$rg/providers/Microsoft.CognitiveServices/accounts/$acct"
 ```
 
 ---
@@ -52,20 +60,20 @@ $jane = az ad user show --id "janedoe@<tenant>.onmicrosoft.com" --query id -o ts
 az role assignment create `
   --role "53ca6127-db72-4b80-b1b0-d745d6d5456d" `
   --assignee-object-id $jane --assignee-principal-type User `
-  --scope $projScope
+  --scope $acctScope
 ```
 
 ## b. The whole room (recommended for 20–30 people) — assign **once** to a group
 
 ```powershell
-# Create a security group, add participants, assign the role to the GROUP at project scope.
+# Create a security group, add participants, assign the role to the GROUP at account scope.
 $grp = az ad group create --display-name "foundry-workshop-participants" `
         --mail-nickname "foundry-workshop-participants" --query id -o tsv
 # add each participant: az ad group member add --group $grp --member-id <userObjectId>
 az role assignment create `
   --role "53ca6127-db72-4b80-b1b0-d745d6d5456d" `
   --assignee-object-id $grp --assignee-principal-type Group `
-  --scope $projScope
+  --scope $acctScope
 ```
 
 ## c. Project managed identity (recommended)
@@ -77,7 +85,6 @@ Azure CLI as an **Owner**, this is assigned automatically; with the ARM REST pat
 ```powershell
 $projMI = az cognitiveservices account project show `
   --name $acct --resource-group $rg --project-name $proj --query identity.principalId -o tsv
-$acctScope = "/subscriptions/$sub/resourceGroups/$rg/providers/Microsoft.CognitiveServices/accounts/$acct"
 az role assignment create `
   --role "53ca6127-db72-4b80-b1b0-d745d6d5456d" `
   --assignee-object-id $projMI --assignee-principal-type ServicePrincipal `
@@ -87,8 +94,8 @@ az role assignment create `
 ## d. Verify
 
 ```powershell
-# Confirm the participant (or group) has Foundry User at the project scope:
-az role assignment list --scope $projScope `
+# Confirm the participant (or group) has Foundry User at the ACCOUNT scope:
+az role assignment list --scope $acctScope `
   --query "[?roleDefinitionName=='Foundry User'].{principal:principalName,type:principalType}" -o table
 ```
 
@@ -97,10 +104,13 @@ az role assignment list --scope $projScope `
 ## Participants finding the project
 
 A participant signs in at **https://ai.azure.com**, picks the tenant, and opens the
-**`research-workshop`** project. Project-scope **Foundry User** is enough to see and use it.
+**`research-workshop`** project. Account-scope **Foundry User** lets them see the project, view the
+deployed models, and create/run agents.
 
-> If a participant can't *find* the project in the portal, assign Foundry User at the **account**
-> scope instead (broader, still no management rights).
+> **Symptoms of the wrong scope:** if a participant is *in* the project but the **Deployed models**
+> list is empty and agent creation is blocked (portal asks for *Foundry Owner*), their role is at
+> **project** scope only — re-assign at **account** scope (see the ⚠️ note above). Allow a few
+> minutes for RBAC to propagate, then have them refresh / sign out and back in.
 
 The Build-rail endpoint + `.env` handoff is covered in
 [01-provision-foundry.md §6](./01-provision-foundry.md#6-hand-the-endpoint-to-build-rail-participants).

@@ -78,8 +78,9 @@ Provisioned with these steps (RG `rg-foundry-workshop`, account `dso-foundry-ws-
 | 3 | Code Interpreter | ✅ computed stats, flagged the `S012` outlier |
 | 4 | Function tool | ✅ agent called `convert_units` |
 
-`Foundry User` was assigned to the representative participant `janedoe` at **project scope** and
-verified. The project was swept clean afterward (0 agents, 0 vector stores).
+`Foundry User` was assigned to the representative participant `janedoe` at **account scope** (the
+project's parent resource — required so participants can see model deployments and create agents)
+and verified. The project was swept clean afterward (0 agents, 0 vector stores).
 
 ---
 

@@ -9,7 +9,8 @@ Minute-by-minute script, demo cues, and contingencies. Pairs with
 > Provisioning + RBAC is a one-time admin job — follow the **[admin runbook](../admin/README.md)**
 > (Basic Foundry account, model deployments, participant access). This checklist confirms it's done.
 - [ ] Shared **Basic** Foundry project live (managed File Search — no Azure AI Search to wire up).
-- [ ] All participants granted **Foundry User** at **project scope** (assign once to an Entra group
+- [ ] All participants granted **Foundry User** at **account scope** (the project's *parent*
+      resource — required to see model deployments + create agents; assign once to an Entra group
       for 20–30 people). See [admin/02-assign-participant-access.md](../admin/02-assign-participant-access.md).
 - [ ] `model-router` deployed (Global Standard); quota sized for the whole room on one project.
 - [ ] **`gpt-4.1` deployed** (Global Standard) — **Lab 1 Web Search needs an Azure OpenAI model;
