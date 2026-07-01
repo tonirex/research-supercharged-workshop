@@ -40,6 +40,7 @@ all on **Microsoft Foundry**.
 | 1:45 – 2:25 | Analyse the data | [Lab 3](./labs/lab-03-analyse-the-data.md) |
 | 2:25 – 2:50 | Add a tool | [Lab 4](./labs/lab-04-add-a-tool.md) |
 | 2:50 – 3:00 | Take it home | [Lab 5](./labs/lab-05-take-it-home.md) |
+| _optional_ | 🌟 Bonus: evaluate & observe | [Bonus labs](./labs/bonus/) |
 
 ## Two rails — follow either, switch anytime
 
@@ -75,15 +76,17 @@ research-supercharged-workshop/
 ├── README.md                  ← you are here
 ├── QUICKSTART.md              one-page handout (both rails, the data rule)
 ├── labs/                      the 6 hands-on labs (start at Lab 0)
+│   └── bonus/                 🌟 optional evaluate & observe labs
 ├── prompts/demo-prompts.json  canned prompts the scripts use
 └── assets/                    Build (SDK) rail
     ├── README.md              SDK setup + how to run
     ├── requirements.txt · .env.example
     ├── common/research_common.py   shared helper (all SDK calls live here)
-    ├── lab01_websearch.py … lab04_tool.py
+    ├── lab01_websearch.py … lab04_tool.py · bonus_cloud_eval.py
+    ├── mcp-server/            Lab 4 MCP server + Azure Container Apps deploy script
     ├── corpus/                ← drop your own unclassified docs (Lab 2)
     │   └── STARTER-CORPUS.md   curated open-access pack for Lab 2
-    └── data/sample_experiments.csv   synthetic dataset (Lab 3)
+    └── data/                  sample_experiments.csv (Lab 3) · eval_qa.jsonl (bonus)
 ```
 
 > **Running or organising this workshop?** Setup and delivery live in two folders participants don't

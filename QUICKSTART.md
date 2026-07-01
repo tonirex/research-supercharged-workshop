@@ -59,4 +59,5 @@ For Lab 2, use your **own public PDFs** or the facilitator's **starter corpus pa
 
 ## When you finish
 ✅ You have a research agent with four superpowers. **Delete your `rc-<initials>` agent** to keep
-the shared project tidy. Want to go further? See **Lab 5** and the repo `README`.
+the shared project tidy. Want to go further? See **Lab 5**, the optional **[🌟 bonus evaluate &
+observe labs](./labs/bonus/)**, and the repo `README`.
