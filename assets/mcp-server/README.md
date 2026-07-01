@@ -1,9 +1,15 @@
 # Research Tools MCP server (Lab 4)
 
 A tiny [Model Context Protocol](https://modelcontextprotocol.io/) server that gives a
-Foundry agent real tools it can call. The **admin deploys it once** to Azure Container
-Apps before the workshop; on the day, participants just paste one HTTPS URL into their
-agent (**Tools → MCP**).
+Foundry agent real tools it can call. It's the remote tool endpoint for **Lab 4 — Add a
+Tool**.
+
+> **Optional.** Deploying this is a nice-to-have, not required. Lab 4 still works without
+> it: the SDK rail uses a local function tool and the portal rail has a built-in fallback.
+> Deploy it only if you want participants to connect to a live remote MCP tool.
+
+The **admin deploys it once** (optionally) to Azure Container Apps before the workshop; on
+the day, participants just paste one HTTPS URL into their agent (**Tools → MCP**).
 
 ## What it exposes
 
