@@ -76,10 +76,10 @@ move on — the next lab doesn't depend on a *finished* previous one (only on ha
   shared login).
 - Model deployments: **`model-router`** (teaching default — Labs 0–1 portal + all SDK rails) **and
   `gpt-4.1`** (**required** for Lab 2's portal File Search tool, which rejects `model-router`;
-  participants switch to it from Lab 2 on). Both Global Standard; quota sized for the room sharing
-  one project — **or split the room across two regions** (`swedencentral` + `eastus2`) so each
-  project serves ~half the roster (see
-  [../admin/01-provision-foundry.md §7](../admin/01-provision-foundry.md#7-scale-out-across-two-regions-load-balancing)).
+  participants switch to it from Lab 2 on). Both Global Standard, deployed in **each** region; quota
+  sized per project for ~half the roster (the workshop splits the room across two regions —
+  `swedencentral` + `eastus2` — see
+  [../admin/01-provision-foundry.md → What you'll build](../admin/01-provision-foundry.md#what-youll-build)).
 - The Research Copilot **persona text** ready to paste (it lives in Lab 0 — the portal has no
   agent-clone feature, so no reference agent is needed).
 - *(Optional)* a small **open-access corpus pack** for Lab 2 and a **research MCP server** for

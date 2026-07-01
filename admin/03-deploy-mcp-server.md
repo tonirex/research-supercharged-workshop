@@ -24,10 +24,10 @@ deploy scripts). What it exposes:
 
 - **Azure CLI** signed in (`az login`) as an identity with **Contributor** (or Owner) on
   the subscription or the workshop resource group.
-- Reuses the workshop resource group from
-  [01-provision-foundry.md](./01-provision-foundry.md) (`rg-foundry-workshop`) so teardown
-  stays a single `az group delete`. No Docker needed locally — the image is built in the
-  cloud.
+- Deploys into one of the workshop resource groups (e.g. `rg-foundry-workshop-swe` from
+  [01-provision-foundry.md](./01-provision-foundry.md)); the MCP server is a **single shared** endpoint
+  used by Lab 4 participants in **both** regions, so deploy it once. No Docker needed locally — the
+  image is built in the cloud.
 
 ---
 

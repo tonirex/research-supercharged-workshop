@@ -1,23 +1,76 @@
-# 1 · Provision the Foundry resources
+# 1 · Provision the Foundry resources (two regions)
 
-Stand up the shared **Basic** Foundry account + project and deploy the lab models. Prerequisites
-and the `$sub/$rg/$loc/$acct/$proj` variables are in **[README.md](./README.md)** — set them in a
-PowerShell session and keep it open. When you're done here, continue to
-**[02-assign-participant-access.md](./02-assign-participant-access.md)**.
+> **Goal — new deployment for the DSO workshop:** stand up **two identical _Basic_ Foundry projects**
+> — one in **`swedencentral`**, one in **`eastus2`** — and **split the roster evenly** between them.
+> Two regional projects give you **independent model quota (TPM/RPM)** *and* **double the hosted-agent
+> session-concurrency ceiling**, so one region's rate limits can't throttle the whole room. The labs
+> are **identical** on both — this is purely a capacity/logistics move.
+
+Prerequisites (Owner rights, CLI) are in **[README.md](./README.md)**. When both regions are up,
+continue to **[02-assign-participant-access.md](./02-assign-participant-access.md)** to grant access.
+
+> **Just doing a dry run or a small group?** Provision **one** region: run **Steps 1–4** once and
+> **skip Step 5**. Everything else is identical.
+
+---
+
+## What you'll build
+
+Two resource groups, each holding one **Basic** Foundry account + one project (`research-workshop`),
+each with the two lab models. Half the participants use each region.
+
+| | Region A | Region B |
+|---|---|---|
+| **Region** (`$loc`) | `swedencentral` | `eastus2` |
+| **Resource group** (`$rg`) | `rg-foundry-workshop-swe` | `rg-foundry-workshop-eus2` |
+| **Account** (`$acct`, globally unique) | `dso-foundry-ws-swe-<unique>` | `dso-foundry-ws-eus2-<unique>` |
+| **Project** (`$proj`) | `research-workshop` | `research-workshop` |
+| **Models** | `model-router` + `gpt-4.1` | `model-router` + `gpt-4.1` |
+| **Roster half** | initials **A–M** | initials **N–Z** |
+
+**Both regions support every lab tool** — verified against the official *tool support by region* table
+**and** a live model-catalog check, and **stood up + smoke-tested end-to-end** in both regions:
+
+| Capability (as used in the labs) | swedencentral | eastus2 |
+|---|:--:|:--:|
+| **Web Search** — *Search the web with Bing Search* (Lab 1) | ✅ | ✅ |
+| **File Search** — managed vector store (Lab 2) | ✅ | ✅ |
+| Code Interpreter (Lab 3) | ✅ | ✅ |
+| Function / MCP tools (Lab 4) | ✅ | ✅ |
+| `model-router 2025-11-18` · `gpt-4.1 2025-04-14` (GlobalStandard) | ✅ | ✅ |
+
+> Source: [Tool support by region and model](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/tool-best-practice#tool-support-by-region-and-model).
+> Quota is **per-region and independent** — that's exactly why splitting helps. Check each region's
+> headroom with `az cognitiveservices usage list --location <region>` and request an increase per
+> region if needed.
+
+---
+
+## Before you start
+
+- **Azure CLI signed in** as an **Owner** (or Contributor + User Access Administrator) on the
+  subscription: `az login`. Validated on CLI **2.73.0** using the **ARM REST** path below (it works on
+  any CLI version).
+- Choose the two **globally-unique** account names now (lowercase, DNS-safe).
+
+Set the shared variables and **Region A** values. You'll run **Steps 1–4 once per region** — start with
+Region A, then switch to Region B in Step 5:
 
 ```powershell
-# (from README — set these first if you haven't)
 $sub  = "<your-subscription-id>"
-$rg   = "rg-foundry-workshop"
-$loc  = "swedencentral"
-$acct = "dso-foundry-ws-<unique>"   # globally unique, DNS-safe, lowercase
-$proj = "research-workshop"
+$api  = "2026-05-01"
 az account set --subscription $sub
+
+# ---- Region A (swedencentral) ----
+$loc  = "swedencentral"
+$rg   = "rg-foundry-workshop-swe"
+$acct = "dso-foundry-ws-swe-<unique>"   # globally unique, DNS-safe, lowercase
+$proj = "research-workshop"
 ```
 
 ---
 
-## 2. Resource group (new)
+## Step 1 — Resource group
 
 ```powershell
 az group create --name $rg --location $loc
@@ -25,93 +78,73 @@ az group create --name $rg --location $loc
 
 ---
 
-## 3. Foundry account — **Basic** (project-enabled, no BYO search/storage)
+## Step 2 — Foundry account (Basic)
 
-The flag that enables projects is `allowProjectManagement`. Creating the account **without**
-connecting search/storage keeps it **Basic**.
+A **Basic** account is project-enabled (`allowProjectManagement = true`) with **no** connected Azure AI
+Search/Storage, so File Search (Lab 2) uses a **Microsoft-managed** vector store — nothing else to
+provision or pay for. (See [README → What "Basic" means](./README.md).)
 
-**Primary path (current Azure CLI ≥ ~2.80 with the `cognitiveservices` project commands):**
-
-```powershell
-az cognitiveservices account create `
-  --name $acct --resource-group $rg `
-  --kind AIServices --sku S0 --location $loc `
-  --custom-domain $acct `
-  --allow-project-management --yes
-```
-
-> **CLI version note:** on CLI **2.73.0** the `--allow-project-management` flag and the
-> `az cognitiveservices account project` subgroup were **not yet available**. If `az` rejects the
-> flag, either `az upgrade` **or** use the version-independent **ARM REST** fallback below (this is
-> what we validated).
-
-**Fallback path (ARM REST via `az rest` — works on any CLI):**
+Create it with **ARM REST** (validated; works on any CLI) and wait for it to finish:
 
 ```powershell
-$api  = "2026-05-01"
+$acctUri = "https://management.azure.com/subscriptions/$sub/resourceGroups/$rg/providers/Microsoft.CognitiveServices/accounts/$acct" + "?api-version=$api"
 $body = @{
   location = $loc; kind = "AIServices"; sku = @{ name = "S0" }
   identity = @{ type = "SystemAssigned" }
   properties = @{ allowProjectManagement = $true; customSubDomainName = $acct }
 } | ConvertTo-Json -Depth 6
 $body | Set-Content "$env:TEMP\acct.json" -Encoding utf8
-az rest --method put `
-  --uri "https://management.azure.com/subscriptions/$sub/resourceGroups/$rg/providers/Microsoft.CognitiveServices/accounts/$acct`?api-version=$api" `
-  --body "@$env:TEMP\acct.json"
-# Poll properties.provisioningState until "Succeeded" before the next step.
+az rest --method put --uri $acctUri --body "@$env:TEMP\acct.json"
+
+do { Start-Sleep 8; $state = az rest --method get --uri $acctUri --query "properties.provisioningState" -o tsv }
+while ($state -ne "Succeeded" -and $state -ne "Failed")
+"account: $state"
 ```
+
+> **Alternative (Azure CLI ≥ ~2.80):** one command instead of the REST call —
+> `az cognitiveservices account create --name $acct --resource-group $rg --kind AIServices --sku S0 --location $loc --custom-domain $acct --allow-project-management --yes`.
+> On CLI **2.73.0** the `--allow-project-management` flag isn't available, so use the ARM REST block above.
 
 ---
 
-## 4. Project (new)
+## Step 3 — Project + SDK endpoint
 
-**Primary path (current CLI):**
-
-```powershell
-az cognitiveservices account project create `
-  --name $acct --resource-group $rg --project-name $proj --location $loc
-```
-
-**Fallback (ARM REST):**
+Create the project, wait for it, then **record the SDK endpoint** (participants' Build-rail `.env`):
 
 ```powershell
+$projUri = "https://management.azure.com/subscriptions/$sub/resourceGroups/$rg/providers/Microsoft.CognitiveServices/accounts/$acct/projects/$proj" + "?api-version=$api"
 $body = @{
   location = $loc; identity = @{ type = "SystemAssigned" }
   properties = @{ displayName = "Research Supercharged Workshop" }
 } | ConvertTo-Json -Depth 6
 $body | Set-Content "$env:TEMP\proj.json" -Encoding utf8
-az rest --method put `
-  --uri "https://management.azure.com/subscriptions/$sub/resourceGroups/$rg/providers/Microsoft.CognitiveServices/accounts/$acct/projects/$proj`?api-version=$api" `
-  --body "@$env:TEMP\proj.json"
+az rest --method put --uri $projUri --body "@$env:TEMP\proj.json"
+
+do { Start-Sleep 6; $pstate = az rest --method get --uri $projUri --query "properties.provisioningState" -o tsv }
+while ($pstate -ne "Succeeded" -and $pstate -ne "Failed")
+"project: $pstate"
+
+# The endpoint each participant in THIS region will use — write it down:
+az rest --method get --uri $projUri --query "properties.endpoints.\"AI Foundry API\"" -o tsv
+# -> https://<acct>.services.ai.azure.com/api/projects/research-workshop
 ```
 
-Get the **SDK endpoint** participants will use (Build rail `.env`):
-
-```powershell
-az rest --method get `
-  --uri "https://management.azure.com/subscriptions/$sub/resourceGroups/$rg/providers/Microsoft.CognitiveServices/accounts/$acct/projects/$proj`?api-version=$api" `
-  --query "properties.endpoints"
-# -> "AI Foundry API": https://<acct>.services.ai.azure.com/api/projects/<proj>
-```
+> **Alternative (CLI):** `az cognitiveservices account project create --name $acct --resource-group $rg --project-name $proj --location $loc`.
 
 ---
 
-## 5. Deploy the lab models
+## Step 4 — Deploy the two lab models
 
-Deploy **two** models. `model-router` is the teaching default (Labs 0–1 portal + all SDK rails);
-`gpt-4.1` is **required** for Lab 2's portal **File Search** tool, which does not accept
-`model-router`. Size capacity for the participants on **this** project — for a full room, split
-across two regions (see [§7](#7-scale-out-across-two-regions-load-balancing)).
+Deploy **both** models at **GlobalStandard**. `model-router` is the teaching default (Labs 0–1 portal +
+all SDK rails); **`gpt-4.1` is required** for Lab 2's portal File Search, which rejects `model-router`.
 
 ```powershell
-# model-router — teaching default: Labs 0-1 portal + ALL SDK rails (auto-picks a capable model)
 az cognitiveservices account deployment create `
   --name $acct --resource-group $rg `
   --deployment-name model-router `
   --model-name model-router --model-version 2025-11-18 --model-format OpenAI `
   --sku-name GlobalStandard --sku-capacity 100
 
-# gpt-4.1 — REQUIRED for Lab 2 portal File Search (model-router rejected there); also a Web Search fallback
 az cognitiveservices account deployment create `
   --name $acct --resource-group $rg `
   --deployment-name gpt-4.1 `
@@ -119,31 +152,53 @@ az cognitiveservices account deployment create `
   --sku-name GlobalStandard --sku-capacity 100
 ```
 
-> **Why deploy `gpt-4.1`:** Lab 2's **portal** File Search tool does **not** accept `model-router`
-> (participants get *"File search tool doesn't work with the model you selected"*), so they switch
-> their agent to `gpt-4.1` from Lab 2 on. It also serves as a Web Search fallback. (Lab 1 Web
-> Search and all **SDK** rails — including SDK File Search — run fine on `model-router`.) See
+> **Why `gpt-4.1`:** Lab 2's **portal** File Search shows *"File search tool doesn't work with the
+> model you selected"* on `model-router`, so participants switch to `gpt-4.1` from Lab 2 on. (Lab 1 Web
+> Search and **all SDK** rails — including SDK File Search — run fine on `model-router`.) See
 > [../labs/lab-02-ground-on-your-papers.md](../labs/lab-02-ground-on-your-papers.md).
 >
-> **Capacity sizing:** `100` = 100K TPM / 100 requests-per-min per deployment — fine for a dry run.
-> For 20–30 concurrent participants, request **as much `model-router` + `gpt-4.1` quota as the
-> subscription allows**, stagger the heavy labs (RAG indexing, code interpreter), **and/or split the
-> room across two regions** ([§7](#7-scale-out-across-two-regions-load-balancing)) so each project
-> only serves ~half the room. File Search embeddings are **managed in Basic** — you do **not** deploy
-> `text-embedding-3-large` yourself.
->
-> **No managed `text-embedding-3-large` deployment is required** for Lab 2 — verified: File Search
-> built and queried a managed vector store with no embedding deployment (Basic manages it).
+> **Capacity:** `100` = 100K TPM / 100 RPM per deployment. Splitting the room across two regions means
+> each project serves only ~half the roster; still request as much quota as the subscription allows and
+> stagger the heavy labs (RAG indexing, code interpreter). File Search embeddings are **managed in
+> Basic** — you do **not** deploy `text-embedding-3-large` yourself.
 
 ---
 
-## 6. Hand the endpoint to Build-rail participants
+## Step 5 — Repeat for the second region
 
-- **🟢 Explore (portal):** share the project link from **https://ai.azure.com** → `research-workshop`.
-- **🔵 Build (SDK):** participants fill `assets/.env`:
+Provision **Region B**. Re-set the four region variables and run **Steps 1 → 4 again** (`$sub` and
+`$api` stay the same):
+
+```powershell
+# ---- Region B (eastus2) ----
+$loc  = "eastus2"
+$rg   = "rg-foundry-workshop-eus2"
+$acct = "dso-foundry-ws-eus2-<unique>"   # a DIFFERENT globally-unique name
+$proj = "research-workshop"
+# now re-run Step 1, Step 2, Step 3 (capture this region's endpoint), Step 4.
+```
+
+You should finish with **two** SDK endpoints — one per region:
+
+```
+https://dso-foundry-ws-swe-<unique>.services.ai.azure.com/api/projects/research-workshop    # roster A–M
+https://dso-foundry-ws-eus2-<unique>.services.ai.azure.com/api/projects/research-workshop    # roster N–Z
+```
+
+---
+
+## Step 6 — Split the roster & hand out access
+
+Assign **~half** the roster to each project — e.g. **initials A–M → swedencentral**, **N–Z → eastus2**
+(or just split the roster list in two). Everyone still names agents `rc-<initials>` — no clashes, the
+two projects are completely separate. Give each half **their** region's access:
+
+- **🟢 Explore (portal):** the project link from **https://ai.azure.com** → `research-workshop` in
+  **their** region's account.
+- **🔵 Build (SDK):** their region's endpoint in `assets/.env`:
 
   ```
-  FOUNDRY_PROJECT_ENDPOINT=https://<acct>.services.ai.azure.com/api/projects/<proj>
+  FOUNDRY_PROJECT_ENDPOINT=https://<their-region-acct>.services.ai.azure.com/api/projects/research-workshop
   FOUNDRY_MODEL_NAME=model-router
   # FOUNDRY_WEBSEARCH_MODEL=gpt-4.1   # optional Web Search fallback (model-router works)
   INITIALS=<their-initials>
@@ -151,89 +206,35 @@ az cognitiveservices account deployment create `
 
   Then `cd assets; az login; pip install -r requirements.txt; python lab01_websearch.py`.
 
+➡️ **Next:** grant **Foundry User** RBAC — on **both** accounts, each for its half of the room — in
+**[02-assign-participant-access.md](./02-assign-participant-access.md)**.
+
 ---
 
-## 7. Scale out across two regions (load balancing)
+## Verify both projects
 
-For a full room (20–30 people) provision **two identical projects in two regions** and split the
-roster evenly between them. Each Foundry account has its **own** model quota (TPM/RPM) *and* its own
-hosted-agent session-concurrency ceiling, so two regional projects roughly **double the effective
-capacity** and stop one region's rate limits from throttling the whole room. The labs are
-**identical** on both — this is purely a capacity/logistics move, not a content change.
-
-### eastus2 supports every lab tool (validated)
-
-`eastus2` was checked against the official *tool support by region* table **and** the live model
-catalog — it matches `swedencentral` for everything the labs use:
-
-| Capability (as used in the labs) | swedencentral | eastus2 |
-|---|:--:|:--:|
-| **Web Search** — *Search the web with Bing Search* (Lab 1, Grounding with Bing) | ✅ | ✅ |
-| **File Search** — managed vector store (Lab 2) | ✅ | ✅ |
-| Code Interpreter (Lab 3) | ✅ | ✅ |
-| Function / MCP tools (Lab 4) | ✅ | ✅ |
-| `model-router` `2025-11-18` available (GlobalStandard) | ✅ | ✅ |
-| `gpt-4.1` `2025-04-14` available (GlobalStandard) | ✅ | ✅ |
-
-> **Sources:** the [Tool support by region and model](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/tool-best-practice#tool-support-by-region-and-model)
-> table lists `eastus2` as **yes** for File Search, Grounding with Bing Search, Code Interpreter,
-> Function and MCP; a live `az cognitiveservices model list --location eastus2` confirms both models
-> are offered. Quota is **per-region and independent** — that's exactly why splitting helps. Check
-> each region's headroom with `az cognitiveservices usage list --location <region>` and request an
-> increase per region if needed.
-
-### Provision both
-
-Give each region its **own resource group** (clean, independent teardown) and a **globally-unique**
-account name. Keep the **same project name** (`research-workshop`) in both so participants hear one
-instruction. Run the single-region flow (**steps 2–6**) **once per region** with these values:
-
-| Var | Region A | Region B |
-|---|---|---|
-| `$loc`  | `swedencentral` | `eastus2` |
-| `$rg`   | `rg-foundry-workshop-swe` | `rg-foundry-workshop-eus2` |
-| `$acct` | `dso-foundry-ws-swe-<unique>` | `dso-foundry-ws-eus2-<unique>` |
-| `$proj` | `research-workshop` | `research-workshop` |
+Run once **per region** (set `$rg`/`$acct` to each region's values). Expect the account and **both**
+deployments to report `Succeeded`:
 
 ```powershell
-# Driver: run steps 2-6 for each region. Edit the two <unique> suffixes first.
-$sub = "<your-subscription-id>"; az account set --subscription $sub
-$proj = "research-workshop"
-$regions = @(
-  @{ loc='swedencentral'; rg='rg-foundry-workshop-swe';  acct='dso-foundry-ws-swe-<unique>'  },
-  @{ loc='eastus2';       rg='rg-foundry-workshop-eus2'; acct='dso-foundry-ws-eus2-<unique>' }
-)
-foreach ($r in $regions) {
-  $loc = $r.loc; $rg = $r.rg; $acct = $r.acct
-  az group create --name $rg --location $loc          # step 2
-  #  ... now run step 3 (account, Basic), step 4 (project + capture endpoint),
-  #      step 5 (deploy model-router + gpt-4.1) exactly as above, using this $loc/$rg/$acct/$proj.
-  #  Record each project's SDK endpoint from step 4.
-}
+az cognitiveservices account show -n $acct -g $rg `
+  --query "{kind:kind, state:properties.provisioningState}" -o json
+
+az cognitiveservices account deployment list -n $acct -g $rg `
+  --query "[].{name:name, model:properties.model.name, ver:properties.model.version, sku:sku.name, cap:sku.capacity, state:properties.provisioningState}" -o table
 ```
 
-You finish with **two** SDK endpoints — hand each half of the room **their** region's endpoint:
-
-```
-https://dso-foundry-ws-swe-<unique>.services.ai.azure.com/api/projects/research-workshop
-https://dso-foundry-ws-eus2-<unique>.services.ai.azure.com/api/projects/research-workshop
-```
-
-### Split the roster evenly
-
-Assign **~half** the participants to each project — e.g. **initials A–M → swedencentral**,
-**N–Z → eastus2** (or just split the roster list in two). Each half uses **their** region's portal
-project and **their** region's endpoint in `.env`; everyone still names agents `rc-<initials>` — no
-clashes, because the two projects are completely separate. Grant **Foundry User** RBAC on **each**
-account for its half of the room (ideally one Entra group per region) — see
-[02-assign-participant-access.md](./02-assign-participant-access.md).
-
-> **Teardown (both regions):**
-> ```powershell
-> az group delete --name rg-foundry-workshop-swe  --yes --no-wait
-> az group delete --name rg-foundry-workshop-eus2 --yes --no-wait
-> ```
+Expected: `kind = AIServices`; two deployments — `model-router 2025-11-18` and `gpt-4.1 2025-04-14`,
+both `GlobalStandard` / `Succeeded`. (This is exactly what was validated live in both regions.)
 
 ---
 
-➡️ **Next:** grant participants access — **[02-assign-participant-access.md](./02-assign-participant-access.md)**.
+## Teardown
+
+After the workshop, delete **both** resource groups — this removes the accounts, projects, deployments,
+and every participant's agents/vector stores in one shot:
+
+```powershell
+az group delete --name rg-foundry-workshop-swe  --yes --no-wait
+az group delete --name rg-foundry-workshop-eus2 --yes --no-wait
+```

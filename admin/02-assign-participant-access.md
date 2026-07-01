@@ -52,7 +52,7 @@ $acctScope = "/subscriptions/$sub/resourceGroups/$rg/providers/Microsoft.Cogniti
 ```
 
 > **Two-region setup?** If you provisioned two projects
-> ([01-provision-foundry.md §7](./01-provision-foundry.md#7-scale-out-across-two-regions-load-balancing)),
+> ([01-provision-foundry.md → What you'll build](./01-provision-foundry.md#what-youll-build)),
 > run this assignment **once per account** — set `$rg`/`$acct` to each region's values and grant that
 > region's **half** of the roster (ideally one Entra group per region). Everything below is per-account.
 
@@ -118,7 +118,7 @@ deployed models, and create/run agents.
 > minutes for RBAC to propagate, then have them refresh / sign out and back in.
 
 The Build-rail endpoint + `.env` handoff is covered in
-[01-provision-foundry.md §6](./01-provision-foundry.md#6-hand-the-endpoint-to-build-rail-participants).
+[01-provision-foundry.md → Step 6](./01-provision-foundry.md#step-6--split-the-roster--hand-out-access).
 
 ---
 

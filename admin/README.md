@@ -5,18 +5,18 @@ and grant participants access. Running the session itself is covered separately 
 **[../facilitator/](../facilitator/)**.
 
 > **Workshop model:** shared **_Basic_** Foundry project(s) for the whole room (~20–30 people);
-> everyone builds agents named `rc-<initials>` in a shared project. A **dry run or small group** runs
-> fine on **one** project. For a **full room**, provision **two** identical projects in **two regions**
-> (`swedencentral` + `eastus2`) and split the roster to load-balance quota + rate limits — see
-> [01-provision-foundry.md §7](./01-provision-foundry.md#7-scale-out-across-two-regions-load-balancing).
-> Trade-offs (quota, naming, blast radius) are discussed in
+> everyone builds agents named `rc-<initials>` in a shared project. The DSO workshop provisions **two**
+> identical projects in **two regions** (`swedencentral` + `eastus2`) and splits the roster to
+> load-balance quota + rate limits — see
+> [01-provision-foundry.md → What you'll build](./01-provision-foundry.md#what-youll-build). (A dry run
+> or small group can use **one** region.) Trade-offs (quota, naming, blast radius) are discussed in
 > [../facilitator/workshop-plan.md](../facilitator/workshop-plan.md).
 
 ## Do it in order
 
 | Step | Doc | Outcome |
 |------|-----|---------|
-| 1 | **[01-provision-foundry.md](./01-provision-foundry.md)** | Resource group → **Basic** Foundry account → project → `model-router` + `gpt-4.1` deployments (gpt-4.1 required for portal File Search) → SDK endpoint. **§7:** scale to **two regions** for a full room |
+| 1 | **[01-provision-foundry.md](./01-provision-foundry.md)** | **Two regions** (`swedencentral` + `eastus2`), each: resource group → **Basic** Foundry account → project → `model-router` + `gpt-4.1` deployments (gpt-4.1 required for portal File Search) → SDK endpoint. Then split the roster evenly |
 | 2 | **[02-assign-participant-access.md](./02-assign-participant-access.md)** | **Foundry User** RBAC for participants (per-user or Entra group), project managed identity, and verification |
 | 3 *(optional)* | **[03-deploy-mcp-server.md](./03-deploy-mcp-server.md)** | Deploy the **Lab 4 MCP server** to Azure Container Apps → public `…/mcp` URL to hand the facilitator |
 
@@ -45,39 +45,37 @@ the two — only the backing store differs.) Basic is what you get when you crea
 ## Prerequisites
 
 - **Azure CLI** signed in: `az login`. (Validated with CLI `2.73.0`; see the version note in
-  [01-provision-foundry.md §Foundry account](./01-provision-foundry.md#3-foundry-account--basic-project-enabled-no-byo-searchstorage).)
+  [01-provision-foundry.md → Step 2](./01-provision-foundry.md#step-2--foundry-account-basic).)
 - An admin identity with a role that can **create resources and assign roles** — i.e. **Owner**
   (or **Contributor** + **User Access Administrator**) on the subscription or target resource group.
   In Foundry terms, **Foundry Account Owner** can create the account/project and assign Foundry User.
 - A list of participant emails (Entra users in your tenant). For 20–30 people, prefer an **Entra
   security group** so you assign the role **once**.
 
-Set the variables both runbook docs use (PowerShell) — keep this shell open across steps 1 and 2:
+Set the shared variable both runbook docs use (PowerShell) — keep this shell open across steps 1 and 2:
 
 ```powershell
-$sub  = "<your-subscription-id>"
-$rg   = "rg-foundry-workshop"
-$loc  = "swedencentral"             # proven model-router + gpt-4.1 capacity
-$acct = "dso-foundry-ws-<unique>"   # custom domain must be GLOBALLY unique, DNS-safe (lowercase)
-$proj = "research-workshop"
+$sub = "<your-subscription-id>"
 az account set --subscription $sub
+# Per-region $rg / $acct / $proj are set inside 01-provision-foundry.md — you provision TWO regions
+# (swedencentral + eastus2). Doc 02 reuses $rg / $acct, so run it once per region's account.
 ```
 
-> **Region(s):** `swedencentral` was validated end-to-end for this workshop (good `model-router` +
-> `gpt-4.1` quota). `eastus2` is **feature-identical** — it supports Web Search, File Search, Code
-> Interpreter, Function and MCP, and offers both models (validated against the tool-support-by-region
-> table + live model list; see
-> [01-provision-foundry.md §7](./01-provision-foundry.md#7-scale-out-across-two-regions-load-balancing)).
-> For a small group pick **one** region; for a full room provision **both** and split the roster to
-> load-balance. Quota is **per-region** — check `az cognitiveservices usage list --location <region>`
-> and request increases where needed.
+> **Regions:** the DSO workshop uses **two** regions — `swedencentral` **and** `eastus2` — to
+> load-balance the roster (see
+> [01-provision-foundry.md → What you'll build](./01-provision-foundry.md#what-youll-build)). Both are
+> validated **feature-identical** (Web Search, File Search, Code Interpreter, Function, MCP; both models
+> available) and were stood up + smoke-tested end-to-end. Quota is **per-region** — check
+> `az cognitiveservices usage list --location <region>` and request increases where needed. (A quick dry
+> run can use just one region.)
 
 ---
 
 ## Validation — this setup was run end-to-end ✅
 
-Provisioned with these steps (RG `rg-foundry-workshop`, account `dso-foundry-ws-d457yk`, project
-`research-workshop`, **swedencentral**, Basic) and every executable lab passed live:
+Provisioned with these steps (account `dso-foundry-ws-d457yk`, project `research-workshop`,
+**swedencentral**, Basic; the original single-region validation used RG `rg-foundry-workshop`) and
+every executable lab passed live:
 
 | Lab | Feature | Result |
 |-----|---------|--------|
@@ -93,7 +91,7 @@ and verified. The project was swept clean afterward (0 agents, 0 vector stores).
 
 > **Two-region parity — validated end-to-end.** Both regions were provisioned with these steps and
 > exercised live. **swedencentral** ran all five labs (table above). **eastus2** was then stood up via
-> the [§7 flow](./01-provision-foundry.md#7-scale-out-across-two-regions-load-balancing): Basic
+> the [two-region flow](./01-provision-foundry.md#what-youll-build): Basic
 > `AIServices` account (`allowProjectManagement=true`), project `research-workshop`, and **both**
 > deployments `model-router 2025-11-18` + `gpt-4.1 2025-04-14` (GlobalStandard, cap 100, all
 > `Succeeded`). A representative participant (`janedoe`) was granted **Foundry User at account
@@ -112,13 +110,11 @@ and verified. The project was swept clean afterward (0 agents, 0 vector stores).
 ## Teardown (after the workshop)
 
 ```powershell
-# Deletes the account, project, deployments, and all agents/vector stores in one shot:
-az group delete --name $rg --yes --no-wait
+# Deletes the accounts, projects, deployments, and all agents/vector stores in one shot.
+# The DSO workshop uses two regional resource groups — delete both:
+az group delete --name rg-foundry-workshop-swe  --yes --no-wait
+az group delete --name rg-foundry-workshop-eus2 --yes --no-wait
 ```
-
-> **Two regions?** Delete **both** resource groups:
-> `az group delete --name rg-foundry-workshop-swe --yes --no-wait` and
-> `az group delete --name rg-foundry-workshop-eus2 --yes --no-wait`.
 
 Remind participants to delete their `rc-<initials>` agents at the end of Lab 5; a full
 `az group delete` is the clean way to remove everything when the workshop is over.
