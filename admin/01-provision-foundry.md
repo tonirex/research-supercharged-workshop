@@ -82,7 +82,7 @@ az group create --name $rg --location $loc
 
 A **Basic** account is project-enabled (`allowProjectManagement = true`) with **no** connected Azure AI
 Search/Storage, so File Search (Lab 2) uses a **Microsoft-managed** vector store — nothing else to
-provision or pay for. (See [README → What "Basic" means](./README.md).)
+provision or pay for.
 
 Create it with **ARM REST** (validated; works on any CLI) and wait for it to finish:
 

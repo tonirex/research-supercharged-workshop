@@ -12,34 +12,6 @@ and grant participants access. Running the session itself is covered separately 
 > or small group can use **one** region.) Trade-offs (quota, naming, blast radius) are discussed in
 > [../facilitator/workshop-plan.md](../facilitator/workshop-plan.md).
 
-## Do it in order
-
-| Step | Doc | Outcome |
-|------|-----|---------|
-| 1 | **[01-provision-foundry.md](./01-provision-foundry.md)** | **Two regions** (`swedencentral` + `eastus2`), each: resource group → **Basic** Foundry account → project → `model-router` + `gpt-4.1` deployments (gpt-4.1 required for portal File Search) → SDK endpoint. Then split the roster evenly |
-| 2 | **[02-assign-participant-access.md](./02-assign-participant-access.md)** | **Foundry User** RBAC for participants (per-user or Entra group), project managed identity, and verification |
-| 3 *(optional)* | **[03-deploy-mcp-server.md](./03-deploy-mcp-server.md)** | Deploy the **Lab 4 MCP server** to Azure Container Apps → public `…/mcp` URL to hand the facilitator |
-
-When both are done, hand the project link + endpoint to participants and confirm the
-**pre-flight checklist** in [../facilitator/facilitator-guide.md](../facilitator/facilitator-guide.md).
-
----
-
-## What "Basic" means here (and why we use it)
-
-A Foundry account can be created in one of two ways, which only changes **where File Search
-(Lab 2) stores its vector data**:
-
-| Setup | Vector store / file storage | Needs Azure AI Search? |
-|-------|-----------------------------|------------------------|
-| **Basic** (this workshop) | **Microsoft-managed** search + storage (IDs look like `vs_…`) | **No** |
-| **Standard** | *Your* connected Azure AI Search + Blob Storage | Yes (BYO resources) |
-
-We deliberately use **Basic**: no Azure AI Search or Storage account to provision, connect, or pay
-for. File Search "just works" against a managed vector store. (The lab code never changes between
-the two — only the backing store differs.) Basic is what you get when you create the account with
-`allowProjectManagement` and **do not** connect your own search/storage/Cosmos resources.
-
 ---
 
 ## Prerequisites
@@ -71,39 +43,16 @@ az account set --subscription $sub
 
 ---
 
-## Validation — this setup was run end-to-end ✅
+## Do it in order
 
-Provisioned with these steps (account `dso-foundry-ws-d457yk`, project `research-workshop`,
-**swedencentral**, Basic; the original single-region validation used RG `rg-foundry-workshop`) and
-every executable lab passed live:
+| Step | Doc | Outcome |
+|------|-----|---------|
+| 1 | **[01-provision-foundry.md](./01-provision-foundry.md)** | **Two regions** (`swedencentral` + `eastus2`), each: resource group → **Basic** Foundry account → project → `model-router` + `gpt-4.1` deployments (gpt-4.1 required for portal File Search) → SDK endpoint. Then split the roster evenly |
+| 2 | **[02-assign-participant-access.md](./02-assign-participant-access.md)** | **Foundry User** RBAC for participants (per-user or Entra group), project managed identity, and verification |
+| 3 *(optional)* | **[03-deploy-mcp-server.md](./03-deploy-mcp-server.md)** | Deploy the **Lab 4 MCP server** to Azure Container Apps → public `…/mcp` URL to hand the facilitator |
 
-| Lab | Feature | Result |
-|-----|---------|--------|
-| 0 | Persona + governance | ✅ in-persona; **declined** a classified-data request |
-| 1 | Web Search (`model-router`) | ✅ grounded answer + deduped citations |
-| 2 | File Search (**Basic** managed vector store) | ✅ built `vs_…`, cited source files, **no Azure AI Search** |
-| 3 | Code Interpreter | ✅ computed stats, flagged the `S012` outlier |
-| 4 | Function tool | ✅ agent called `convert_units` |
-
-`Foundry User` was assigned to the representative participant `janedoe` at **account scope** (the
-project's parent resource — required so participants can see model deployments and create agents)
-and verified. The project was swept clean afterward (0 agents, 0 vector stores).
-
-> **Two-region parity — validated end-to-end.** Both regions were provisioned with these steps and
-> exercised live. **swedencentral** ran all five labs (table above). **eastus2** was then stood up via
-> the [two-region flow](./01-provision-foundry.md#what-youll-build): Basic
-> `AIServices` account (`allowProjectManagement=true`), project `research-workshop`, and **both**
-> deployments `model-router 2025-11-18` + `gpt-4.1 2025-04-14` (GlobalStandard, cap 100, all
-> `Succeeded`). A representative participant (`janedoe`) was granted **Foundry User at account
-> scope**, and a **live two-model agent smoke test passed** against the eastus2 endpoint
-> (`model-router` applied the persona + citations; `gpt-4.1` answered). The project was left pristine
-> (0 agents, 0 vector stores). eastus2 is confirmed feature-identical to swedencentral for every lab.
-
-> **Lab 4 MCP server (step 3, optional):** the server code + MCP Streamable-HTTP transport were
-> validated locally (`convert_units` returns `1.8 eV → 2.884e-19 J`; tools advertise over `/mcp`).
-> The Azure Container Apps **deploy script** is provided ready-to-run — do a dry-run deploy before
-> the workshop and confirm the portal agent can reach `…/mcp` (see
-> [03-deploy-mcp-server.md](./03-deploy-mcp-server.md)).
+When both are done, hand the project link + endpoint to participants and confirm the
+**pre-flight checklist** in [../facilitator/facilitator-guide.md](../facilitator/facilitator-guide.md).
 
 ---
 
