@@ -22,7 +22,7 @@ Research Copilot persona from **[Lab 0](./labs/lab-00-hello-research-copilot.md)
 1. Open the shared **Foundry project** (link from facilitator) → **Agents** → **New agent**.
 2. Name it `rc-<initials>`, paste the **persona** (from Lab 0), pick **`model-router`**.
 3. **Chat** to confirm it replies — and that it **declines** a sensitive ask.
-4. Each lab, add one tool: **Web Search** → **Knowledge/Files** → **Code Interpreter** → **MCP**.
+4. Each lab, add one tool: **Web Search** → **Upload files** (File Search) → **Code Interpreter** → **MCP**.
 
 ## 🔵 Build — get going in 4 steps
 ```bash
@@ -39,7 +39,7 @@ python lab01_websearch.py     # then lab02_filesearch / lab03_codeinterpreter / 
 | Lab | You'll do | Portal (🟢) | Code (🔵) |
 |-----|-----------|------------|-----------|
 | 1 · Search | Cited answer from the live web | Tools → Web Search → *Search the web with Bing Search* (no setup, on `model-router`) | `lab01_websearch.py` |
-| 2 · Ground | Cited answer from your **public** docs | Switch model → **`gpt-4.1`**, then Knowledge → add files (name the index with your initials) | `lab02_filesearch.py` |
+| 2 · Ground | Cited answer from your **public** docs | Switch model → **`gpt-4.1`**, then **Tools → Upload files** (name the index with your initials) | `lab02_filesearch.py` |
 | 3 · Analyse | Stats + chart; find the outlier | Tools → Code Interpreter | `lab03_codeinterpreter.py` |
 | 4 · Act | Agent calls a tool, you approve | Tools → MCP | `lab04_tool.py` |
 

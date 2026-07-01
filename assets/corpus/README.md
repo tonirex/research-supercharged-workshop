@@ -16,7 +16,7 @@ A handful of files is plenty for the lab (3–10 is ideal):
   standards, datasheets, Wikipedia article exports, or your own published/non-sensitive notes.
 
 ## Where it's used
-- **🟢 Explore (portal):** upload these same files to your agent's **Knowledge / Files**.
+- **🟢 Explore (portal):** on your agent, use **Tools → Upload files** to add these same files.
 - **🔵 Build (SDK):** `python lab02_filesearch.py` indexes this folder via
   `build_vector_store()` and queries it.
 

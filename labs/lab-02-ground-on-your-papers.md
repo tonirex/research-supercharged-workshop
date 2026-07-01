@@ -32,10 +32,12 @@ cites the exact file — instead of the open web. This is Retrieval-Augmented Ge
 
 1. Gather **3–10 public documents** (PDF / MD / TXT / DOCX). No materials of your own? Use the
    facilitator's **open-access starter pack**.
-2. On your `rc-<initials>` agent, open **Knowledge → add files** (or **Tools → Add → Files**). In
-   the **Attach files** dialog, keep **Create a new index**, then **replace the auto-generated
-   Vector index name with one you'll recognise — include your initials**, e.g.
-   **`<initials>-papers`** (`jd-papers`). Upload your documents and wait for indexing.
+2. On your `rc-<initials>` agent, scroll to the **Tools** section and click the **Upload files**
+   button (it sits next to **Add** — *not* the separate **Knowledge** panel further down). This
+   adds the **File Search** tool. In the **Attach files** dialog, keep **Create a new index**, then
+   **replace the auto-generated Vector index name with one you'll recognise — include your
+   initials**, e.g. **`<initials>-papers`** (`jd-papers`). Drag in (or **browse for**) your
+   documents and wait for indexing to finish.
    > **Why rename it?** Everyone shares one project, so the vector indexes are listed together.
    > Your initials make *yours* easy to find and avoid confusion with a neighbour's.
 3. Ask a grounding question:

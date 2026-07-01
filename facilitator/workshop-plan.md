@@ -63,7 +63,7 @@ move on — the next lab doesn't depend on a *finished* previous one (only on ha
 |-----|------------|-----------------------------------|
 | 0 | New agent + instructions | `create_version` + `PromptAgentDefinition` |
 | 1 | Tools → Web Search → *Search the web with Bing Search* (no setup) | `WebSearchTool()` (hosted, no connection) |
-| 2 | Switch to `gpt-4.1` → Knowledge → files (name index w/ initials) | `openai.vector_stores.*` + `FileSearchTool` (works on `model-router`) |
+| 2 | Switch to `gpt-4.1` → **Tools → Upload files** (name index w/ initials) | `openai.vector_stores.*` + `FileSearchTool` (works on `model-router`) |
 | 3 | Tools → Code Interpreter | `CodeInterpreterTool()` |
 | 4 | Tools → MCP | `FunctionTool(...)` / `MCPTool(...)` |
 
