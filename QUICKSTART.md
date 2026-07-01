@@ -38,13 +38,12 @@ python lab01_websearch.py     # then lab02_filesearch / lab03_codeinterpreter / 
 ## The four labs at a glance
 | Lab | You'll do | Portal (🟢) | Code (🔵) |
 |-----|-----------|------------|-----------|
-| 1 · Search | Cited answer from the live web | Switch model → **`gpt-4.1`**, then Tools → Web Search | `lab01_websearch.py` |
+| 1 · Search | Cited answer from the live web | Tools → Web Search (on `model-router`) | `lab01_websearch.py` |
 | 2 · Ground | Cited answer from your **public** docs | Knowledge → add files | `lab02_filesearch.py` |
 | 3 · Analyse | Stats + chart; find the outlier | Tools → Code Interpreter | `lab03_codeinterpreter.py` |
 | 4 · Act | Agent calls a tool, you approve | Tools → MCP | `lab04_tool.py` |
 
-> **Lab 1 only:** Web Search runs on Azure OpenAI models — switch your agent to **`gpt-4.1`** first
-> (`model-router` doesn't support Web Search). The Build script does this automatically.
+> **All labs run on `model-router`** — no model switching needed, Web Search included.
 
 For Lab 2, use your **own public PDFs** or the facilitator's **starter corpus pack**.
 

@@ -24,7 +24,7 @@ pip install -r requirements.txt
 |----------|------|
 | `FOUNDRY_PROJECT_ENDPOINT` | `https://<account>.services.ai.azure.com/api/projects/<project>` (shared project) |
 | `FOUNDRY_MODEL_NAME` | model deployment — `model-router` (default) auto-picks a good model |
-| `FOUNDRY_WEBSEARCH_MODEL` | model for Web Search labs (default `gpt-4.1`) — `model-router` can't use Web Search |
+| `FOUNDRY_WEBSEARCH_MODEL` | *optional* — pin a fallback model for Web Search (defaults to `model-router`, which works) |
 | `INITIALS` | your initials → agents are named `rc-<initials>` to keep the shared project tidy |
 
 ## Run the labs

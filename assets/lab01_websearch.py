@@ -24,7 +24,8 @@ from common.research_common import (  # noqa: E402
 
 def main():
     # search_context_size: "low" | "medium" | "high" (how much page context to pull in)
-    # Web Search needs an Azure OpenAI model (gpt-4.1); model-router doesn't support it.
+    # Web Search runs on the default model-router. WEBSEARCH_MODEL lets you pin a fallback
+    # model (e.g. gpt-4.1) via FOUNDRY_WEBSEARCH_MODEL, but it's not required.
     agent = research_agent("websearch", tools=[web_search_tool("high")], model=WEBSEARCH_MODEL)
     try:
         question = text_of("search_recent")

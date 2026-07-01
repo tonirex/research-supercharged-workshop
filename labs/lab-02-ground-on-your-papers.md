@@ -64,8 +64,8 @@ cleanup(agent)
 
 ## 💡 Go further
 - **Combine rails:** give one agent *both* tools — `tools=[file_search_tool(vs), web_search_tool()]`
-  with `model="gpt-4.1"` (Web Search needs an Azure OpenAI model, not `model-router`) — so it
-  grounds on your papers **and** can check the live web. Ask a question that needs both.
+  (on the default `model-router`) — so it grounds on your papers **and** can check the live web.
+  Ask a question that needs both.
 - Ask for a **literature-review table** (method · dataset · result · source file) across the corpus.
 
 ➡️ **Next:** *Break (10 min)*, then [Lab 3 — Analyse the data](./lab-03-analyse-the-data.md)

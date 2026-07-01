@@ -13,8 +13,9 @@ Minute-by-minute script, demo cues, and contingencies. Pairs with
       resource — required to see model deployments + create agents; assign once to an Entra group
       for 20–30 people). See [admin/02-assign-participant-access.md](../admin/02-assign-participant-access.md).
 - [ ] `model-router` deployed (Global Standard); quota sized for the whole room on one project.
-- [ ] **`gpt-4.1` deployed** (Global Standard) — **Lab 1 Web Search needs an Azure OpenAI model;
-      `model-router` doesn't support Web Search.** Size its quota for the room too.
+      **All labs — including Lab 1 Web Search — run on `model-router`.**
+- [ ] *(Optional)* **`gpt-4.1` deployed** (Global Standard) as a **Web Search fallback** only;
+      not required. If you deploy it, size a little quota for the room.
 - [ ] Persona text handy to paste (it's in Lab 0 step 4) — the portal has **no agent-clone**
       feature, so participants create a **New agent** and paste the persona.
 - [ ] **Dry-run all 4 lab scripts** end-to-end in the real tenant: `lab01`–`lab04`.
@@ -46,8 +47,8 @@ Minute-by-minute script, demo cues, and contingencies. Pairs with
 - **Demo (3 min):** ask a current question *without* web search, then *with* it. The citations are
   the "wow".
 - **Do (25 min):** add Web Search, ask a topic in their own field, inspect sources, A/B it.
-- **Cue first:** have everyone switch their `rc-<initials>` agent to **`gpt-4.1`** before adding
-  the tool — **`model-router` doesn't support Web Search** and the agent will error otherwise.
+- **Cue:** everyone stays on **`model-router`** — Web Search works on it, no model switch needed.
+  *(If a rare query errors, switching that agent to `gpt-4.1` is a reliable fallback.)*
 - **Talking point:** training-cutoff vs. live grounding; "trust but verify" via citations.
 
 ### 0:55 – 1:35 · Lab 2 — Ground on Your Papers

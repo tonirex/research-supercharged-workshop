@@ -13,7 +13,7 @@ and grant participants access. Running the session itself is covered separately 
 
 | Step | Doc | Outcome |
 |------|-----|---------|
-| 1 | **[01-provision-foundry.md](./01-provision-foundry.md)** | Resource group → **Basic** Foundry account → project → `model-router` + `gpt-4.1` deployments → SDK endpoint |
+| 1 | **[01-provision-foundry.md](./01-provision-foundry.md)** | Resource group → **Basic** Foundry account → project → `model-router` deployment (+ optional `gpt-4.1` fallback) → SDK endpoint |
 | 2 | **[02-assign-participant-access.md](./02-assign-participant-access.md)** | **Foundry User** RBAC for participants (per-user or Entra group), project managed identity, and verification |
 
 When both are done, hand the project link + endpoint to participants and confirm the
@@ -73,7 +73,7 @@ Provisioned with these steps (RG `rg-foundry-workshop`, account `dso-foundry-ws-
 | Lab | Feature | Result |
 |-----|---------|--------|
 | 0 | Persona + governance | ✅ in-persona; **declined** a classified-data request |
-| 1 | Web Search (`gpt-4.1`) | ✅ grounded answer + deduped citations |
+| 1 | Web Search (`model-router`) | ✅ grounded answer + deduped citations |
 | 2 | File Search (**Basic** managed vector store) | ✅ built `vs_…`, cited source files, **no Azure AI Search** |
 | 3 | Code Interpreter | ✅ computed stats, flagged the `S012` outlier |
 | 4 | Function tool | ✅ agent called `convert_units` |

@@ -26,7 +26,7 @@ Foundry project and granting participant access is a separate, one-time admin jo
 | Time | Lab | Feature |
 |------|-----|---------|
 | 0:00 – 0:20 | 0 · Hello, Research Copilot | Agents |
-| 0:20 – 0:55 | 1 · Search the literature | Web Search (`gpt-4.1`) |
+| 0:20 – 0:55 | 1 · Search the literature | Web Search (`model-router`) |
 | 0:55 – 1:35 | 2 · Ground on your papers | File Search / RAG |
 | 1:35 – 1:45 | ☕ Break | — |
 | 1:45 – 2:25 | 3 · Analyse the data | Code Interpreter |

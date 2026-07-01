@@ -19,10 +19,9 @@ rails: ["🟢 Explore (portal)", "🔵 Build (SDK) — optional"]
 
 ## 🟢 Explore (portal) — everyone
 
-> ### ⚠️ First, switch this agent to **`gpt-4.1`**
-> The teaching default **`model-router` does *not* support the Web Search tool.** On your
-> `rc-<initials>` agent, open the **model** selector and pick **`gpt-4.1`** (Web Search runs only
-> on Azure OpenAI models — `gpt-4.1` is our pick for today). Save, then add the tool below.
+> **Stay on `model-router`.** Web Search works on the teaching default — no model switch needed.
+> *(If your agent ever errors on a web-search query, switching the model to **`gpt-4.1`** is a
+> reliable fallback, but you shouldn't need it.)*
 
 1. On your `rc-<initials>` agent, open **Tools** → add the **Web Search** grounding tool.
    *(Your facilitator will point out the exact label and the **search context size** option —
@@ -57,7 +56,8 @@ server-side and you just read the result and its citations:
 ```python
 from common.research_common import research_agent, web_search_tool, run_response, citations_of, cleanup, text_of, WEBSEARCH_MODEL
 
-# model=gpt-4.1 (via WEBSEARCH_MODEL) — Web Search needs an Azure OpenAI model, not model-router.
+# Web Search runs on model-router (the default). WEBSEARCH_MODEL defaults to model-router;
+# set FOUNDRY_WEBSEARCH_MODEL only to pin a fallback like gpt-4.1.
 agent = research_agent("websearch", tools=[web_search_tool("high")], model=WEBSEARCH_MODEL)  # "low"|"medium"|"high"
 resp = run_response(agent, text_of("search_recent"))
 print(resp.output_text)
@@ -66,8 +66,8 @@ cleanup(agent)
 ```
 
 > No Bing connection or API key to provision — `WebSearchTool()` works out of the box on the
-> current Foundry API. **Just remember Web Search runs only on Azure OpenAI models, so the agent
-> is pinned to `gpt-4.1` (override with `FOUNDRY_WEBSEARCH_MODEL`), not `model-router`.**
+> current Foundry API, including on the default **`model-router`**. *(Need a specific model? Pin
+> one via `FOUNDRY_WEBSEARCH_MODEL`, e.g. `gpt-4.1`, as a fallback.)*
 > *(There's also a connection-based `BingGroundingTool` if your org needs a managed/keyed search
 > backend — out of scope for today.)*
 

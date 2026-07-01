@@ -98,17 +98,18 @@ az rest --method get `
 
 ## 5. Deploy the lab models
 
-Two deployments cover every lab. Size capacity for the **whole room** on one project.
+One deployment (`model-router`) covers every lab; a second (`gpt-4.1`) is an **optional** Web
+Search fallback. Size capacity for the **whole room** on one project.
 
 ```powershell
-# model-router — Labs 0/2/3/4 (auto-picks a capable model)
+# model-router — ALL labs 0-4 (auto-picks a capable model; handles Web Search too)
 az cognitiveservices account deployment create `
   --name $acct --resource-group $rg `
   --deployment-name model-router `
   --model-name model-router --model-version 2025-11-18 --model-format OpenAI `
   --sku-name GlobalStandard --sku-capacity 100
 
-# gpt-4.1 — Lab 1 Web Search (model-router does NOT support Web Search)
+# gpt-4.1 — OPTIONAL Web Search fallback (model-router handles Web Search fine)
 az cognitiveservices account deployment create `
   --name $acct --resource-group $rg `
   --deployment-name gpt-4.1 `
@@ -116,17 +117,18 @@ az cognitiveservices account deployment create `
   --sku-name GlobalStandard --sku-capacity 100
 ```
 
-> **Why `gpt-4.1` too:** the hosted **Web Search** tool requires an Azure OpenAI model;
-> `model-router` doesn't support it. Labs 2–4 stay on `model-router`. See
+> **Why deploy `gpt-4.1` (optional):** Web Search works on `model-router` (verified), so all labs
+> run on the default. Deploy `gpt-4.1` only if you want a reliable Web Search **fallback**. See
 > [../labs/lab-01-search-the-literature.md](../labs/lab-01-search-the-literature.md).
 >
 > **Capacity sizing:** `100` = 100K TPM / 100 requests-per-min per deployment — fine for a dry run.
-> For 20–30 concurrent participants, request **as much `model-router` + `gpt-4.1` quota as the
-> subscription allows** and stagger the heavy labs (RAG indexing, code interpreter). File Search
+> For 20–30 concurrent participants, request **as much `model-router` quota as the subscription
+> allows** (and some for `gpt-4.1` if you deployed the fallback) and stagger the heavy labs (RAG
+> indexing, code interpreter). File Search
 > embeddings are **managed in Basic** — you do **not** deploy `text-embedding-3-large` yourself.
 >
 > **No managed `text-embedding-3-large` deployment is required** for Lab 2 — verified: File Search
-> built and queried a managed vector store with only the two deployments above.
+> built and queried a managed vector store with only `model-router` deployed.
 
 ---
 
@@ -138,7 +140,7 @@ az cognitiveservices account deployment create `
   ```
   FOUNDRY_PROJECT_ENDPOINT=https://<acct>.services.ai.azure.com/api/projects/<proj>
   FOUNDRY_MODEL_NAME=model-router
-  FOUNDRY_WEBSEARCH_MODEL=gpt-4.1
+  # FOUNDRY_WEBSEARCH_MODEL=gpt-4.1   # optional Web Search fallback (model-router works)
   INITIALS=<their-initials>
   ```
 

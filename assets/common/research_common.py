@@ -45,9 +45,9 @@ DATA = ASSETS / "data"            # sample datasets for the code-interpreter lab
 # --------------------------------------------------------------------------- config
 # Accept the current FOUNDRY_* names (official samples) and older names for resilience.
 MODEL = os.environ.get("FOUNDRY_MODEL_NAME") or os.environ.get("MODEL_DEPLOYMENT", "model-router")
-# Web Search needs an Azure OpenAI model; model-router does NOT support the Web Search tool.
-# Web-search labs override the agent's model with this (default: gpt-4.1).
-WEBSEARCH_MODEL = os.environ.get("FOUNDRY_WEBSEARCH_MODEL", "gpt-4.1")
+# Web Search works on the default model-router (verified). Optionally pin a specific Azure
+# OpenAI model (e.g. gpt-4.1) as a fallback via FOUNDRY_WEBSEARCH_MODEL.
+WEBSEARCH_MODEL = os.environ.get("FOUNDRY_WEBSEARCH_MODEL") or MODEL
 INITIALS = os.environ.get("INITIALS", "xx")
 
 
@@ -147,8 +147,8 @@ def create_agent(name, instructions, tools=None, text_format=None, description=N
     """Create (version) a Prompt agent in the shared project; returns the agent version object.
 
     `model` overrides the default deployment (FOUNDRY_MODEL_NAME / model-router) for this agent.
-    Web-search labs pass an Azure OpenAI model (e.g. gpt-4.1) because model-router doesn't
-    support the Web Search tool.
+    All labs (including Web Search) run on model-router; pass `model` only to pin a specific
+    deployment as a fallback (e.g. gpt-4.1).
     """
     m = _models()
     kwargs = dict(model=model or MODEL, instructions=instructions)
@@ -166,8 +166,8 @@ def create_agent(name, instructions, tools=None, text_format=None, description=N
 def research_agent(suffix="", instructions=None, tools=None, text_format=None, model=None):
     """Create a Research Copilot agent (named rc-<initials>[-suffix]) with the default persona.
 
-    Pass `model` to override the default deployment when a tool needs a specific model — e.g.
-    Web Search requires an Azure OpenAI model such as gpt-4.1 (model-router doesn't support it).
+    Pass `model` to override the default deployment — e.g. to pin a specific Azure OpenAI model
+    such as gpt-4.1 as a fallback (all labs, including Web Search, work on model-router).
     """
     return create_agent(
         name=agent_name(suffix),
@@ -205,7 +205,7 @@ def citations_of(response) -> list:
     """Best-effort: pull cited URLs/titles from a response (Web/File Search), de-duplicated.
 
     Prefers structured ``url_citation`` annotations. Falls back to markdown ``[title](url)``
-    links in the answer text, because gpt-4.1 web search sometimes inlines citations that
+    links in the answer text, because the web search tool sometimes inlines citations that
     way instead of emitting annotations.
     """
     cites: list = []
