@@ -51,6 +51,11 @@ Get the account resource ID:
 $acctScope = "/subscriptions/$sub/resourceGroups/$rg/providers/Microsoft.CognitiveServices/accounts/$acct"
 ```
 
+> **Two-region setup?** If you provisioned two projects
+> ([01-provision-foundry.md §7](./01-provision-foundry.md#7-scale-out-across-two-regions-load-balancing)),
+> run this assignment **once per account** — set `$rg`/`$acct` to each region's values and grant that
+> region's **half** of the roster (ideally one Entra group per region). Everything below is per-account.
+
 ---
 
 ## a. One participant (e.g. the representative `janedoe`)

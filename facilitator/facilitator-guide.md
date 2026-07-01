@@ -12,7 +12,9 @@ Minute-by-minute script, demo cues, and contingencies. Pairs with
 - [ ] All participants granted **Foundry User** at **account scope** (the project's *parent*
       resource — required to see model deployments + create agents; assign once to an Entra group
       for 20–30 people). See [admin/02-assign-participant-access.md](../admin/02-assign-participant-access.md).
-- [ ] `model-router` deployed (Global Standard); quota sized for the whole room on one project.
+- [ ] `model-router` deployed (Global Standard); quota sized for the whole room on one project
+      (or **~half the room per project** if you split across two regions — see
+      [admin/01-provision-foundry.md §7](../admin/01-provision-foundry.md#7-scale-out-across-two-regions-load-balancing)).
       Teaching default for Labs 0–1 and all SDK rails (Lab 1 Web Search works on it).
 - [ ] **`gpt-4.1` deployed** (Global Standard) — **required for Lab 2's portal File Search tool**,
       which does *not* accept `model-router`. Participants switch to it from Lab 2 on. Size its

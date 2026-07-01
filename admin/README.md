@@ -4,16 +4,19 @@ The **one-time** jobs an admin does **before** the workshop: stand up the shared
 and grant participants access. Running the session itself is covered separately in
 **[../facilitator/](../facilitator/)**.
 
-> **Workshop model:** a **single shared, _Basic_ Foundry project** for the whole room (~20–30
-> people). Everyone builds agents named `rc-<initials>` in the *same* project. It's the simplest
-> thing to run on one subscription; the trade-offs (quota, naming, blast radius) are discussed in
+> **Workshop model:** shared **_Basic_** Foundry project(s) for the whole room (~20–30 people);
+> everyone builds agents named `rc-<initials>` in a shared project. A **dry run or small group** runs
+> fine on **one** project. For a **full room**, provision **two** identical projects in **two regions**
+> (`swedencentral` + `eastus2`) and split the roster to load-balance quota + rate limits — see
+> [01-provision-foundry.md §7](./01-provision-foundry.md#7-scale-out-across-two-regions-load-balancing).
+> Trade-offs (quota, naming, blast radius) are discussed in
 > [../facilitator/workshop-plan.md](../facilitator/workshop-plan.md).
 
 ## Do it in order
 
 | Step | Doc | Outcome |
 |------|-----|---------|
-| 1 | **[01-provision-foundry.md](./01-provision-foundry.md)** | Resource group → **Basic** Foundry account → project → `model-router` + `gpt-4.1` deployments (gpt-4.1 required for portal File Search) → SDK endpoint |
+| 1 | **[01-provision-foundry.md](./01-provision-foundry.md)** | Resource group → **Basic** Foundry account → project → `model-router` + `gpt-4.1` deployments (gpt-4.1 required for portal File Search) → SDK endpoint. **§7:** scale to **two regions** for a full room |
 | 2 | **[02-assign-participant-access.md](./02-assign-participant-access.md)** | **Foundry User** RBAC for participants (per-user or Entra group), project managed identity, and verification |
 | 3 *(optional)* | **[03-deploy-mcp-server.md](./03-deploy-mcp-server.md)** | Deploy the **Lab 4 MCP server** to Azure Container Apps → public `…/mcp` URL to hand the facilitator |
 
@@ -60,9 +63,14 @@ $proj = "research-workshop"
 az account set --subscription $sub
 ```
 
-> **Region:** `swedencentral` was validated for this workshop (good `model-router` + `gpt-4.1`
-> quota). `eastus2` also works but had far lower `model-router` quota in our subscription. Pick one
-> region and keep the account, project, and deployments together.
+> **Region(s):** `swedencentral` was validated end-to-end for this workshop (good `model-router` +
+> `gpt-4.1` quota). `eastus2` is **feature-identical** — it supports Web Search, File Search, Code
+> Interpreter, Function and MCP, and offers both models (validated against the tool-support-by-region
+> table + live model list; see
+> [01-provision-foundry.md §7](./01-provision-foundry.md#7-scale-out-across-two-regions-load-balancing)).
+> For a small group pick **one** region; for a full room provision **both** and split the roster to
+> load-balance. Quota is **per-region** — check `az cognitiveservices usage list --location <region>`
+> and request increases where needed.
 
 ---
 
@@ -83,6 +91,15 @@ Provisioned with these steps (RG `rg-foundry-workshop`, account `dso-foundry-ws-
 project's parent resource — required so participants can see model deployments and create agents)
 and verified. The project was swept clean afterward (0 agents, 0 vector stores).
 
+> **Two-region parity:** the live end-to-end run above was on `swedencentral`. `eastus2` was
+> validated for **feature + model parity** — the tool-support-by-region table lists it as *yes* for
+> File Search, Grounding with Bing Search, Code Interpreter, Function and MCP, and a live
+> `az cognitiveservices model list --location eastus2` confirms `model-router 2025-11-18` +
+> `gpt-4.1 2025-04-14` are both offered. So the second (eastus2) project behaves identically. Provisioning
+> commands were re-checked against this session's logs and the live swedencentral resources (account
+> kind `AIServices`, both deployments `GlobalStandard`/`Succeeded`) — they match
+> [01-provision-foundry.md](./01-provision-foundry.md) step-for-step.
+
 > **Lab 4 MCP server (step 3, optional):** the server code + MCP Streamable-HTTP transport were
 > validated locally (`convert_units` returns `1.8 eV → 2.884e-19 J`; tools advertise over `/mcp`).
 > The Azure Container Apps **deploy script** is provided ready-to-run — do a dry-run deploy before
@@ -97,6 +114,10 @@ and verified. The project was swept clean afterward (0 agents, 0 vector stores).
 # Deletes the account, project, deployments, and all agents/vector stores in one shot:
 az group delete --name $rg --yes --no-wait
 ```
+
+> **Two regions?** Delete **both** resource groups:
+> `az group delete --name rg-foundry-workshop-swe --yes --no-wait` and
+> `az group delete --name rg-foundry-workshop-eus2 --yes --no-wait`.
 
 Remind participants to delete their `rc-<initials>` agents at the end of Lab 5; a full
 `az group delete` is the clean way to remove everything when the workshop is over.
