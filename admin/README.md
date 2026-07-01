@@ -15,6 +15,7 @@ and grant participants access. Running the session itself is covered separately 
 |------|-----|---------|
 | 1 | **[01-provision-foundry.md](./01-provision-foundry.md)** | Resource group → **Basic** Foundry account → project → `model-router` + `gpt-4.1` deployments (gpt-4.1 required for portal File Search) → SDK endpoint |
 | 2 | **[02-assign-participant-access.md](./02-assign-participant-access.md)** | **Foundry User** RBAC for participants (per-user or Entra group), project managed identity, and verification |
+| 3 *(optional)* | **[03-deploy-mcp-server.md](./03-deploy-mcp-server.md)** | Deploy the **Lab 4 MCP server** to Azure Container Apps → public `…/mcp` URL to hand the facilitator |
 
 When both are done, hand the project link + endpoint to participants and confirm the
 **pre-flight checklist** in [../facilitator/facilitator-guide.md](../facilitator/facilitator-guide.md).
@@ -81,6 +82,12 @@ Provisioned with these steps (RG `rg-foundry-workshop`, account `dso-foundry-ws-
 `Foundry User` was assigned to the representative participant `janedoe` at **account scope** (the
 project's parent resource — required so participants can see model deployments and create agents)
 and verified. The project was swept clean afterward (0 agents, 0 vector stores).
+
+> **Lab 4 MCP server (step 3, optional):** the server code + MCP Streamable-HTTP transport were
+> validated locally (`convert_units` returns `1.8 eV → 2.884e-19 J`; tools advertise over `/mcp`).
+> The Azure Container Apps **deploy script** is provided ready-to-run — do a dry-run deploy before
+> the workshop and confirm the portal agent can reach `…/mcp` (see
+> [03-deploy-mcp-server.md](./03-deploy-mcp-server.md)).
 
 ---
 

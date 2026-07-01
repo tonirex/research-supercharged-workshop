@@ -1,0 +1,5 @@
+# Research Tools MCP server — runtime dependencies
+# Verified with mcp 1.28.1 / httpx 0.28 on Python 3.11+.
+mcp>=1.12.0        # FastMCP + Streamable HTTP transport (serves /mcp)
+httpx>=0.27.0      # used by search_arxiv to call the public arXiv API
+uvicorn>=0.30.0    # ASGI server FastMCP runs the Streamable HTTP app on

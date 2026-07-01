@@ -22,8 +22,9 @@ Minute-by-minute script, demo cues, and contingencies. Pairs with
 - [ ] **Dry-run all 4 lab scripts** end-to-end in the real tenant: `lab01`–`lab04`.
 - [ ] Confirm the **portal labels** for Web Search, **Upload files** (File Search, under **Tools**),
       Code Interpreter, MCP — these can drift; note the exact wording you'll say out loud.
-- [ ] *(Optional)* **open-access corpus pack** zipped for Lab 2; **research MCP server** URL ready
-      for Lab 4 (test it). If not, plan to demo Lab 4 and have everyone do the Build rail.
+- [ ] *(Optional)* **open-access corpus pack** zipped for Lab 2; **research MCP server** deployed and
+      its `…/mcp` URL ready for Lab 4 (deploy via [../admin/03-deploy-mcp-server.md](../admin/03-deploy-mcp-server.md);
+      test it). If not, plan to demo Lab 4 and have everyone do the Build rail.
 - [ ] Print/share the **data-posture rule** where everyone can see it.
 
 ## Room setup

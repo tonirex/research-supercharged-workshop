@@ -81,7 +81,8 @@ move on — the next lab doesn't depend on a *finished* previous one (only on ha
 - The Research Copilot **persona text** ready to paste (it lives in Lab 0 — the portal has no
   agent-clone feature, so no reference agent is needed).
 - *(Optional)* a small **open-access corpus pack** for Lab 2 and a **research MCP server** for
-  Lab 4 (with fallback to facilitator demo).
+  Lab 4 — deploy it to Azure Container Apps with [../admin/03-deploy-mcp-server.md](../admin/03-deploy-mcp-server.md)
+  (with fallback to facilitator demo).
 - Dry-run all four lab scripts end-to-end in the real tenant.
 
 **Per participant:**

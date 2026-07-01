@@ -25,13 +25,20 @@ when it needs a fact or capability it shouldn't guess. This is what turns a chat
    You've already used hosted tools (Web Search, Code Interpreter); now we add an **external**
    one via **MCP** (Model Context Protocol — an open standard for tool servers).
 2. On your `rc-<initials>` agent, open **Tools → MCP** and add the **workshop research MCP
-   server** (your facilitator shares the URL). Set **require approval = always** so you stay in
-   the loop.
-3. Ask a question that needs it, e.g. *"Use the tool to convert 1.8 eV to joules."*
-4. **Approve** the tool call when prompted, and read the grounded result.
+   server** — your facilitator shares its URL (it ends in **`/mcp`**). Set **require approval =
+   always** so every call pauses for your OK. This one server exposes two tools:
+   - **`convert_units`** — exact unit conversions (eV↔J, nm↔m, Å↔m, kPa↔atm, °C↔K).
+   - **`search_arxiv`** — live search of the public [arXiv](https://arxiv.org/) preprint API.
+3. Ask a question that needs it, then **approve** the call when prompted and read the grounded
+   result. Try both:
+   - *"Use the tool to convert 1.8 eV to joules."* → calls `convert_units` (≈ `2.884e-19 J`).
+   - *"Search arXiv for recent work on solid-state battery electrolytes and summarise the top 2."*
+     → calls `search_arxiv` and cites real papers.
 
-> 🛟 **No MCP server on the day?** The facilitator demos this once, and everyone does the Build
-> rail below — which teaches the same idea with a local function tool (no server needed).
+> 🛟 **No MCP server on the day?** No problem — the facilitator demos it once, and everyone does
+> the Build rail below, which teaches the same idea with a local function tool (no server needed).
+> You can also add a hosted tool (Web Search / Code Interpreter) to feel the same approve-a-call
+> loop.
 
 ### ✅ Checkpoint
 The agent **calls the tool** (you approve it) and answers using the **tool's result**, not a
@@ -65,13 +72,18 @@ cleanup(agent)
 ```
 
 ### 💡 Stretch — make it an MCP tool
-Swap the function tool for an MCP server with the helper (the agent calls it the same way):
+Swap the function tool for the **same MCP server the portal rail uses** (the agent calls it the
+same way). Use the `…/mcp` URL your facilitator shared — it exposes `convert_units` and
+`search_arxiv`:
 
 ```python
 from common.research_common import mcp_tool
-agent = research_agent("mcp", tools=[mcp_tool("research", "https://<your-mcp-url>",
+agent = research_agent("mcp", tools=[mcp_tool("research", "https://<app-fqdn>/mcp",
                                               require_approval="always")])
 ```
+
+> The server's source is in [`assets/mcp-server/`](../assets/mcp-server/); an admin deploys it to
+> Azure Container Apps beforehand ([admin/03-deploy-mcp-server.md](../admin/03-deploy-mcp-server.md)).
 
 > **Go further (orchestration):** for multi-step research pipelines, look at **Workflow agents**
 > (`WorkflowAgentDefinition`) or the **Microsoft Agent Framework** — code-first ways to chain
