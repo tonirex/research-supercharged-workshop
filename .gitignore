@@ -19,3 +19,8 @@ env/
 Thumbs.db
 .vscode/
 .idea/
+
+# Lab 2 corpus: participant/facilitator-supplied documents stay local (keep the meta-docs)
+assets/corpus/*
+!assets/corpus/README.md
+!assets/corpus/STARTER-CORPUS.md
