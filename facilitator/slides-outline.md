@@ -98,7 +98,7 @@ real deck from this; keep text light and let the **portal + code** do the talkin
 - *Cue:* one diagram; don't over-explain embeddings.
 
 **Slide 17 — Knowledge in Foundry**
-- 🟢 Switch agent to `gpt-4.1` (File Search needs it in the portal) → Knowledge → upload files
+- 🟢 Switch agent to `gpt-5.4` (File Search needs it in the portal) → Knowledge → upload files
   (name the index with your initials; creates a vector store).
 - 🔵 `build_vector_store()` + `file_search_tool()`.
 

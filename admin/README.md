@@ -13,7 +13,7 @@ and grant participants access. Running the session itself is covered separately 
 
 | Step | Doc | Outcome |
 |------|-----|---------|
-| 1 | **[01-provision-foundry.md](./01-provision-foundry.md)** | Resource group → **Basic** Foundry account → project → `model-router` + `gpt-4.1` deployments (gpt-4.1 required for portal File Search) → SDK endpoint |
+| 1 | **[01-provision-foundry.md](./01-provision-foundry.md)** | Resource group → **Basic** Foundry account → project → `model-router` + `gpt-5.4` deployments (gpt-5.4 required for portal File Search) → SDK endpoint |
 | 2 | **[02-assign-participant-access.md](./02-assign-participant-access.md)** | **Foundry User** RBAC for participants (per-user or Entra group), project managed identity, and verification |
 
 When both are done, hand the project link + endpoint to participants and confirm the
@@ -53,14 +53,15 @@ Set the variables both runbook docs use (PowerShell) — keep this shell open ac
 ```powershell
 $sub  = "<your-subscription-id>"
 $rg   = "rg-foundry-workshop"
-$loc  = "swedencentral"             # proven model-router + gpt-4.1 capacity
+$loc  = "swedencentral"             # model-router quota proven here; confirm gpt-5.4 availability
 $acct = "dso-foundry-ws-<unique>"   # custom domain must be GLOBALLY unique, DNS-safe (lowercase)
 $proj = "research-workshop"
 az account set --subscription $sub
 ```
 
-> **Region:** `swedencentral` was validated for this workshop (good `model-router` + `gpt-4.1`
-> quota). `eastus2` also works but had far lower `model-router` quota in our subscription. Pick one
+> **Region:** `swedencentral` was validated for this workshop (good `model-router` quota); `eastus2`
+> also works but had far lower `model-router` quota in our subscription. `gpt-5.4` is newer than the
+> originally validated `gpt-4.1` — confirm its region availability/quota before you deploy. Pick one
 > region and keep the account, project, and deployments together.
 
 ---

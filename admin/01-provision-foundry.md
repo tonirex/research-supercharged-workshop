@@ -99,7 +99,7 @@ az rest --method get `
 ## 5. Deploy the lab models
 
 Deploy **two** models. `model-router` is the teaching default (Labs 0–1 portal + all SDK rails);
-`gpt-4.1` is **required** for Lab 2's portal **File Search** tool, which does not accept
+`gpt-5.4` is **required** for Lab 2's portal **File Search** tool, which does not accept
 `model-router`. Size capacity for the **whole room** on one project.
 
 ```powershell
@@ -110,22 +110,28 @@ az cognitiveservices account deployment create `
   --model-name model-router --model-version 2025-11-18 --model-format OpenAI `
   --sku-name GlobalStandard --sku-capacity 100
 
-# gpt-4.1 — REQUIRED for Lab 2 portal File Search (model-router rejected there); also a Web Search fallback
+# gpt-5.4 — REQUIRED for Lab 2 portal File Search (model-router rejected there); also a Web Search fallback
 az cognitiveservices account deployment create `
   --name $acct --resource-group $rg `
-  --deployment-name gpt-4.1 `
-  --model-name gpt-4.1 --model-version 2025-04-14 --model-format OpenAI `
+  --deployment-name gpt-5.4 `
+  --model-name gpt-5.4 --model-version 2026-03-05 --model-format OpenAI `
   --sku-name GlobalStandard --sku-capacity 100
 ```
 
-> **Why deploy `gpt-4.1`:** Lab 2's **portal** File Search tool does **not** accept `model-router`
+> **Why deploy `gpt-5.4`:** Lab 2's **portal** File Search tool does **not** accept `model-router`
 > (participants get *"File search tool doesn't work with the model you selected"*), so they switch
-> their agent to `gpt-4.1` from Lab 2 on. It also serves as a Web Search fallback. (Lab 1 Web
+> their agent to `gpt-5.4` from Lab 2 on. It also serves as a Web Search fallback. (Lab 1 Web
 > Search and all **SDK** rails — including SDK File Search — run fine on `model-router`.) See
 > [../labs/lab-02-ground-on-your-papers.md](../labs/lab-02-ground-on-your-papers.md).
 >
+> **Model versions age out.** If a deploy is rejected with `ServiceModelDeprecating` ("cannot be
+> used for new deployments"), that pinned version has deprecated — drop `--model-version` to take the
+> current default, or pin a newer one (e.g. a later `gpt-5.x`). List what's deployable first:
+> `az cognitiveservices account list-models --name $acct --resource-group $rg --query "[?name=='gpt-5.4'].version" -o tsv`.
+> `gpt-5.4` `2026-03-05` was current when this was written.
+>
 > **Capacity sizing:** `100` = 100K TPM / 100 requests-per-min per deployment — fine for a dry run.
-> For 20–30 concurrent participants, request **as much `model-router` + `gpt-4.1` quota as the
+> For 20–30 concurrent participants, request **as much `model-router` + `gpt-5.4` quota as the
 > subscription allows** and stagger the heavy labs (RAG indexing, code interpreter). File Search
 > embeddings are **managed in Basic** — you do **not** deploy `text-embedding-3-large` yourself.
 >
@@ -142,7 +148,7 @@ az cognitiveservices account deployment create `
   ```
   FOUNDRY_PROJECT_ENDPOINT=https://<acct>.services.ai.azure.com/api/projects/<proj>
   FOUNDRY_MODEL_NAME=model-router
-  # FOUNDRY_WEBSEARCH_MODEL=gpt-4.1   # optional Web Search fallback (model-router works)
+  # FOUNDRY_WEBSEARCH_MODEL=gpt-5.4   # optional Web Search fallback (model-router works)
   INITIALS=<their-initials>
   ```
 

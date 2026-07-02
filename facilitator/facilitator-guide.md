@@ -14,7 +14,7 @@ Minute-by-minute script, demo cues, and contingencies. Pairs with
       for 20–30 people). See [admin/02-assign-participant-access.md](../admin/02-assign-participant-access.md).
 - [ ] `model-router` deployed (Global Standard); quota sized for the whole room on one project.
       Teaching default for Labs 0–1 and all SDK rails (Lab 1 Web Search works on it).
-- [ ] **`gpt-4.1` deployed** (Global Standard) — **required for Lab 2's portal File Search tool**,
+- [ ] **`gpt-5.4` deployed** (Global Standard) — **required for Lab 2's portal File Search tool**,
       which does *not* accept `model-router`. Participants switch to it from Lab 2 on. Size its
       quota for the room too.
 - [ ] Persona text handy to paste (it's in Lab 0 step 4) — the portal has **no agent-clone**
@@ -51,12 +51,12 @@ Minute-by-minute script, demo cues, and contingencies. Pairs with
   web with Bing Search" (No setup required)**, *not* the Bing Custom Search option — then ask a
   topic in their own field, inspect sources, A/B it.
 - **Cue:** everyone stays on **`model-router`** — Web Search works on it, no model switch needed.
-  *(If a rare query errors, switching that agent to `gpt-4.1` is a reliable fallback.)*
+  *(If a rare query errors, switching that agent to `gpt-5.4` is a reliable fallback.)*
 - **Talking point:** training-cutoff vs. live grounding; "trust but verify" via citations.
 
 ### 0:55 – 1:35 · Lab 2 — Ground on Your Papers
 - **Cue first:** File Search is **not** supported on `model-router` in the portal — have everyone
-  switch their `rc-<initials>` agent to **`gpt-4.1`** before adding files (and keep it there for
+  switch their `rc-<initials>` agent to **`gpt-5.4`** before adding files (and keep it there for
   Labs 3–4). Otherwise they hit *"File search tool doesn't work with the model you selected."*
 - **Cue:** when the **Attach files** dialog appears, tell them to rename the **Vector index name**
   with their **initials** (e.g. `jd-papers`) — one shared project, so it keeps indexes findable.
