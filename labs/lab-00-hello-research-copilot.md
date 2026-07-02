@@ -26,6 +26,13 @@ single tool. This is your *Research Copilot*; every later lab gives it a new sup
    keep the agent list legible and avoid collisions.
 3. **Model:** choose **`model-router`** — it auto-picks a capable model so nobody stalls on
    model selection.
+
+   > **⚠️ See *"We couldn't automatically deploy a model … no models have at least 50K tokens per
+   > minute of available quota"*?** That's expected — you have *use* access, not *deploy* access, so
+   > the portal can't auto-provision a model for you (and doesn't need to: `model-router` is already
+   > deployed for the whole room). Just click **Create and open playground**, then set the agent's
+   > **Deployment → `model-router`**. **Don't** click *Request more quota* or *Deploy a model
+   > manually* — those need admin rights, and the quota is actually fine.
 4. **Instructions:** paste the Research Copilot persona:
 
    ```text

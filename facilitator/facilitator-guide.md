@@ -12,7 +12,9 @@ Minute-by-minute script, demo cues, and contingencies. Pairs with
 - [ ] All participants granted **Foundry User** at **account scope** (the project's *parent*
       resource — required to see model deployments + create agents; assign once to an Entra group
       for 20–30 people). See [admin/02-assign-participant-access.md](../admin/02-assign-participant-access.md).
-- [ ] `model-router` deployed (Global Standard); quota sized for the whole room on one project.
+- [ ] `model-router` deployed (Global Standard) in **each region**; quota sized per project for ~half
+      the room (two regions — see
+      [admin/01-provision-foundry.md → What you'll build](../admin/01-provision-foundry.md#what-youll-build)).
       Teaching default for Labs 0–1 and all SDK rails (Lab 1 Web Search works on it).
 - [ ] **`gpt-5.4` deployed** (Global Standard) — **required for Lab 2's portal File Search tool**,
       which does *not* accept `model-router`. Participants switch to it from Lab 2 on. Size its
@@ -20,10 +22,11 @@ Minute-by-minute script, demo cues, and contingencies. Pairs with
 - [ ] Persona text handy to paste (it's in Lab 0 step 4) — the portal has **no agent-clone**
       feature, so participants create a **New agent** and paste the persona.
 - [ ] **Dry-run all 4 lab scripts** end-to-end in the real tenant: `lab01`–`lab04`.
-- [ ] Confirm the **portal labels** for Web Search, Knowledge/Files, Code Interpreter, MCP — these
-      can drift; note the exact wording you'll say out loud.
-- [ ] *(Optional)* **open-access corpus pack** zipped for Lab 2; **research MCP server** URL ready
-      for Lab 4 (test it). If not, plan to demo Lab 4 and have everyone do the Build rail.
+- [ ] Confirm the **portal labels** for Web Search, **Upload files** (File Search, under **Tools**),
+      Code Interpreter, MCP — these can drift; note the exact wording you'll say out loud.
+- [ ] *(Optional)* **open-access corpus pack** zipped for Lab 2; **research MCP server** deployed and
+      its `…/mcp` URL ready for Lab 4 (deploy via [../admin/03-deploy-mcp-server.md](../admin/03-deploy-mcp-server.md);
+      test it). If not, plan to demo Lab 4 and have everyone do the Build rail.
 - [ ] Print/share the **data-posture rule** where everyone can see it.
 
 ## Room setup
@@ -56,10 +59,13 @@ Minute-by-minute script, demo cues, and contingencies. Pairs with
 
 ### 0:55 – 1:35 · Lab 2 — Ground on Your Papers
 - **Cue first:** File Search is **not** supported on `model-router` in the portal — have everyone
-  switch their `rc-<initials>` agent to **`gpt-5.4`** before adding files (and keep it there for
-  Labs 3–4). Otherwise they hit *"File search tool doesn't work with the model you selected."*
-- **Cue:** when the **Attach files** dialog appears, tell them to rename the **Vector index name**
-  with their **initials** (e.g. `jd-papers`) — one shared project, so it keeps indexes findable.
+  switch their `rc-<initials>` agent to **`gpt-5.4`** before clicking **Upload files** under
+  **Tools** (and keep it there for Labs 3–4). Otherwise they hit *"File search tool doesn't work
+  with the model you selected."*
+- **Cue:** the File Search tool is the **Upload files** button in the **Tools** section (next to
+  **Add**), *not* the separate Knowledge panel. When the **Attach files** dialog appears, tell them
+  to rename the **Vector index name** with their **initials** (e.g. `jd-papers`) — one shared
+  project, so it keeps indexes findable.
 - **Demo (3 min):** upload 2–3 open-access PDFs, ask for a cited summary, then ask something
   *not* in them to show the honest "not in the documents" refusal.
 - **Do (32 min):** participants use the starter pack or their own **public** docs.

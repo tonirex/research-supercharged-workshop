@@ -1,0 +1,9 @@
+# Code owners for research-supercharged-workshop
+#
+# @tonirex owns every file in the repo. Combined with the branch-protection rule
+# "Require review from Code Owners" on `main`, this means any pull request that
+# changes anything must be approved by @tonirex before it can be merged.
+#
+# Order matters: the LAST matching pattern wins. Keep the catch-all last.
+
+* @tonirex

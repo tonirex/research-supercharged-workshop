@@ -32,9 +32,11 @@ Foundry project and granting participant access is a separate, one-time admin jo
 | 1:45 – 2:25 | 3 · Analyse the data | Code Interpreter |
 | 2:25 – 2:50 | 4 · Add a tool | Function calling / MCP |
 | 2:50 – 3:00 | 5 · Take it home | Responsible AI + next steps |
+| _optional_ | 🌟 Bonus · Evaluate & observe | Evaluations (portal + SDK) — [labs/bonus/](../labs/bonus/) |
 
 > Trim to **2.5 hours** by tightening Lab 2's work time and running **Lab 4 as a demo** — see the
-> contingencies in [facilitator-guide.md](./facilitator-guide.md).
+> contingencies in [facilitator-guide.md](./facilitator-guide.md). The **bonus evaluation labs**
+> are self-paced for fast finishers or post-workshop — not part of the timed run.
 
 Participant materials live in the repo root **[README](../README.md)**, **[QUICKSTART](../QUICKSTART.md)**,
 and **[labs/](../labs/)**.

@@ -32,8 +32,11 @@ tell you where every answer came from.
   verdict.
 
 ## 🚀 Where to go next
-- **Evaluate & observe:** add **evaluators** (groundedness, safety) and **tracing**
-  (OpenTelemetry → Azure Monitor) before anything leaves a demo. → `azure-ai-evaluation`.
+- **Evaluate & observe:** measure quality before anything leaves a demo. Try the **bonus labs** →
+  [Evaluate in the portal](./bonus/bonus-01-evaluate-in-portal.md) and
+  [Cloud evaluation with the SDK](./bonus/bonus-02-cloud-evaluation-sdk.md) — run **evaluators**
+  (relevance, coherence, groundedness, safety) over a dataset or your own agent. Pair with
+  **tracing** (OpenTelemetry → Azure Monitor) for production.
 - **Orchestrate:** chain several agents/tools with **Workflow agents** or the **Microsoft Agent
   Framework** for multi-step research pipelines.
 - **Deploy:** publish your agent as a **hosted agent** so a teammate (or app) can call it.

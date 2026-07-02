@@ -15,9 +15,28 @@ so a mixed DSO room all has something relevant.
 2. **Verify each link resolves** during the dry-run (URLs drift) and that each opens as a real
    PDF/HTML, not a paywall.
 3. Zip as `starter-corpus.zip` and share (USB / network share / download link).
-4. Participants unzip into **`assets/corpus/`** (🔵 Build) or upload via **Knowledge** (🟢 Explore).
+4. Participants unzip into **`assets/corpus/`** (🔵 Build) or add via **Tools → Upload files** (🟢 Explore).
 
 Aim for **diversity over volume** — 6–10 files across a few domains is ideal for the lab.
+
+### Quick download (verified open-access links)
+
+Grabs a solid **5-file starter set** (4 ML classics + a public cyber framework) into
+`assets/corpus/`. Run from the repo root (PowerShell shown — on macOS/Linux use `curl` instead of
+`curl.exe`):
+
+```powershell
+cd assets/corpus
+curl.exe -sSL -o attention-is-all-you-need.pdf     https://arxiv.org/pdf/1706.03762
+curl.exe -sSL -o bert.pdf                          https://arxiv.org/pdf/1810.04805
+curl.exe -sSL -o resnet-deep-residual-learning.pdf https://arxiv.org/pdf/1512.03385
+curl.exe -sSL -o gpt3-few-shot-learners.pdf        https://arxiv.org/pdf/2005.14165
+curl.exe -sSL -o nist-csf-2.0.pdf                  https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.29.pdf
+```
+
+All sources are arXiv (open access) or NIST (US-Gov public domain). The corpus PDFs are
+**git-ignored**, so they stay on your machine and are never committed. Add more from the manifest
+below for extra domains.
 
 ---
 
