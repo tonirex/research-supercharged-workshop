@@ -50,7 +50,7 @@ az account set --subscription $sub
 
 | Step | Doc | Outcome |
 |------|-----|---------|
-| 1 | **[01-provision-foundry.md](./01-provision-foundry.md)** | **Two regions** (`swedencentral` + `eastus2`), each: resource group → **Basic** Foundry account → project → `model-router` + `gpt-4.1` deployments (gpt-4.1 required for portal File Search) → SDK endpoint. Then split the roster evenly |
+| 1 | **[01-provision-foundry.md](./01-provision-foundry.md)** | **Two regions** (`swedencentral` + `eastus2`), each: resource group → **Basic** Foundry account → project → `model-router` + `gpt-5.4` deployments (gpt-5.4 required for portal File Search) → SDK endpoint. Then split the roster evenly |
 | 2 | **[02-assign-participant-access.md](./02-assign-participant-access.md)** | **Foundry User** RBAC for participants (per-user or Entra group), project managed identity, and verification |
 | 3 *(optional)* | **[03-deploy-mcp-server.md](./03-deploy-mcp-server.md)** | Deploy the **Lab 4 MCP server** to Azure Container Apps → public `…/mcp` URL to hand the facilitator |
 

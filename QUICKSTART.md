@@ -39,12 +39,12 @@ python lab01_websearch.py     # then lab02_filesearch / lab03_codeinterpreter / 
 | Lab | You'll do | Portal (🟢) | Code (🔵) |
 |-----|-----------|------------|-----------|
 | 1 · Search | Cited answer from the live web | Tools → Web Search → *Search the web with Bing Search* (no setup, on `model-router`) | `lab01_websearch.py` |
-| 2 · Ground | Cited answer from your **public** docs | Switch model → **`gpt-4.1`**, then **Tools → Upload files** (name the index with your initials) | `lab02_filesearch.py` |
+| 2 · Ground | Cited answer from your **public** docs | Switch model → **`gpt-5.4`**, then **Tools → Upload files** (name the index with your initials) | `lab02_filesearch.py` |
 | 3 · Analyse | Stats + chart; find the outlier | Tools → Code Interpreter | `lab03_codeinterpreter.py` |
 | 4 · Act | Agent calls a tool, you approve | Tools → MCP | `lab04_tool.py` |
 
 > **Model:** Labs 0–1 run on **`model-router`** (Web Search included). **From Lab 2 on, switch your
-> agent to `gpt-4.1`** — the portal's File Search tool doesn't accept `model-router` — and keep it
+> agent to `gpt-5.4`** — the portal's File Search tool doesn't accept `model-router` — and keep it
 > there for the rest of the portal labs. *(The `🔵` SDK scripts all work on `model-router`.)*
 
 For Lab 2, use your **own public PDFs** or the facilitator's **starter corpus pack**.
