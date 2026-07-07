@@ -23,7 +23,14 @@ rails: ["🟢 Explore (portal)", "🔵 Build (SDK) — optional"]
 > *(If your agent ever errors on a web-search query, switching the model to **`gpt-5.4`** is a
 > reliable fallback, but you shouldn't need it.)*
 
-1. On your `rc-<initials>` agent, open **Tools** → **Add** → **Web Search**. In the **Add the Web
+> **Heads-up — the new portal enables Web Search by default.** When you create an agent with
+> **Build an agent**, the current Foundry UI already attaches the **Web Search** tool — you'll see
+> it listed under **Tools** with a *Grounding with Bing* cost note. If it's already there you don't
+> need to add it again: just confirm the search type below, then use the **A/B test in step 4** to
+> feel the on-vs-off difference for yourself.
+
+1. On your `rc-<initials>` agent, open **Tools** → **Add** → **Web Search** *(skip this if Web
+   Search is already listed — see the note above)*. In the **Add the Web
    Search Tool** dialog, under **Search type** choose **"Search the web with Bing Search"
    (No setup required)** — **not** *"Search specific domains with Bing Custom Search"* (that option
    needs a Bing Custom Search connection you don't have). Click **Add**.
@@ -36,8 +43,10 @@ rails: ["🟢 Explore (portal)", "🔵 Build (SDK) — optional"]
    *(Swap in **your own field** — that's the point.)*
 3. **Inspect the citations.** Expand the sources / annotations and click through to at least
    one. Are they credible? Recent?
-4. **A/B it:** temporarily **remove** the Web Search tool and ask the same question. Notice the
-   answer gets vaguer and loses citations. Re-add the tool. *This contrast is the lesson.*
+4. **A/B it — Web Search on vs off:** you've just seen the **on** case (grounded, cited answers).
+   Now temporarily **remove** the Web Search tool and ask the *same* question. Notice the
+   answer gets vaguer and loses citations. Re-add the tool. *This on/off contrast is the lesson —
+   and it's exactly why the portal now enables Web Search by default.*
 
 ### ✅ Checkpoint
 The grounded answer names **3 developments**, each with a **clickable, recent source**, and
