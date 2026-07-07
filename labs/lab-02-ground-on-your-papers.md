@@ -23,11 +23,11 @@ cites the exact file — instead of the open web. This is Retrieval-Augmented Ge
 
 ## 🟢 Explore (portal) — everyone
 
-> ### ⚠️ First, switch this agent to **`gpt-4.1`**
+> ### ⚠️ First, switch this agent to **`gpt-5.4`**
 > The **File Search** tool is **not** supported on `model-router` in the portal — you'll get
 > *"File search tool doesn't work with the model you selected. Please use another model."* On your
-> `rc-<initials>` agent, open the **model** selector, pick **`gpt-4.1`**, and Save. *(Keep it on
-> `gpt-4.1` for the rest of the portal labs — it supports every tool. Web Search from Lab 1 works
+> `rc-<initials>` agent, open the **model** selector, pick **`gpt-5.4`**, and Save. *(Keep it on
+> `gpt-5.4` for the rest of the portal labs — it supports every tool. Web Search from Lab 1 works
 > on it too.)*
 
 1. Gather **3–10 public documents** (PDF / MD / TXT / DOCX). No materials of your own? Use the

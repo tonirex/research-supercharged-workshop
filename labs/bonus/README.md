@@ -19,7 +19,7 @@ answer so you can see an evaluator catch it).
 
 - The same access as the core labs (**Foundry User** on the project — you already have it).
 - A **judge model** deployment for the AI-assisted evaluators. `model-router` works (validated);
-  `gpt-4.1` is a fine alternative. F1/similarity evaluators need no model.
+  `gpt-5.4` is a fine alternative. F1/similarity evaluators need no model.
 - For the SDK rail: the same `.env` + `az login` as Labs 1–4, and `azure-ai-projects>=2.2.0`
   (already in [`../../assets/requirements.txt`](../../assets/requirements.txt)).
 

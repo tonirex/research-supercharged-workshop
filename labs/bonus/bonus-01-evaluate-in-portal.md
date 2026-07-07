@@ -22,7 +22,7 @@ Based on Microsoft Learn: [Run evaluations from the Microsoft Foundry portal](ht
 ## Before you start
 - You have **Foundry User** on the workshop project (same as every lab).
 - A **judge model** is available for AI-assisted evaluators — `model-router` (validated) or
-  `gpt-4.1`. (The F1/similarity evaluator needs no model.)
+  `gpt-5.4`. (The F1/similarity evaluator needs no model.)
 - Grab the sample dataset **[`assets/data/eval_qa.jsonl`](../../assets/data/eval_qa.jsonl)** — 8
   research Q&A rows with `query`, `response`, and `ground_truth`. Row 8 is a deliberately vague
   answer, so you can watch an evaluator flag it.
@@ -83,7 +83,7 @@ your agent to produce the responses, then evaluates them.
 - **No scores / evaluator failed?** Check field mapping — required inputs (query/response) must be
   assigned, and AI-assisted evaluators need a judge model selected.
 - **Quota:** the judge model counts against your Azure OpenAI quota. Keep the dataset small (8 rows
-  is plenty here); use `gpt-4.1-mini`-class judges for cheap runs on big sets.
+  is plenty here); use `gpt-5.4-mini`-class judges for cheap runs on big sets.
 - **Read the reason, not just the number.** The "why" is what tells you how to fix a prompt.
 
 ## Where this goes next

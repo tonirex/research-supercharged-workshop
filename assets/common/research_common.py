@@ -46,7 +46,7 @@ DATA = ASSETS / "data"            # sample datasets for the code-interpreter lab
 # Accept the current FOUNDRY_* names (official samples) and older names for resilience.
 MODEL = os.environ.get("FOUNDRY_MODEL_NAME") or os.environ.get("MODEL_DEPLOYMENT", "model-router")
 # Web Search works on the default model-router (verified). Optionally pin a specific Azure
-# OpenAI model (e.g. gpt-4.1) as a fallback via FOUNDRY_WEBSEARCH_MODEL.
+# OpenAI model (e.g. gpt-5.4) as a fallback via FOUNDRY_WEBSEARCH_MODEL.
 WEBSEARCH_MODEL = os.environ.get("FOUNDRY_WEBSEARCH_MODEL") or MODEL
 INITIALS = os.environ.get("INITIALS", "xx")
 
@@ -148,7 +148,7 @@ def create_agent(name, instructions, tools=None, text_format=None, description=N
 
     `model` overrides the default deployment (FOUNDRY_MODEL_NAME / model-router) for this agent.
     All labs (including Web Search) run on model-router; pass `model` only to pin a specific
-    deployment as a fallback (e.g. gpt-4.1).
+    deployment as a fallback (e.g. gpt-5.4).
     """
     m = _models()
     kwargs = dict(model=model or MODEL, instructions=instructions)
@@ -167,7 +167,7 @@ def research_agent(suffix="", instructions=None, tools=None, text_format=None, m
     """Create a Research Copilot agent (named rc-<initials>[-suffix]) with the default persona.
 
     Pass `model` to override the default deployment — e.g. to pin a specific Azure OpenAI model
-    such as gpt-4.1 as a fallback (all labs, including Web Search, work on model-router).
+    such as gpt-5.4 as a fallback (all labs, including Web Search, work on model-router).
     """
     return create_agent(
         name=agent_name(suffix),

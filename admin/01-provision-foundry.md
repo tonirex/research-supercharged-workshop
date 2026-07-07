@@ -25,7 +25,7 @@ each with the two lab models. Half the participants use each region.
 | **Resource group** (`$rg`) | `rg-foundry-workshop-swe` | `rg-foundry-workshop-eus2` |
 | **Account** (`$acct`, globally unique) | `dso-foundry-ws-swe-<unique>` | `dso-foundry-ws-eus2-<unique>` |
 | **Project** (`$proj`) | `research-workshop` | `research-workshop` |
-| **Models** | `model-router` + `gpt-4.1` | `model-router` + `gpt-4.1` |
+| **Models** | `model-router` + `gpt-5.4` | `model-router` + `gpt-5.4` |
 | **Roster half** | initials **A–M** | initials **N–Z** |
 
 **Both regions support every lab tool** — verified against the official *tool support by region* table
@@ -37,7 +37,7 @@ each with the two lab models. Half the participants use each region.
 | **File Search** — managed vector store (Lab 2) | ✅ | ✅ |
 | Code Interpreter (Lab 3) | ✅ | ✅ |
 | Function / MCP tools (Lab 4) | ✅ | ✅ |
-| `model-router 2025-11-18` · `gpt-4.1 2025-04-14` (GlobalStandard) | ✅ | ✅ |
+| `model-router 2025-11-18` · `gpt-5.4 2026-03-05` (GlobalStandard) | ✅ | ✅ |
 
 > Source: [Tool support by region and model](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/tool-best-practice#tool-support-by-region-and-model).
 > Quota is **per-region and independent** — that's exactly why splitting helps. Check each region's
@@ -141,7 +141,7 @@ The project gets a **system-assigned managed identity** by default — that's th
 ## Step 4 — Deploy the two lab models
 
 Deploy **both** models at **GlobalStandard**. `model-router` is the teaching default (Labs 0–1 portal +
-all SDK rails); **`gpt-4.1` is required** for Lab 2's portal File Search, which rejects `model-router`.
+all SDK rails); **`gpt-5.4` is required** for Lab 2's portal File Search, which rejects `model-router`.
 
 ```powershell
 az cognitiveservices account deployment create `
@@ -152,13 +152,13 @@ az cognitiveservices account deployment create `
 
 az cognitiveservices account deployment create `
   --name $acct --resource-group $rg `
-  --deployment-name gpt-4.1 `
-  --model-name gpt-4.1 --model-version 2025-04-14 --model-format OpenAI `
+  --deployment-name gpt-5.4 `
+  --model-name gpt-5.4 --model-version 2026-03-05 --model-format OpenAI `
   --sku-name GlobalStandard --sku-capacity 100
 ```
 
-> **Why `gpt-4.1`:** Lab 2's **portal** File Search shows *"File search tool doesn't work with the
-> model you selected"* on `model-router`, so participants switch to `gpt-4.1` from Lab 2 on. (Lab 1 Web
+> **Why `gpt-5.4`:** Lab 2's **portal** File Search shows *"File search tool doesn't work with the
+> model you selected"* on `model-router`, so participants switch to `gpt-5.4` from Lab 2 on. (Lab 1 Web
 > Search and **all SDK** rails — including SDK File Search — run fine on `model-router`.) See
 > [../labs/lab-02-ground-on-your-papers.md](../labs/lab-02-ground-on-your-papers.md).
 >
@@ -205,7 +205,7 @@ two projects are completely separate. Give each half **their** region's access:
   ```
   FOUNDRY_PROJECT_ENDPOINT=https://<their-region-acct>.services.ai.azure.com/api/projects/research-workshop
   FOUNDRY_MODEL_NAME=model-router
-  # FOUNDRY_WEBSEARCH_MODEL=gpt-4.1   # optional Web Search fallback (model-router works)
+  # FOUNDRY_WEBSEARCH_MODEL=gpt-5.4   # optional Web Search fallback (model-router works)
   INITIALS=<their-initials>
   ```
 
@@ -229,7 +229,7 @@ az cognitiveservices account deployment list -n $acct -g $rg `
   --query "[].{name:name, model:properties.model.name, ver:properties.model.version, sku:sku.name, cap:sku.capacity, state:properties.provisioningState}" -o table
 ```
 
-Expected: `kind = AIServices`; two deployments — `model-router 2025-11-18` and `gpt-4.1 2025-04-14`,
+Expected: `kind = AIServices`; two deployments — `model-router 2025-11-18` and `gpt-5.4 2026-03-05`,
 both `GlobalStandard` / `Succeeded`. (This is exactly what was validated live in both regions.)
 
 ---

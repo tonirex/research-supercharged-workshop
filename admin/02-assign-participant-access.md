@@ -187,12 +187,12 @@ actually runs on has plenty of headroom: `model-router` (GlobalStandard) shows *
 region** in this subscription.
 
 **Fix — the participant selects the pre-deployed model instead of auto-deploying** (you already
-deployed `model-router` + `gpt-4.1` in
+deployed `model-router` + `gpt-5.4` in
 [01 → Step 4](./01-provision-foundry.md#step-4--deploy-the-two-lab-models)):
 
 1. In the "Create an agent" dialog, click **Create and open playground** anyway — the warning is
    **non-blocking** and that button stays enabled.
-2. In the agent's **Setup** panel, set **Deployment → `model-router`** (or **`gpt-4.1`** from Lab 2's
+2. In the agent's **Setup** panel, set **Deployment → `model-router`** (or **`gpt-5.4`** from Lab 2's
    portal File Search onward).
 3. **Do not** click *Request more quota* or *Deploy a model manually* — those need admin rights the
    participant doesn't have, and quota isn't the problem.

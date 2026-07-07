@@ -15,7 +15,7 @@ Run from the assets/ folder (after `az login`):
     python bonus_cloud_eval.py
 
 Requires: azure-ai-projects>=2.2.0 and a judge-model deployment. Defaults to your
-FOUNDRY_MODEL_NAME (model-router); set FOUNDRY_EVAL_MODEL to pin one (e.g. gpt-4.1).
+FOUNDRY_MODEL_NAME (model-router); set FOUNDRY_EVAL_MODEL to pin one (e.g. gpt-5.4).
 """
 import os
 import pathlib

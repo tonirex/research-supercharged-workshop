@@ -25,7 +25,7 @@ Based on Microsoft Learn: [Run evaluations in the cloud by using the Microsoft F
 - `azure-ai-projects>=2.2.0` (already pinned in
   [../../assets/requirements.txt](../../assets/requirements.txt)).
 - A **judge model** for the AI-assisted evaluators. Defaults to your `FOUNDRY_MODEL_NAME`
-  (`model-router`, validated); set `FOUNDRY_EVAL_MODEL=gpt-4.1` to pin a specific one.
+  (`model-router`, validated); set `FOUNDRY_EVAL_MODEL=gpt-5.4` to pin a specific one.
 
 ---
 
@@ -118,7 +118,7 @@ Read it like this:
   **`builtin.similarity`** to the `testing_criteria` list.
 - Point `DATASET` at your **own** JSONL (answers from your `rc-<initials>` agent) and re-run — now
   you're grading your own agent, reproducibly.
-- Set `FOUNDRY_EVAL_MODEL=gpt-4.1` and compare whether the judge model changes any borderline rows.
+- Set `FOUNDRY_EVAL_MODEL=gpt-5.4` and compare whether the judge model changes any borderline rows.
 
 ## Notes
 - Cloud evaluation is **asynchronous** — the script polls; a run takes a few minutes.

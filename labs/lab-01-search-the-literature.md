@@ -20,7 +20,7 @@ rails: ["🟢 Explore (portal)", "🔵 Build (SDK) — optional"]
 ## 🟢 Explore (portal) — everyone
 
 > **Stay on `model-router`.** Web Search works on the teaching default — no model switch needed.
-> *(If your agent ever errors on a web-search query, switching the model to **`gpt-4.1`** is a
+> *(If your agent ever errors on a web-search query, switching the model to **`gpt-5.4`** is a
 > reliable fallback, but you shouldn't need it.)*
 
 1. On your `rc-<initials>` agent, open **Tools** → **Add** → **Web Search**. In the **Add the Web
@@ -60,7 +60,7 @@ server-side and you just read the result and its citations:
 from common.research_common import research_agent, web_search_tool, run_response, citations_of, cleanup, text_of, WEBSEARCH_MODEL
 
 # Web Search runs on model-router (the default). WEBSEARCH_MODEL defaults to model-router;
-# set FOUNDRY_WEBSEARCH_MODEL only to pin a fallback like gpt-4.1.
+# set FOUNDRY_WEBSEARCH_MODEL only to pin a fallback like gpt-5.4.
 agent = research_agent("websearch", tools=[web_search_tool("high")], model=WEBSEARCH_MODEL)  # "low"|"medium"|"high"
 resp = run_response(agent, text_of("search_recent"))
 print(resp.output_text)
@@ -70,7 +70,7 @@ cleanup(agent)
 
 > No Bing connection or API key to provision — `WebSearchTool()` works out of the box on the
 > current Foundry API, including on the default **`model-router`**. *(Need a specific model? Pin
-> one via `FOUNDRY_WEBSEARCH_MODEL`, e.g. `gpt-4.1`, as a fallback.)*
+> one via `FOUNDRY_WEBSEARCH_MODEL`, e.g. `gpt-5.4`, as a fallback.)*
 > *(There's also a connection-based `BingGroundingTool` if your org needs a managed/keyed search
 > backend — out of scope for today.)*
 
