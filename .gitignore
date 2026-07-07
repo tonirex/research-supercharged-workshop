@@ -20,6 +20,9 @@ Thumbs.db
 .vscode/
 .idea/
 
+# Playwright MCP scratch output (snapshots/console dumps used while capturing lab screenshots)
+.playwright-mcp/
+
 # Lab 2 corpus: participant/facilitator-supplied documents stay local (keep the meta-docs)
 assets/corpus/*
 !assets/corpus/README.md
