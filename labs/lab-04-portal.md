@@ -24,8 +24,8 @@ is what turns a chatbot into an *agent*.
 > Adding an MCP server from scratch (**Tools → Add → Custom → MCP**) needs **Foundry Owner** rights,
 > which workshop participants don't have. So your facilitator has already registered the workshop
 > server **once** as a shared tool called **`research-tools`**. You don't paste any URL — you just
-> **attach the existing tool** to your agent. See [Note on the main lab](#-go-further) below for the
-> details.
+> **attach the existing tool** to your agent. See the [facilitator note](#-go-further) below for the
+> one-time admin step.
 
 **Before you start**
 - You've completed [Lab 3](./lab-03-portal.md) and have your `rc-<your-initials>` agent in the
@@ -146,15 +146,13 @@ you're tidying your own agent, you can remove `research-tools` from **its** Tool
 - Ask something the tool **can't** do (e.g. a conversion it doesn't support) and see how it responds —
   a good way to feel the boundary between "call the tool" and "answer directly."
 
-> **Note on the main lab:** [`lab-04-add-a-tool.md`](./lab-04-add-a-tool.md) tells participants to open
-> **Tools → MCP** and **add the server** themselves (paste the `…/mcp` URL, set *require approval =
-> always*). In the current portal that create path (**Tools → Add → Custom → MCP → Connect**) is
-> **gated on Foundry Owner** — for a **Foundry User** the **Connect** button stays disabled even with a
-> valid URL, so participants can't self-add the server. The working pattern is the one above: an
-> **admin registers the server once** as the shared **`research-tools`** connection, and each
-> participant **attaches it** via **Tools → Use in an agent**. Approval then defaults to prompting on
-> every call (choose **Approve once**), which matches the lab's *require approval = always* intent. See
-> the added **"Register it as a shared tool"** section in
+> **Facilitator note:** participants can't create this MCP connection themselves — the create path
+> (**Tools → Add → Custom → MCP → Connect**) is **gated on Foundry Owner**, so for a **Foundry User**
+> the **Connect** button stays disabled even with a valid `…/mcp` URL. That's why an **admin registers
+> the server once** as the shared **`research-tools`** connection and everyone else just **attaches it**
+> via **Tools → Use in an agent** (the steps above). Approval then defaults to prompting on every call
+> (choose **Approve once**), which matches the main lab's *require approval = always* intent. See the
+> **"Register it as a shared tool"** section in
 > [admin/03-deploy-mcp-server.md](../admin/03-deploy-mcp-server.md) for the one-time admin step.
 
 ➡️ **Next:** [Lab 5 — Take it home](./lab-05-take-it-home.md)

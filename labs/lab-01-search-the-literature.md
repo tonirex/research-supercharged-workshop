@@ -15,6 +15,9 @@ rails: ["🟢 Explore (portal)", "🔵 Build (SDK) — optional"]
 > agent pull in this week's papers, news, and pages — and show you *where* each claim came
 > from, so you can verify it.
 
+> 📸 **Prefer a click-by-click walkthrough?** Follow the **[portal walkthrough](./lab-01-portal.md)** —
+> the 🟢 portal-rail steps below, captured screen by screen.
+
 ---
 
 ## 🟢 Explore (portal) — everyone

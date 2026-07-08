@@ -127,9 +127,4 @@ off via its **Actions (…)**. Leave **File search** and **Web search** attached
   a run like trial 12 would underperform?"*) so it reaches for **File search** and **Code interpreter**
   together.
 
-> **Note on the main lab:** two portal details have drifted from
-> [`lab-03-analyse-the-data.md`](./lab-03-analyse-the-data.md). CSVs now attach through the **Code
-> interpreter → Files** button (not the chat box), and the chart is delivered as a **downloadable file**
-> rather than rendering inline. The analysis result is unchanged.
-
 ➡️ **Next:** [Lab 4 — Add a tool](./lab-04-add-a-tool.md)

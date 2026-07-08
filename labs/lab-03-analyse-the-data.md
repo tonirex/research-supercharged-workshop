@@ -19,23 +19,30 @@ numbers and drawing charts — instead of estimating in its head.
 > We ship a small **synthetic** dataset (`assets/data/sample_experiments.csv`). Use it, or your
 > own **public/unclassified** CSV. Never upload sensitive data to the sandbox.
 
+> 📸 **Prefer a click-by-click walkthrough?** Follow the **[portal walkthrough](./lab-03-portal.md)** —
+> the 🟢 portal-rail steps below, captured screen by screen (and kept current with the latest portal UI).
+
 ---
 
 ## 🟢 Explore (portal) — everyone
 
 1. On your `rc-<initials>` agent, open **Tools** → add **Code Interpreter**.
-2. **Upload** `assets/data/sample_experiments.csv` (drag it into the chat or attach it).
+2. **Upload** `assets/data/sample_experiments.csv` **to the tool**: on the **Code Interpreter**
+   row under **Tools**, click **Files → browse for files**, pick the CSV, and **Attach**.
+   *(The chat composer's paperclip only accepts images/PDFs, so data files go in at the tool level.)*
 3. Ask:
    > *"Describe this dataset. Compute summary statistics for each numeric column, plot
    > `energy_density_whkg` over `trial`, and tell me whether it's improving. Then identify the
    > row that breaks that upward trend (a contextual outlier vs. its neighbours) and explain why."*
-4. Watch it **write code, run it, render a chart inline**, and report numbers. Look for the one
-   row that breaks the upward trend. *(Hint: check around **trial 12 / sample `S012`**.)*
+4. Watch it **write Python, run it, and report real numbers**, then open the chart it produces —
+   in the current portal it comes back as a **downloadable plot link** rather than rendering
+   inline. Look for the one row that breaks the upward trend. *(Hint: check around **trial 12 /
+   sample `S012`**.)*
 
 ### ✅ Checkpoint
-The agent shows a **chart** + **computed statistics**, says energy density is **improving
-across trials**, and flags **`S012` (trial 12)** as the row that **breaks the trend** — its
-yield/energy dips far below its neighbours.
+The agent produces a **chart** (offered as a downloadable plot) + **computed statistics**, says
+energy density is **improving across trials**, and flags **`S012` (trial 12)** as the row that
+**breaks the trend** — its yield/energy dips far below its neighbours.
 
 ---
 
@@ -60,8 +67,9 @@ print(run_text(agent, "You have a Python sandbox. Analyse this CSV:\n" + csv_tex
 cleanup(agent)
 ```
 
-> We paste the small CSV inline so the lab runs anywhere. In the **portal** you simply attach
-> the file and charts render inline — the nicer experience for this lab.
+> We paste the small CSV inline so the lab runs anywhere. In the **portal** you attach the file
+> to the **Code Interpreter** tool instead, and it returns the chart as a **downloadable plot** —
+> either way the agent runs real Python on your data.
 
 ---
 
