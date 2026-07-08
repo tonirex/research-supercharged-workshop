@@ -20,6 +20,9 @@ You started with a plain chat agent and gave it four research superpowers:
 Together that's an **agentic research assistant**: it can find, read, calculate, and do — and
 tell you where every answer came from.
 
+> 📸 **Prefer a click-by-click walkthrough?** Follow the **[portal walkthrough](./lab-05-portal.md)** —
+> the recap and the agent-cleanup steps, captured screen by screen.
+
 ---
 
 ## 🧭 Responsible AI for research (the part that matters most)

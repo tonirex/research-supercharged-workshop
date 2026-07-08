@@ -16,6 +16,9 @@ when it needs a fact or capability it shouldn't guess. This is what turns a chat
 > conversions, a lookup in a catalogue, a live calculation). Tools let it **call out** to
 > trustworthy code or services and use the real result.
 
+> 📸 **Prefer a click-by-click walkthrough?** Follow the **[portal walkthrough](./lab-04-portal.md)** —
+> the 🟢 portal-rail steps below, captured screen by screen (and kept current with the latest portal UI).
+
 ---
 
 ## 🟢 Explore (portal) — everyone
@@ -24,13 +27,16 @@ when it needs a fact or capability it shouldn't guess. This is what turns a chat
    *when* to call it, you (or a service) run it, and the result flows back into the answer.
    You've already used hosted tools (Web Search, Code Interpreter); now we add an **external**
    one via **MCP** (Model Context Protocol — an open standard for tool servers).
-2. On your `rc-<initials>` agent, open **Tools → MCP** and add the **workshop research MCP
-   server** — your facilitator shares its URL (it ends in **`/mcp`**). Set **require approval =
-   always** so every call pauses for your OK. This one server exposes two tools:
+2. **Attach the shared tool.** Creating an MCP server from scratch (**Tools → Add → Custom →
+   MCP → Connect**) needs **Foundry Owner** rights, which participants don't have — so your
+   facilitator has registered the workshop server **once** as a shared tool called
+   **`research-tools`**. In the **left nav → Tools**, click **`research-tools`**, then **Use in an
+   agent** and pick your `rc-<initials>` agent (no URL to paste). This one server exposes two tools:
    - **`convert_units`** — exact unit conversions (eV↔J, nm↔m, Å↔m, kPa↔atm, °C↔K).
    - **`search_arxiv`** — live search of the public [arXiv](https://arxiv.org/) preprint API.
-3. Ask a question that needs it, then **approve** the call when prompted and read the grounded
-   result. Try both:
+3. Ask a question that needs it. The agent **pauses for your approval** before each call — choose
+   **Approve once** to review every one (the portal's equivalent of *require approval = always*).
+   Approve, then read the grounded result. Try both:
    - *"Use the tool to convert 1.8 eV to joules."* → calls `convert_units` (≈ `2.884e-19 J`).
    - *"Search arXiv for recent work on solid-state battery electrolytes and summarise the top 2."*
      → calls `search_arxiv` and cites real papers.

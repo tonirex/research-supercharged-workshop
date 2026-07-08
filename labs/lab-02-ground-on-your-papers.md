@@ -19,6 +19,9 @@ cites the exact file — instead of the open web. This is Retrieval-Augmented Ge
 > Anything you index here is uploaded to the shared project. Use open-access papers, public
 > reports, or your own non-sensitive notes. **No classified or personal material.**
 
+> 📸 **Prefer a click-by-click walkthrough?** Follow the **[portal walkthrough](./lab-02-portal.md)** —
+> the 🟢 portal-rail steps below, captured screen by screen.
+
 ---
 
 ## 🟢 Explore (portal) — everyone

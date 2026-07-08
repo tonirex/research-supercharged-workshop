@@ -17,6 +17,9 @@ single tool. This is your *Research Copilot*; every later lab gives it a new sup
 > The Research Copilot persona is told to refuse such requests, but **you** are the real
 > guardrail. When in doubt, use a public example.
 
+> 📸 **Prefer a click-by-click walkthrough?** Follow the **[portal walkthrough](./lab-00-portal.md)** —
+> the 🟢 portal-rail steps below, captured screen by screen.
+
 ---
 
 ## 🟢 Explore (portal) — everyone

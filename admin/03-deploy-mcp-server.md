@@ -107,11 +107,59 @@ Best end-to-end check: in the Foundry portal, open a test agent → **Tools → 
 
 ---
 
+## Register it as a shared tool (so participants can attach it)
+
+> **Why this step matters.** In the current portal, adding an MCP server from an agent
+> (**Tools → Add → Custom → MCP**) requires **Foundry Owner** — for a **Foundry User** the
+> **Connect** button stays disabled even with a valid URL. So participants can't paste the URL
+> themselves. Register the server **once** as a project **connection**; every participant in the
+> project can then **attach** it (no owner rights) via **Tools → Use in an agent**.
+
+Create the shared connection — name it **`research-tools`** (connection names allow letters, digits,
+dashes, and dots, but **no underscores**). Run this as an identity with **Owner/Contributor** on the
+account, filling in your Foundry project's resource IDs:
+
+```powershell
+# From your Foundry project (portal → Management center → project → resource ID, or `az` output):
+$sub     = "<subscription-id>"
+$rg      = "<resource-group>"
+$account = "<foundry-account-name>"        # the Microsoft.CognitiveServices account
+$project = "<project-name>"
+$mcpUrl  = "https://<app-fqdn>/mcp"        # the URL printed by the deploy step above
+
+$body = @{ properties = @{
+  category      = "RemoteTool"             # MCP connections use the RemoteTool category
+  target        = $mcpUrl
+  authType      = "None"                   # server is public / unauthenticated
+  isSharedToAll = $true
+  metadata      = @{}
+} } | ConvertTo-Json -Depth 5
+
+az rest --method put `
+  --url "https://management.azure.com/subscriptions/$sub/resourceGroups/$rg/providers/Microsoft.CognitiveServices/accounts/$account/projects/$project/connections/research-tools?api-version=2025-06-01" `
+  --headers "Content-Type=application/json" `
+  --body $body
+```
+
+Verify in the portal: **Build → Tools** should list **`research-tools`** typed as **Model Context
+Protocol (MCP)**.
+
+> **Have Foundry Owner and prefer the portal?** Skip the CLI: open any agent →
+> **Tools → Add → Custom → MCP**, paste the `…/mcp` URL, set **Authentication = Unauthenticated**, and
+> click **Connect** (enabled for Owners). The resulting connection is the same shared
+> **`research-tools`** tool participants attach.
+
+---
+
 ## Hand it to the facilitator
 
-Give the facilitator the **`https://<app-fqdn>/mcp`** URL. They share it on a slide / in
-chat at the start of Lab 4. Participants set **Require approval = Always** so they can watch
-each call (see [../labs/lab-04-add-a-tool.md](../labs/lab-04-add-a-tool.md)).
+Once the server is deployed **and** registered as the shared **`research-tools`** tool (above),
+participants don't need the raw URL — they attach the tool in two clicks
+(**Tools → `research-tools` → Use in an agent**; walkthrough in
+[../labs/lab-04-portal.md](../labs/lab-04-portal.md)). Approval defaults to prompting on every call, so
+they still watch each one (the main lab's *require approval = always*). Keep the **`https://<app-fqdn>/mcp`**
+URL handy for the **SDK rail**, which connects to the same server directly
+(see [../labs/lab-04-add-a-tool.md](../labs/lab-04-add-a-tool.md)).
 
 ---
 
