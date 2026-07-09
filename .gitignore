@@ -23,7 +23,9 @@ Thumbs.db
 # Playwright MCP scratch output (snapshots/console dumps used while capturing lab screenshots)
 .playwright-mcp/
 
-# Lab 2 corpus: participant/facilitator-supplied documents stay local (keep the meta-docs)
+# Lab 2 corpus: participant/facilitator-supplied documents stay local (keep the meta-docs + fetch scripts)
 assets/corpus/*
 !assets/corpus/README.md
 !assets/corpus/STARTER-CORPUS.md
+!assets/corpus/fetch-starter-corpus.sh
+!assets/corpus/fetch-starter-corpus.ps1
