@@ -54,7 +54,8 @@ guess.
 
 ## 🔵 Build (SDK)
 
-Run it:
+Script for this lab: **[`assets/lab04_tool.py`](../assets/lab04_tool.py)** (SDK helpers in
+**[`assets/common/research_common.py`](../assets/common/research_common.py)**). Run it from `assets/`:
 
 ```bash
 python lab04_tool.py
@@ -77,6 +78,17 @@ assert "convert_units" in [c.name for c in trace.tool_calls]      # it used the 
 cleanup(agent)
 ```
 
+> **🔗 From code to Foundry.** `function_tool()` returns a `FunctionTool` from
+> `azure.ai.projects.models`. The model emits a `function_call`; `run_with_trace()` runs your Python
+> and returns a `function_call_output` on the next Responses API turn — the **same tool-call → run →
+> return loop** the portal shows (there you *approve* each call).
+> Docs: [Function calling](https://learn.microsoft.com/azure/foundry/agents/how-to/tools/function-calling).
+
+> **📦 Libraries used.** `azure-ai-projects` provides `FunctionTool` (and `MCPTool` for the stretch);
+> `openai` (the **Responses API**) drives the loop — `responses.create(..., previous_response_id=...)`
+> threads your tool results back in.
+> See [assets/README.md → Libraries used](../assets/README.md#libraries-used).
+
 ### 💡 Stretch — make it an MCP tool
 Swap the function tool for the **same MCP server the portal rail uses** (the agent calls it the
 same way). Use the `…/mcp` URL your facilitator shared — it exposes `convert_units` and
@@ -90,6 +102,10 @@ agent = research_agent("mcp", tools=[mcp_tool("research", "https://<app-fqdn>/mc
 
 > The server's source is in [`assets/mcp-server/`](../assets/mcp-server/); an admin deploys it to
 > Azure Container Apps beforehand ([admin/03-deploy-mcp-server.md](../admin/03-deploy-mcp-server.md)).
+
+> `mcp_tool()` returns an `MCPTool` from `azure.ai.projects.models` — the **same MCP server
+> registration** the portal uses when a facilitator adds **Tools → MCP**.
+> Docs: [Model Context Protocol tool](https://learn.microsoft.com/azure/foundry/agents/how-to/tools/model-context-protocol).
 
 > **Go further (orchestration):** for multi-step research pipelines, look at **Workflow agents**
 > (`WorkflowAgentDefinition`) or the **Microsoft Agent Framework** — code-first ways to chain

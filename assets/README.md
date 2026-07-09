@@ -41,6 +41,7 @@ pip install -r requirements.txt
 ## Run the labs
 Run each from the `assets/` folder:
 ```bash
+python lab00_hello.py            # Lab 0 — create + chat with your agent (no tools yet)
 python lab01_websearch.py        # Lab 1 — web search + citations
 python lab02_filesearch.py       # Lab 2 — RAG over assets/corpus (add your docs first)
 python lab03_codeinterpreter.py  # Lab 3 — analyse assets/data/sample_experiments.csv
@@ -59,6 +60,20 @@ Everything you need, on the current API:
 | `function_tool(...)` · `mcp_tool(...)` | your own function / an MCP server |
 | `build_vector_store(folder=)` | index `assets/corpus` into a vector store |
 | `citations_of(response)` · `cleanup(*agents)` | pull cited sources · delete your agents |
+
+## Libraries used
+The Build rail is deliberately small — four packages (see [`requirements.txt`](./requirements.txt)):
+
+| Library | Role in these labs |
+|---------|--------------------|
+| **`azure-ai-projects`** (≥ 2.2) | The current **Microsoft Foundry agents SDK**. `AIProjectClient` connects to your project; `project.agents.create_version(PromptAgentDefinition(...))` defines/versions an agent (what `research_agent()` does); `azure.ai.projects.models` holds the tool classes — `WebSearchTool`, `FileSearchTool`, `CodeInterpreterTool`, `FunctionTool`, `MCPTool`. Also powers the bonus cloud-evaluation lab. |
+| **`openai`** (≥ 2.8) | The **OpenAI-compatible client** Foundry returns from `project.get_openai_client()`. Labs call its **Responses API** (`responses.create(...)` → `.output_text`) to run a turn, and `vector_stores.*` / `files.*` to manage RAG data (Lab 2). Foundry is wire-compatible with the OpenAI SDK, so the same code shape works against either. |
+| **`azure-identity`** (≥ 1.15) | `DefaultAzureCredential` — picks up your `az login` session locally (or a managed identity in Codespaces/CI). No API keys live in the code. |
+| **`python-dotenv`** (≥ 1.0) | Optional convenience: loads `assets/.env` so `FOUNDRY_PROJECT_ENDPOINT`, `INITIALS`, and friends are available as environment variables. |
+
+> **Why not `azure-ai-agents` / the classic Assistants API?** This workshop is built on the *current*
+> Foundry agents API (`create_version` + the Responses API) — the same backend the portal drives — so
+> a portal agent and an SDK agent are the **same object**. See the repo `README` → *Tech stack*.
 
 ## Troubleshooting
 - **`Set FOUNDRY_PROJECT_ENDPOINT…`** → your `.env` isn't filled in, or you're not running from `assets/`.

@@ -57,7 +57,9 @@ to answer what isn't in the corpus.
 
 ## 🔵 Build (SDK) — optional
 
-Drop your files into **`assets/corpus/`**, then run:
+Script for this lab: **[`assets/lab02_filesearch.py`](../assets/lab02_filesearch.py)** (SDK helpers
+in **[`assets/common/research_common.py`](../assets/common/research_common.py)**). Drop your files
+into **[`assets/corpus/`](../assets/corpus/)**, then run it from `assets/`:
 
 ```bash
 python lab02_filesearch.py
@@ -79,6 +81,18 @@ cleanup(agent)
 > Unlike the portal, the **SDK** File Search runs fine on the default **`model-router`** — no model
 > switch needed on this rail (verified). `build_vector_store()` auto-names the index; pass
 > `name="<initials>-papers"` to label yours in the shared project.
+
+> **🔗 From code to Foundry.** `build_vector_store()` uploads your docs with `openai.vector_stores.*`,
+> and `file_search_tool()` returns a `FileSearchTool` from `azure.ai.projects.models` — the **same
+> vector store + File Search tool** the portal creates when you click **Upload files**. Either way the
+> index lives in the shared Foundry project.
+> Docs: [File Search tool](https://learn.microsoft.com/azure/foundry/agents/how-to/tools/file-search)
+> · [Vector stores](https://learn.microsoft.com/azure/foundry/agents/concepts/vector-stores).
+
+> **📦 Libraries used.** `azure-ai-projects` provides `FileSearchTool`; the `openai` client manages the
+> RAG data (`vector_stores.create`, `vector_stores.files.upload_and_poll`) and runs the grounded turn
+> via the **Responses API**.
+> See [assets/README.md → Libraries used](../assets/README.md#libraries-used).
 
 ---
 

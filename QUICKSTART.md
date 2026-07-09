@@ -31,7 +31,7 @@ Research Copilot persona from **[Lab 0](./labs/lab-00-hello-research-copilot.md)
 cd research-supercharged-workshop/assets
 pip install --prefer-binary -r requirements.txt
 copy .env.example .env        # fill FOUNDRY_PROJECT_ENDPOINT + INITIALS, then: az login
-python lab01_websearch.py     # then lab02_filesearch / lab03_codeinterpreter / lab04_tool
+python lab00_hello.py         # then lab01_websearch / lab02_filesearch / lab03_codeinterpreter / lab04_tool
 ```
 > Run scripts **from the `assets/` folder** so `from common.research_common import ...` resolves.
 

@@ -72,7 +72,15 @@ copy .env.example .env        # then fill FOUNDRY_PROJECT_ENDPOINT + INITIALS
 pip install -r requirements.txt
 ```
 
-Then create + chat with the *same kind* of agent from code:
+Then run **[`assets/lab00_hello.py`](../assets/lab00_hello.py)** — the SDK helpers live in
+**[`assets/common/research_common.py`](../assets/common/research_common.py)** so the script stays
+short. From the `assets/` folder:
+
+```bash
+python lab00_hello.py
+```
+
+Under the hood it creates + chats with the *same kind* of agent, from code:
 
 ```python
 from common.research_common import research_agent, run_text, cleanup
@@ -82,8 +90,18 @@ print(run_text(agent, "In one sentence, what can you help me research?"))
 cleanup(agent)                               # tidy up the shared project when you're done
 ```
 
-> The portal agent and the SDK agent are the **same object type** in Foundry — the portal is
-> just a UI over the API you're calling here.
+> **🔗 From code to Foundry.** `research_agent()` calls
+> `project.agents.create_version(PromptAgentDefinition(...))` — the **exact same agent object** the
+> portal creates under **Agents**. The portal is just a UI over this API, so an agent you make in
+> code shows up in the shared project's agent list (and vice-versa).
+> Docs: [Create a prompt agent](https://learn.microsoft.com/azure/foundry/agents/quickstarts/prompt-agent)
+> · [Build with agents & responses](https://learn.microsoft.com/azure/foundry/agents/quickstarts/responses-api).
+
+> **📦 Libraries used.** `azure-ai-projects` is the Foundry agents SDK (`AIProjectClient` +
+> `create_version`); `azure-identity` supplies `DefaultAzureCredential` (your `az login` session —
+> no keys in code); `openai` is the OpenAI-compatible client Foundry returns, so `run_text()` chats
+> via its **Responses API**; `python-dotenv` loads your `.env`.
+> Full rundown: [assets/README.md → Libraries used](../assets/README.md#libraries-used).
 
 ---
 
