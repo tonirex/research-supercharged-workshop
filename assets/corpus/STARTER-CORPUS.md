@@ -21,7 +21,19 @@ Aim for **diversity over volume** — 6–10 files across a few domains is ideal
 
 ### Quick download (verified open-access links)
 
-Grabs a solid **5-file starter set** (4 ML classics + a public cyber framework) into
+**Fastest — run the fetch script** (grabs all 5 files into `assets/corpus/`; skips any already there):
+
+```bash
+bash assets/corpus/fetch-starter-corpus.sh      # macOS / Linux / Codespaces
+```
+```powershell
+pwsh assets/corpus/fetch-starter-corpus.ps1     # Windows (or Windows PowerShell)
+```
+
+> In a **Codespace** this runs automatically on first build (see `.devcontainer/`), so the starter
+> corpus is already there when you open Lab 2.
+
+Or grab them by hand — a solid **5-file starter set** (4 ML classics + a public cyber framework) into
 `assets/corpus/`. Run from the repo root (PowerShell shown — on macOS/Linux use `curl` instead of
 `curl.exe`):
 

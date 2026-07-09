@@ -12,6 +12,17 @@ lab scripts stay short.
 - Access to the **shared workshop project** (endpoint from your facilitator)
 - `az login` working (the SDK auths with `DefaultAzureCredential`)
 
+## GitHub Codespaces (recommended — zero local install)
+This repo ships a **devcontainer** (`.devcontainer/`) that pre-installs Python 3.12, the Azure CLI,
+and all Build-rail dependencies, and seeds `assets/.env` for you on first build.
+
+1. **Code ▸ Create codespace** on your branch — wait for the container to finish building.
+2. In the terminal, sign in: `az login --use-device-code` (copy the code into your browser).
+3. Edit **`assets/.env`** → set `FOUNDRY_PROJECT_ENDPOINT` and `INITIALS`.
+4. `cd assets`, then run the labs (see **Run the labs** below).
+
+Prefer your own machine? Use the manual setup instead:
+
 ## One-time setup (run inside `assets/`)
 ```bash
 az login

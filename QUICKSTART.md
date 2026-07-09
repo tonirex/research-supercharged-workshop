@@ -25,6 +25,8 @@ Research Copilot persona from **[Lab 0](./labs/lab-00-hello-research-copilot.md)
 4. Each lab, add one tool: **Web Search** → **Upload files** (File Search) → **Code Interpreter** → **MCP**.
 
 ## 🔵 Build — get going in 4 steps
+> **In a Codespace?** Deps are pre-installed via `.devcontainer`. Just `az login --use-device-code`,
+> fill `assets/.env`, then run the labs from `assets/` — skip the `pip install` line below.
 ```bash
 cd research-supercharged-workshop/assets
 pip install --prefer-binary -r requirements.txt
