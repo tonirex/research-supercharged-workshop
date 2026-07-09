@@ -330,6 +330,16 @@ def mcp_tool(server_label, server_url, require_approval="never", allowed_tools=N
 
 
 # --------------------------------------------------------------------- file search (RAG)
+# File extensions the File Search / vector-store API accepts (its "Supported formats").
+# Anything else in the corpus folder (e.g. the fetch-starter-corpus.ps1/.sh helper
+# scripts) is skipped so it can't break the upload with a 400 "Invalid extension".
+SUPPORTED_CORPUS_EXTS = {
+    ".c", ".cpp", ".css", ".csv", ".doc", ".docx", ".gif", ".go", ".html", ".java",
+    ".jpeg", ".jpg", ".js", ".json", ".md", ".pdf", ".php", ".pkl", ".png", ".pptx",
+    ".py", ".rb", ".tar", ".tex", ".ts", ".txt", ".webp", ".xlsx", ".xml", ".zip",
+}
+
+
 def build_vector_store(folder=None, name=None) -> str:
     """Upload every file under `folder` into a new vector store; return its id.
 
@@ -343,7 +353,10 @@ def build_vector_store(folder=None, name=None) -> str:
     skip = {"readme.md", "starter-corpus.md"}  # meta-docs in the corpus folder, not research content
     files = sorted(
         p for p in path.rglob("*")
-        if p.is_file() and not p.name.startswith(".") and p.name.lower() not in skip
+        if p.is_file()
+        and not p.name.startswith(".")
+        and p.name.lower() not in skip
+        and p.suffix.lower() in SUPPORTED_CORPUS_EXTS
     )
     if not files:
         raise RuntimeError(
