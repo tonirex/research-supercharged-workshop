@@ -126,4 +126,6 @@ continuing.
   published this year?"*) and watch it ground on your corpus **and** check the live web in one answer.
 - Ask for a **literature-review table** (method · dataset · result · source file) across your corpus.
 
-➡️ **Next:** *Break (10 min)*, then [Lab 3 — Analyse the data](./lab-03-analyse-the-data.md)
+---
+
+⬅️ **Previous:** [Lab 1 (portal) — Search the literature](./lab-01-portal.md) · ➡️ **Next:** *Break (10 min)*, then [Lab 3 (portal) — Analyse the data](./lab-03-portal.md)

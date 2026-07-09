@@ -67,7 +67,7 @@ request. That's a working, governed agent. 🎉
 One-time setup (in `assets/`):
 
 ```bash
-az login                      # auth for DefaultAzureCredential
+az login --use-device-code                      # auth for DefaultAzureCredential
 copy .env.example .env        # then fill FOUNDRY_PROJECT_ENDPOINT + INITIALS
 pip install -r requirements.txt
 ```
@@ -109,4 +109,6 @@ cleanup(agent)                               # tidy up the shared project when y
 Tweak the persona (e.g. *"always answer as a numbered checklist"*) and re-ask. Notice how
 instructions alone change behaviour — no code, no retraining.
 
-➡️ **Next:** [Lab 1 — Search the literature](./lab-01-search-the-literature.md)
+---
+
+⬅️ **Previous:** [Workshop overview](../README.md) · ➡️ **Next:** [Lab 1 — Search the literature](./lab-01-search-the-literature.md)

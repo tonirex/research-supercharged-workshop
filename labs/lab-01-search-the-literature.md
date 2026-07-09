@@ -105,4 +105,6 @@ cleanup(agent)
 - Ask a **comparison** question (try the `compare_methods` prompt) and see it synthesise across
   several pages in one answer.
 
-➡️ **Next:** [Lab 2 — Ground on your papers](./lab-02-ground-on-your-papers.md)
+---
+
+⬅️ **Previous:** [Lab 0 — Hello, Research Copilot](./lab-00-hello-research-copilot.md) · ➡️ **Next:** [Lab 2 — Ground on your papers](./lab-02-ground-on-your-papers.md)

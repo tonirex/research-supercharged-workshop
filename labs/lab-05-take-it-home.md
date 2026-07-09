@@ -45,6 +45,8 @@ tell you where every answer came from.
 - **Deploy:** publish your agent as a **hosted agent** so a teammate (or app) can call it.
 - **Keep building:** the current SDK samples live in
   `Azure/azure-sdk-for-python → sdk/ai/azure-ai-projects/samples/agents/`.
+- **Learn at your own pace:** keep exploring with interactive, self-directed modules on
+  **Microsoft Learn** → [aka.ms/AI-103onLearn](https://aka.ms/AI-103onLearn).
 
 ## ✍️ Apply it to your work (pick one, 2 min)
 - *Which of the four superpowers would save you the most time this month?*
@@ -60,4 +62,6 @@ it tidy for the next group. From the portal: Agents → select yours → delete.
 
 **Thank you — go supercharge your research!** 🔬✨
 
-⬅️ Back to [the workshop overview](../README.md)
+---
+
+⬅️ **Previous:** [Lab 4 — Add a tool](./lab-04-add-a-tool.md) · ➡️ **Next:** [Bonus labs — Evaluate & observe](./bonus/README.md) · ↩️ Back to [the workshop overview](../README.md)

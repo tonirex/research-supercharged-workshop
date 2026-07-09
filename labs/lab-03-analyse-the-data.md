@@ -89,4 +89,6 @@ cleanup(agent)
 - Ask it to **fit a linear regression** of energy density on trial and report slope + R².
 - Ask for a **cleaned dataset** with the outlier removed, then re-plot.
 
-➡️ **Next:** [Lab 4 — Add a tool](./lab-04-add-a-tool.md)
+---
+
+⬅️ **Previous:** [Lab 2 — Ground on your papers](./lab-02-ground-on-your-papers.md) · ➡️ **Next:** [Lab 4 — Add a tool](./lab-04-add-a-tool.md)

@@ -22,9 +22,7 @@ same agent a new superpower.
 
 **Before you start**
 - You are signed in to the **Foundry portal** ([ai.azure.com](https://ai.azure.com)).
-- You have opened the **shared workshop project** (named `research-workshop`). If your initials are
-  A–M you were assigned the `swedencentral` project; N–Z the `eastus2` project — either works, both are
-  identical.
+- You have opened the **shared workshop project** (named `research-workshop`). 
 
 ---
 
@@ -140,4 +138,6 @@ We all share one project, so tidy up when you're done experimenting:
 Tweak the persona (e.g. *"always answer as a numbered checklist"*), click **Save**, and re-ask. Notice
 how instructions alone change behaviour — no code, no retraining.
 
-➡️ **Next:** [Lab 1 — Search the literature](./lab-01-search-the-literature.md)
+---
+
+⬅️ **Previous:** [Workshop overview](../README.md) · ➡️ **Next:** [Lab 1 (portal) — Search the literature](./lab-01-portal.md)

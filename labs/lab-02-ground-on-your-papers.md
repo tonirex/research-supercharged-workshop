@@ -58,8 +58,12 @@ to answer what isn't in the corpus.
 ## 🔵 Build (SDK) — optional
 
 Script for this lab: **[`assets/lab02_filesearch.py`](../assets/lab02_filesearch.py)** (SDK helpers
-in **[`assets/common/research_common.py`](../assets/common/research_common.py)**). Drop your files
-into **[`assets/corpus/`](../assets/corpus/)**, then run it from `assets/`:
+in **[`assets/common/research_common.py`](../assets/common/research_common.py)**). Drop the papers you
+want the agent to ground on — the PDFs, `.md`, or `.txt` files it should answer *from* — into
+**[`assets/corpus/`](../assets/corpus/)**. This folder is your **corpus**: File Search indexes these
+documents so every answer is drawn from **your specific papers** (with per-claim citations back to
+them) instead of the model's general training memory. Keep them **public / unclassified**, as always.
+Then run it from `assets/`:
 
 ```bash
 python lab02_filesearch.py
@@ -102,4 +106,6 @@ cleanup(agent)
   Ask a question that needs both.
 - Ask for a **literature-review table** (method · dataset · result · source file) across the corpus.
 
-➡️ **Next:** *Break (10 min)*, then [Lab 3 — Analyse the data](./lab-03-analyse-the-data.md)
+---
+
+⬅️ **Previous:** [Lab 1 — Search the literature](./lab-01-search-the-literature.md) · ➡️ **Next:** *Break (10 min)*, then [Lab 3 — Analyse the data](./lab-03-analyse-the-data.md)

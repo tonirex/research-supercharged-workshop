@@ -155,4 +155,6 @@ you're tidying your own agent, you can remove `research-tools` from **its** Tool
 > **"Register it as a shared tool"** section in
 > [admin/03-deploy-mcp-server.md](../admin/03-deploy-mcp-server.md) for the one-time admin step.
 
-➡️ **Next:** [Lab 5 — Take it home](./lab-05-take-it-home.md)
+---
+
+⬅️ **Previous:** [Lab 3 (portal) — Analyse the data](./lab-03-portal.md) · ➡️ **Next:** [Lab 5 (portal) — Take it home](./lab-05-portal.md)
