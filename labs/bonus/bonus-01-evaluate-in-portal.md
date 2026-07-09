@@ -90,4 +90,6 @@ your agent to produce the responses, then evaluates them.
 - Do the same thing **in code** → [bonus-02 — Cloud evaluation with the SDK](./bonus-02-cloud-evaluation-sdk.md),
   so you can wire evaluations into CI and track quality over time.
 
-⬅️ Back to [bonus labs](./README.md) · [workshop overview](../../README.md)
+---
+
+⬅️ **Previous:** [Bonus labs](./README.md) · ➡️ **Next:** [Bonus 02 — Cloud evaluation with the SDK](./bonus-02-cloud-evaluation-sdk.md) · ↩️ [Workshop overview](../../README.md)

@@ -89,16 +89,20 @@ cleanup(agent)
 > threads your tool results back in.
 > See [assets/README.md → Libraries used](../assets/README.md#libraries-used).
 
-### 💡 Stretch — make it an MCP tool
+### 💡 Stretch — add an MCP server as a tool
 Swap the function tool for the **same MCP server the portal rail uses** (the agent calls it the
-same way). Use the `…/mcp` URL your facilitator shared — it exposes `convert_units` and
-`search_arxiv`:
+same way). Try adding it yourself with the workshop server URL below — it exposes `convert_units`
+and `search_arxiv`:
 
 ```python
 from common.research_common import mcp_tool
-agent = research_agent("mcp", tools=[mcp_tool("research", "https://<app-fqdn>/mcp",
+
+MCP_URL = "https://mcp-research-tools.bravebay-a4d1d67d.westeurope.azurecontainerapps.io/mcp"
+agent = research_agent("mcp", tools=[mcp_tool("research", MCP_URL,
                                               require_approval="always")])
 ```
+
+> If your facilitator shared a different `…/mcp` URL for the day, use that instead.
 
 > The server's source is in [`assets/mcp-server/`](../assets/mcp-server/); an admin deploys it to
 > Azure Container Apps beforehand ([admin/03-deploy-mcp-server.md](../admin/03-deploy-mcp-server.md)).
@@ -111,4 +115,6 @@ agent = research_agent("mcp", tools=[mcp_tool("research", "https://<app-fqdn>/mc
 > (`WorkflowAgentDefinition`) or the **Microsoft Agent Framework** — code-first ways to chain
 > several agents/tools. Pointers in the repo `README`.
 
-➡️ **Next:** [Lab 5 — Take it home](./lab-05-take-it-home.md)
+---
+
+⬅️ **Previous:** [Lab 3 — Analyse the data](./lab-03-analyse-the-data.md) · ➡️ **Next:** [Lab 5 — Take it home](./lab-05-take-it-home.md)

@@ -102,4 +102,6 @@ cleanup(agent)
   Ask a question that needs both.
 - Ask for a **literature-review table** (method · dataset · result · source file) across the corpus.
 
-➡️ **Next:** *Break (10 min)*, then [Lab 3 — Analyse the data](./lab-03-analyse-the-data.md)
+---
+
+⬅️ **Previous:** [Lab 1 — Search the literature](./lab-01-search-the-literature.md) · ➡️ **Next:** *Break (10 min)*, then [Lab 3 — Analyse the data](./lab-03-analyse-the-data.md)

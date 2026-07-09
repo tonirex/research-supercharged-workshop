@@ -126,4 +126,6 @@ Read it like this:
   shared project. The dataset version is timestamped so you can re-run freely.
 - The judge model counts against Azure OpenAI quota; the 8-row set is intentionally tiny.
 
-⬅️ Back to [bonus labs](./README.md) · [workshop overview](../../README.md)
+---
+
+⬅️ **Previous:** [Bonus 01 — Evaluate in the portal](./bonus-01-evaluate-in-portal.md) · ↩️ Back to [bonus labs](./README.md) · [workshop overview](../../README.md)

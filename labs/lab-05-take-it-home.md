@@ -60,4 +60,6 @@ it tidy for the next group. From the portal: Agents → select yours → delete.
 
 **Thank you — go supercharge your research!** 🔬✨
 
-⬅️ Back to [the workshop overview](../README.md)
+---
+
+⬅️ **Previous:** [Lab 4 — Add a tool](./lab-04-add-a-tool.md) · ➡️ **Next:** [Bonus labs — Evaluate & observe](./bonus/README.md) · ↩️ Back to [the workshop overview](../README.md)

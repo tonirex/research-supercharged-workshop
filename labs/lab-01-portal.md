@@ -116,4 +116,6 @@ you're stopping here, you can remove your `rc-<initials>` agent from **Build →
 - On the 🔵 SDK rail, dial `search_context_size` from `"low"` → `"high"` and watch depth vs. speed
   change.
 
-➡️ **Next:** [Lab 2 — Ground on your papers](./lab-02-ground-on-your-papers.md)
+---
+
+⬅️ **Previous:** [Lab 0 (portal) — Hello, Research Copilot](./lab-00-portal.md) · ➡️ **Next:** [Lab 2 (portal) — Ground on your papers](./lab-02-portal.md)

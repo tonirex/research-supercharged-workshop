@@ -127,4 +127,6 @@ off via its **Actions (…)**. Leave **File search** and **Web search** attached
   a run like trial 12 would underperform?"*) so it reaches for **File search** and **Code interpreter**
   together.
 
-➡️ **Next:** [Lab 4 — Add a tool](./lab-04-add-a-tool.md)
+---
+
+⬅️ **Previous:** [Lab 2 (portal) — Ground on your papers](./lab-02-portal.md) · ➡️ **Next:** [Lab 4 (portal) — Add a tool](./lab-04-portal.md)

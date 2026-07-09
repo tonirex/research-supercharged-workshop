@@ -26,4 +26,6 @@ answer so you can see an evaluator catch it).
 > These are **not** timed into the 2.5–3 h schedule — do them if you finish early or want to take
 > the idea back to your own project.
 
-⬅️ Back to [the workshop overview](../../README.md)
+---
+
+⬅️ **Previous:** [Lab 5 — Take it home](../lab-05-take-it-home.md) · ➡️ **Next:** [Bonus 01 — Evaluate in the portal](./bonus-01-evaluate-in-portal.md) · ↩️ Back to [the workshop overview](../../README.md)

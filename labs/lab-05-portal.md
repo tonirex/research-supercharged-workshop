@@ -86,4 +86,6 @@ project tidy for the next group.
 
 **Thank you — go supercharge your research!** 🔬✨
 
-⬅️ Back to [the workshop overview](../README.md)
+---
+
+⬅️ **Previous:** [Lab 4 (portal) — Add a tool](./lab-04-portal.md) · ➡️ **Next:** [Bonus labs — Evaluate & observe](./bonus/README.md) · ↩️ Back to [the workshop overview](../README.md)
