@@ -48,7 +48,9 @@ energy density is **improving across trials**, and flags **`S012` (trial 12)** a
 
 ## 🔵 Build (SDK) — optional
 
-Run it:
+Script for this lab: **[`assets/lab03_codeinterpreter.py`](../assets/lab03_codeinterpreter.py)** (SDK
+helpers in **[`assets/common/research_common.py`](../assets/common/research_common.py)**). It reads
+**[`assets/data/sample_experiments.csv`](../assets/data/sample_experiments.csv)**. Run it from `assets/`:
 
 ```bash
 python lab03_codeinterpreter.py
@@ -70,6 +72,16 @@ cleanup(agent)
 > We paste the small CSV inline so the lab runs anywhere. In the **portal** you attach the file
 > to the **Code Interpreter** tool instead, and it returns the chart as a **downloadable plot** —
 > either way the agent runs real Python on your data.
+
+> **🔗 From code to Foundry.** `code_interpreter_tool()` returns a `CodeInterpreterTool` from
+> `azure.ai.projects.models` — the **same hosted Python sandbox** as the portal's **Code Interpreter**
+> tool. The code the agent writes runs server-side in Foundry, not on your laptop.
+> Docs: [Code Interpreter tool](https://learn.microsoft.com/azure/foundry/agents/how-to/tools/code-interpreter).
+
+> **📦 Libraries used.** `azure-ai-projects` provides `CodeInterpreterTool` and creates the agent;
+> `openai` (the **Responses API**) runs the turn — `run_text()` sends the prompt and returns
+> `.output_text`.
+> See [assets/README.md → Libraries used](../assets/README.md#libraries-used).
 
 ---
 

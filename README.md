@@ -66,7 +66,7 @@ cd assets
 az login                         # auth (DefaultAzureCredential)
 copy .env.example .env           # fill FOUNDRY_PROJECT_ENDPOINT + your INITIALS
 pip install -r requirements.txt
-python lab01_websearch.py        # first agent with web search
+python lab00_hello.py            # create + chat with your first agent
 ```
 Full SDK setup & troubleshooting: **[assets/README.md](./assets/README.md)**.
 
@@ -82,7 +82,7 @@ research-supercharged-workshop/
     ├── README.md              SDK setup + how to run
     ├── requirements.txt · .env.example
     ├── common/research_common.py   shared helper (all SDK calls live here)
-    ├── lab01_websearch.py … lab04_tool.py · bonus_cloud_eval.py
+    ├── lab00_hello.py … lab04_tool.py · bonus_cloud_eval.py
     ├── mcp-server/            Lab 4 MCP server + Azure Container Apps deploy script
     ├── corpus/                ← drop your own unclassified docs (Lab 2)
     │   └── STARTER-CORPUS.md   curated open-access pack for Lab 2

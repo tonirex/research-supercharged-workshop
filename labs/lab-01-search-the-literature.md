@@ -59,7 +59,8 @@ visibly beats the no-tool version.
 
 ## 🔵 Build (SDK) — optional
 
-Run it:
+Script for this lab: **[`assets/lab01_websearch.py`](../assets/lab01_websearch.py)** (SDK helpers in
+**[`assets/common/research_common.py`](../assets/common/research_common.py)**). Run it from `assets/`:
 
 ```bash
 python lab01_websearch.py
@@ -85,6 +86,17 @@ cleanup(agent)
 > one via `FOUNDRY_WEBSEARCH_MODEL`, e.g. `gpt-5.4`, as a fallback.)*
 > *(There's also a connection-based `BingGroundingTool` if your org needs a managed/keyed search
 > backend — out of scope for today.)*
+
+> **🔗 From code to Foundry.** `web_search_tool()` returns a `WebSearchTool` from
+> `azure.ai.projects.models` — the **same hosted Web Search tool** you add under **Tools** in the
+> portal. The search runs server-side in Foundry (no Bing connection), and `citations_of()` reads
+> the `url_citation` annotations the service attaches to the response.
+> Docs: [Web Search tool for agents](https://learn.microsoft.com/azure/foundry/agents/how-to/tools/web-search).
+
+> **📦 Libraries used.** `azure-ai-projects` provides `WebSearchTool` and creates the agent; `openai`
+> (the **Responses API**) runs the turn — `run_response()` calls `responses.create(...)`, then you
+> read `.output_text` plus the citation annotations.
+> See [assets/README.md → Libraries used](../assets/README.md#libraries-used).
 
 ---
 
